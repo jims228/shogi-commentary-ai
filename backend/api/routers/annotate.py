@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from backend.api.auth import Principal, require_api_key
 from backend.api import engine_state as _es
+from backend.api.services.bioshogi import analyze_kifu, is_available, BioshogiResult
 
 router = APIRouter()
 
@@ -40,6 +41,7 @@ class AnnotateResponse(BaseModel):
     bestmove: Optional[str] = None
     notes: List[Dict[str, Any]] = Field(default_factory=list)
     candidates: List[Dict[str, Any]] = Field(default_factory=list)
+    bioshogi: Optional[Dict[str, Any]] = None
 
 
 class AnalyzeIn(BaseModel):
@@ -76,12 +78,8 @@ class _EngineAdapter:
                 return await _es.batch_engine.fast_analyze_one(position_cmd)
 
         if _es._MAIN_LOOP is None:
-            # テスト環境: 新しいevent loopで直接実行
-            try:
-                return asyncio.run(_run())
-            except Exception as e:
-                print(f"[EngineAdapter] analyze failed (no loop): {e}")
-                return AnalyzeResponse(bestmove="", candidates=[])
+            print("[EngineAdapter] analyze skipped: main loop not initialized")
+            return AnalyzeResponse(bestmove="", candidates=[])
         try:
             fut = asyncio.run_coroutine_threadsafe(_run(), _es._MAIN_LOOP)
             res = fut.result(timeout=15.0)
@@ -196,11 +194,7 @@ def annotate(payload: Any) -> AnnotateResponse:
 
     for i, mv in enumerate(moves):
         req = {"usi": usi, "ply": i + 1, "move": mv}
-        import sys
-        _engine = sys.modules.get('backend.api.main') 
-        _engine = getattr(_engine, 'engine', None) if _engine else None
-        res = (_engine or engine).analyze(req)
-        last_res = res
+        res = engine.analyze(req)
 
         score_after: Optional[int] = None
         depth: Optional[int] = None
@@ -272,7 +266,38 @@ def annotate(payload: Any) -> AnnotateResponse:
         bestmove = last_res.bestmove
         candidates_dump = [_dump_model(c) for c in last_res.candidates]
 
-    return AnnotateResponse(summary="annotation", bestmove=bestmove, notes=notes, candidates=candidates_dump)
+    # bioshogi 解析（起動していれば）
+    bioshogi_data = None
+    if is_available():
+        # USI → KIF変換は後回し。今はUSI文字列をそのまま渡してみる
+        # （エラーになっても握りつぶす）
+        try:
+            br = analyze_kifu(usi)
+            if br.ok:
+                bioshogi_data = {
+                    "sente": {
+                        "attack":    br.players[0].attack    if br.players else [],
+                        "defense":   br.players[0].defense   if br.players else [],
+                        "technique": br.players[0].technique if br.players else [],
+                        "note":      br.players[0].note      if br.players else [],
+                    },
+                    "gote": {
+                        "attack":    br.players[1].attack    if len(br.players) > 1 else [],
+                        "defense":   br.players[1].defense   if len(br.players) > 1 else [],
+                        "technique": br.players[1].technique if len(br.players) > 1 else [],
+                        "note":      br.players[1].note      if len(br.players) > 1 else [],
+                    },
+                }
+        except Exception:
+            pass
+
+    return AnnotateResponse(
+        summary="annotation",
+        bestmove=bestmove,
+        notes=notes,
+        candidates=candidates_dump,
+        bioshogi=bioshogi_data,
+    )
 
 
 # ====== Routes ======
@@ -290,10 +315,7 @@ def digest_endpoint_compat(payload: Dict[str, Any]):
     prev_score: Optional[int] = None
     for i, mv in enumerate(moves):
         req = {"usi": usi, "ply": i + 1, "move": mv}
-        import sys
-        _engine = sys.modules.get('backend.api.main') 
-        _engine = getattr(_engine, 'engine', None) if _engine else None
-        res = (_engine or engine).analyze(req)
+        res = engine.analyze(req)
         score_after: Optional[int] = None
         if res.candidates:
             score_after = res.candidates[0].score_cp

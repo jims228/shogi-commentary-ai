@@ -1,0 +1,8 @@
+.pieceTransition {
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.selected {
+  filter: drop-shadow(0 0 4px rgba(0, 120, 255, 0.8));
+  z-index: 20 !important;
+}

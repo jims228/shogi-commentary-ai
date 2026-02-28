@@ -1,0 +1,292 @@
+/* Tailwind v3 方式 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== あなたのデザイントークン（CSS変数） ===== */
+:root {
+  --radius: 0.625rem;
+  /* --- Sakura tokens (light, subtle) --- */
+  --sakura-50: oklch(0.985 0.015 15);
+  --sakura-100: oklch(0.96 0.03 15);
+  --sakura-200: oklch(0.92 0.05 15);
+  --surface: oklch(0.985 0.01 15);
+  --text: oklch(0.18 0.02 285);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Mobile (WebView) board/piece scaling hook (defaults to desktop). */
+  --piece-scale: 1;
+}
+
+/* Mobile (WebView) scaling: driven by server-rendered data-mobile="1" on the lesson root. */
+[data-mobile="1"] {
+  --piece-scale: 1;
+  background-color: #ffffff;
+}
+
+/* Scale board/pieces only inside the board root (avoid "global zoom feel"). */
+[data-mobile="1"] [data-shogi-board-root="1"] {
+  --piece-scale: 1.35;
+}
+
+/* Mobile WebView lesson shell: force readable surface/text. */
+[data-mobile="1"][data-mobile-lesson-shell] {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Belt-and-suspenders: prevent Android WebView from text-autoscaling descendants. */
+[data-mobile="1"][data-mobile-lesson-shell] * {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Mobile WebView: remove tap highlight / selection only inside shogi board. */
+[data-mobile="1"] [data-shogi-board-root="1"],
+[data-mobile="1"] [data-shogi-board-root="1"] * {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Keep accessibility intact elsewhere; only strip focus ring inside the board on mobile. */
+[data-mobile="1"] [data-shogi-board-root="1"] :focus {
+  outline: none;
+}
+
+/* Mobile WebView flicker hardening for pieces (GPU hint). */
+[data-mobile="1"] [data-shogi-board-root="1"] [data-shogi-piece="1"] {
+  backface-visibility: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.sakura-theme {
+  /* Override shadcn tokens only within the themed area */
+  --background: var(--surface);
+  --foreground: var(--text);
+  --card: oklch(0.99 0.01 15);
+  --card-foreground: var(--text);
+  --popover: oklch(0.99 0.01 15);
+  --popover-foreground: var(--text);
+  --primary: oklch(0.62 0.12 20);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.02 15);
+  --secondary-foreground: var(--text);
+  --muted: oklch(0.965 0.01 15);
+  --muted-foreground: oklch(0.45 0.02 285);
+  --accent: oklch(0.965 0.02 15);
+  --accent-foreground: var(--text);
+  --border: oklch(0.9 0.03 15);
+  --input: oklch(0.9 0.03 15);
+  --ring: oklch(0.75 0.08 20);
+}
+
+.sakura-surface {
+  background:
+    radial-gradient(1200px 520px at 50% -12%, rgba(255, 160, 185, 0.30), transparent 62%),
+    radial-gradient(900px 420px at 20% 15%, rgba(255, 205, 220, 0.18), transparent 60%),
+    linear-gradient(180deg, var(--sakura-50) 0%, #ffffff 34%, var(--sakura-100) 100%);
+  border: 1px solid color-mix(in oklab, var(--sakura-200) 55%, transparent);
+  box-shadow: 0 14px 44px rgba(255, 150, 180, 0.14);
+  border-radius: 20px;
+}
+
+/* 画面全体を桜背景で覆う“固定レイヤ”。
+   これで body 背景や竹装飾が視覚的に消える（レイアウトは不変）。 */
+.sakura-backdrop-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1400px 560px at 50% -10%, rgba(255, 160, 185, 0.26), transparent 62%),
+    linear-gradient(180deg, var(--sakura-50) 0%, #ffffff 35%, var(--sakura-100) 100%);
+}
+
+/* 竹っぽい装飾が class/id に含まれていたら桜テーマでは消す（最小差分の安全策） */
+.sakura-theme [class*="bamboo"],
+.sakura-theme [id*="bamboo"],
+.sakura-theme [class*="take"],
+.sakura-theme [id*="take"] {
+  display: none !important;
+}
+
+/* --- Sakura petals animation --- */
+.sakura-petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10; /* 背景より上・UIより下（wrapper側でz=20） */
+}
+
+.sakura-petal {
+  position: absolute;
+  top: -12vh;
+  left: var(--petal-left, 50%);
+
+  width: var(--petal-size, 38px);
+  height: calc(var(--petal-size, 38px) * 0.78);
+
+  /* “イラスト調”の塗り（ハイライト＋淡い縁色） */
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.18) 34%, transparent 35%),
+    radial-gradient(circle at 40% 40%, rgba(255, 205, 220, 0.92) 0%, rgba(255, 160, 190, 0.78) 55%, rgba(255, 120, 175, 0.30) 100%);
+
+  border-radius: 88% 12% 88% 12%;
+  outline: 1px solid rgba(255, 150, 175, 0.14);
+  transform: rotate(45deg) scale(var(--petal-scale, 1));
+  opacity: var(--petal-opacity, 0.30); /* 透明度を下げて見えるように */
+
+  filter: blur(0.12px);
+  box-shadow: 0 6px 26px rgba(255, 145, 175, 0.20);
+  will-change: transform;
+  animation: sakura-fall var(--petal-duration, 14s) linear var(--petal-delay, 0s) infinite;
+}
+
+@keyframes sakura-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(45deg) scale(var(--petal-scale, 1));
+  }
+  100% {
+    transform: translate3d(var(--petal-drift, 0px), 120vh, 0) rotate(420deg) scale(var(--petal-scale, 1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sakura-petals {
+    display: none;
+  }
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ===== 高さ伝播のための設定 ===== */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@layer base {
+  * {
+    /* TailwindユーティリティではなくCSS変数で直接指定 */
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  body {
+    /* Default to Dark Navy theme */
+    background-color: #1a1f3a;
+    color: #f8fafc;
+    background-image: url("/images/bg-ichimatsu.png");
+    background-repeat: repeat;
+    background-size: 120px 120px;
+    position: relative;
+    /* height: 100% はhtml,bodyで設定済み */
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    background-image: url("/images/bamboo-column.png");
+    background-repeat: repeat-y;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    left: 0;
+  }
+
+  body::after {
+    right: 0;
+  }
+
+  /* Sakura theme: disable bamboo side columns (body pseudo elements) */
+  body:has(.sakura-theme)::before,
+  body:has(.sakura-theme)::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body::before,
+  body::after {
+    content: none;
+  }
+}

@@ -1,0 +1,100 @@
+/* apps/web/src/components/annotate/MoveQualityPanel.module.css */
+.panel {
+  background: #f9f3e5;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  color: #333333;
+}
+
+.header {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f1308;
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+}
+
+.indicatorGood {
+  background: #16a34a;
+}
+
+.indicatorInaccuracy {
+  background: #2563eb;
+}
+
+.indicatorMistake {
+  background: #ea580c;
+}
+
+.indicatorBlunder {
+  background: #dc2626;
+}
+
+.itemBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemTitle {
+  display: flex;
+  gap: 8px;
+  font-weight: 600;
+  color: #1f1308;
+}
+
+.itemPly {
+  font-size: 12px;
+  color: #7a5f36;
+}
+
+.itemMove {
+  font-size: 14px;
+}
+
+.itemMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #333333;
+}
+
+.itemClassification {
+  font-weight: 600;
+}
+
+.itemDiff {
+  font-family: "Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  color: #444444;
+}
+
+.empty {
+  font-size: 13px;
+  color: #666666;
+}

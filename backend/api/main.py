@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.routers import annotate, explain, games
+from backend.api.routers import annotate, analysis, explain, games
 
 
 @asynccontextmanager
@@ -41,6 +41,7 @@ app.add_middleware(
 
 # --- Routers ---
 app.include_router(annotate.router)
+app.include_router(analysis.router)
 app.include_router(explain.router, prefix="/api")
 app.include_router(games.router, prefix="/api")
 

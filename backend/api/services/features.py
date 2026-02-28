@@ -68,6 +68,10 @@ def build_move_explanation(
     move_type = classify_move_type(bio.get("attack", []), bio.get("defense", []))
     phase = classify_phase(ply)
 
+    defense_list = bio.get("defense", [])
+    attack_list = bio.get("attack", [])
+    technique_list = bio.get("technique", [])
+
     return MoveExplanation(
         ply=ply,
         move=move,
@@ -75,11 +79,11 @@ def build_move_explanation(
         eval_after=eval_after,
         eval_delta=eval_delta,
         move_type=move_type,
-        tactical_themes=bio.get("technique", []),
+        tactical_themes=technique_list,
         position_phase=phase,
-        castle_info=bio.get("defense", [None])[0],
-        attack_info=bio.get("attack", [None])[0],
-        technique_info=bio.get("technique", []),
+        castle_info=defense_list[0] if defense_list else None,
+        attack_info=attack_list[0] if attack_list else None,
+        technique_info=technique_list,
     )
 
 

@@ -1,0 +1,389 @@
+/* apps/web/src/app/home.css */
+.home-root {
+  min-height: 100%;
+  height: 100%;
+  color: #333333;
+  background: transparent;
+  overflow: hidden;
+}
+
+.home-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(249, 243, 229, 0.96);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  z-index: 50;
+}
+
+.home-header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.home-logo {
+  display: flex;
+  align-items: baseline;
+  font-family: inherit;
+}
+
+.home-logo-main {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.home-logo-sub {
+  margin-left: 4px;
+  color: #555555;
+  font-weight: 600;
+}
+
+.home-header-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.home-header-icons button {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.home-header-icons button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.home-header-icons button:focus-visible {
+  outline: 2px solid rgba(27, 59, 95, 0.5);
+  outline-offset: 2px;
+}
+
+.home-header-icons svg {
+  color: #555555;
+}
+
+.home-main {
+  padding-top: 64px;
+  padding-bottom: 24px;
+}
+
+.home-root--no-header .home-main {
+  padding-top: 48px;
+}
+
+.home-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.home-page-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+}
+
+.home-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  background: rgba(249, 243, 229, 0.95);
+  border-radius: 24px;
+  padding: 20px 24px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.home-metric-item {
+  text-align: left;
+}
+
+.home-metric-item--divider {
+  border-left: 1px solid rgba(224, 210, 184, 0.9);
+  border-right: 1px solid rgba(224, 210, 184, 0.9);
+  padding: 0 24px;
+}
+
+.home-metric-label {
+  font-size: 12px;
+  color: #8b5a2b;
+  letter-spacing: 0.08em;
+}
+
+.home-metric-value {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.home-mascot {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 24px;
+  background: #455a81;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.home-mascot-copy {
+  flex: 1;
+}
+
+.home-mascot-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #cde4ff;
+}
+
+.home-mascot-text {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.home-mascot-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #34a6ff;
+  border: 4px solid #2b3a5c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.home-training {
+  margin-top: 36px;
+}
+
+.home-training-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.home-training-accent {
+  width: 6px;
+  height: 28px;
+  border-radius: 999px;
+  background: #7e8b45;
+}
+
+.home-training-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #6b3f1d;
+}
+
+.home-training-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .home-main {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 64px;
+    padding-bottom: 24px;
+  }
+
+  .home-root--no-header .home-main {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .home-shell {
+    align-items: center;
+  }
+
+  .home-page-title {
+    font-size: 32px;
+    text-align: center;
+  }
+}
+
+.home-training-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.training-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-radius: 24px;
+  background: #fbf7ef;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+  color: #333333;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.training-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
+}
+
+.training-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.training-card--play {
+  border-color: #1b3b5f;
+}
+
+.training-card--learn {
+  border-color: #4b7b34;
+}
+
+.training-card--review {
+  border-color: #b43a32;
+}
+
+.training-card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.training-card-sub {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666666;
+}
+
+@media (max-width: 768px) {
+  .home-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .home-metric-item--divider {
+    border: none;
+    padding: 0;
+  }
+
+  .home-mascot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-training-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-training-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile tweaks to ensure buttons/cards fit on a single viewport */
+@media (max-width: 420px) {
+  .home-shell {
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .home-page-title {
+    font-size: 18px;
+  }
+
+  .training-card {
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .training-card-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+
+  .training-card-title {
+    font-size: 16px;
+  }
+
+  .training-card-sub {
+    font-size: 12px;
+  }
+
+  .home-main {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 64px;
+    padding-bottom: 12px;
+  }
+
+  .home-training-grid {
+    gap: 12px;
+  }
+
+  .home-mascot {
+    padding: 12px;
+  }
+}
+
+/* Hide success/overlay explanation blocks on mobile inside lesson scaffold */
+@media (max-width: 420px) {
+  .lesson-explanation-mobile .animate-in {
+    display: none !important;
+  }
+
+  /* Ensure the mobile board wrapper does not clip hands */
+  .lesson-mobile-board-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    height: 100%;
+  }
+
+  /* Ensure the cloned board fills width and keeps square aspect */
+  .lesson-mobile-board-wrapper .w-full {
+    max-width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}

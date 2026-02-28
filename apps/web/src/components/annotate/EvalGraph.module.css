@@ -1,0 +1,80 @@
+/* apps/web/src/components/annotate/EvalGraph.module.css */
+.card {
+  background: #f9f3e5;
+  border: 1px solid #e5dfcf;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #333333;
+}
+
+.header {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f1308;
+}
+
+.graphWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.graphBackground {
+  stroke: rgba(0, 0, 0, 0.04);
+}
+
+.tickLine {
+  stroke: rgba(0, 0, 0, 0.06);
+  stroke-dasharray: 4 4;
+}
+
+.tickLabel {
+  font-size: 11px;
+  fill: #555555;
+}
+
+.zeroLine {
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1.2px;
+}
+
+.path {
+  fill: none;
+  stroke-width: 2;
+}
+
+.highlightGroup {
+  pointer-events: none;
+}
+
+.highlightLine {
+  stroke: rgba(58, 43, 23, 0.35);
+  stroke-dasharray: 6 4;
+}
+
+.highlightDot {
+  fill: #ab3f2b;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.highlightLabel {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #3a2b17;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.empty {
+  font-size: 13px;
+  color: #555555;
+}

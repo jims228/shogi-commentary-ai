@@ -43,6 +43,10 @@ class GameDigestInput(BaseModel):
     total_moves: int
     eval_history: List[int]
     winner: Optional[str] = None
+    notes: Optional[List[dict]] = None
+    bioshogi: Optional[dict] = None
+    sente_name: Optional[str] = None
+    gote_name: Optional[str] = None
 
 
 @router.post("/explain")

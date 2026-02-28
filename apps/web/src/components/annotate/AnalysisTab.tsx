@@ -28,6 +28,7 @@ import { AnalysisCache, buildMoveImpacts, getPrimaryEvalScore } from "@/lib/anal
 import { FileText, RotateCcw, Search, Play, Sparkles, Upload, ChevronFirst, ChevronLeft, ChevronRight, ChevronLast, ArrowRight, BrainCircuit, X, ScrollText, Eye, ArrowLeft, Pencil, ArrowLeftRight, GraduationCap, BookOpen } from "lucide-react";
 import MoveListPanel from "@/components/annotate/MoveListPanel";
 import EvalGraph from "@/components/annotate/EvalGraph";
+import BioshogiPanel, { type BioshogiData } from "@/components/annotate/BioshogiPanel";
 import { useBatchAnalysis } from "@/hooks/useBatchAnalysis";
 import { useRouter } from "next/navigation";
 import { fetchWithAuth, getSupabaseAccessToken } from "@/lib/fetchWithAuth";
@@ -231,6 +232,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const [dbRefs, setDbRefs] = useState<DbRefs | null>(null);
   const [gameDigest, setGameDigest] = useState<string>("");
   const [digestMetaSource, setDigestMetaSource] = useState<string>("");
+  const [bioshogiData, setBioshogiData] = useState<BioshogiData | null>(null);
   const [isExplaining, setIsExplaining] = useState(false);
   const [isDigesting, setIsDigesting] = useState(false);
   const [digestCooldownUntil, setDigestCooldownUntil] = useState(0);
@@ -709,6 +711,19 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     return () => clearInterval(timer);
   }, [digestCooldownUntil]);
 
+  // バッチ解析完了時にbioshogi情報を自動取得
+  useEffect(() => {
+    if (isBatchAnalyzing) return;
+    if (Object.keys(batchData).length < 5) return;
+    if (!usi) return;
+    fetch(`${API_BASE}/api/analysis/report?usi=${encodeURIComponent(usi)}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data?.bioshogi) setBioshogiData(data.bioshogi as BioshogiData);
+      })
+      .catch(() => {/* bioshogiなしで続行 */});
+  }, [isBatchAnalyzing, usi]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleGenerateGameDigest = useCallback(async (forceLlm = false) => {
     if (isDigesting) return;
     if (digestCooldownUntil && Date.now() < digestCooldownUntil) return;
@@ -727,11 +742,25 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
         evalList.push(score || 0);
     }
     try {
+        const notesForDigest = moveSequence
+          .map((move, index) => {
+            const ply = index + 1;
+            const delta_cp = moveImpacts[ply]?.diff ?? null;
+            return { ply, move, delta_cp };
+          })
+          .filter((n) => n.delta_cp !== null);
+
         const url = forceLlm ? `${API_BASE}/api/explain/digest?force_llm=1` : `${API_BASE}/api/explain/digest`;
         const res = await fetchWithAuth(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ total_moves: totalMoves, eval_history: evalList, winner: null }),
+            body: JSON.stringify({
+              total_moves: totalMoves,
+              eval_history: evalList,
+              winner: null,
+              notes: notesForDigest,
+              bioshogi: bioshogiData ?? null,
+            }),
         });
         if (!res.ok) {
             let detail = "";
@@ -1109,6 +1138,11 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
           </div>
           
           {/* レポート表示エリア (盤面の下) */}
+          {bioshogiData && (
+            <div className="flex-none animate-in fade-in slide-in-from-bottom-4">
+              <BioshogiPanel data={bioshogiData} />
+            </div>
+          )}
           {gameDigest && (
             <div className="flex-none p-4 bg-white rounded-xl border border-amber-200 shadow-sm animate-in fade-in slide-in-from-bottom-4 max-h-[300px] overflow-y-auto">
                 <div className="font-bold text-amber-700 mb-2 flex items-center gap-2 border-b border-amber-100 pb-2 sticky top-0 bg-white z-10">

@@ -42,7 +42,7 @@ app.add_middleware(
 # --- Routers ---
 app.include_router(annotate.router)
 app.include_router(analysis.router)
-app.include_router(explain.router, prefix="/api")
+app.include_router(explain.router)
 app.include_router(games.router, prefix="/api")
 
 

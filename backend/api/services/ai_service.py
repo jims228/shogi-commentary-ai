@@ -287,8 +287,14 @@ class AIService:
         eval_history = data.get("eval_history") or []
         winner = data.get("winner")
         force_llm = bool(data.get("force_llm"))
+        notes: List[dict] = data.get("notes") or []
+        bioshogi: Dict[str, Any] = data.get("bioshogi") or {}
+        sente_name: str = data.get("sente_name") or "先手"
+        gote_name: str = data.get("gote_name") or "後手"
 
-        cache_key = _digest_cache_key(total_moves, eval_history, winner)
+        cache_key = _digest_cache_key(total_moves, eval_history, winner,
+                                      notes=notes, bioshogi=bioshogi,
+                                      sente_name=sente_name, gote_name=gote_name)
         hit = _digest_cache_get(cache_key)
         if hit and not force_llm:
             age = int(time.time() - hit["created_at"])
@@ -318,12 +324,46 @@ class AIService:
             step = max(1, len(eval_history) // 20)
             eval_summary = [f"{i}手:{v}" for i, v in enumerate(eval_history) if i % step == 0]
 
+            # --- bioshogi block ---
+            bio_block = ""
+            if bioshogi:
+                bio_s = bioshogi.get("sente") or {}
+                bio_g = bioshogi.get("gote") or {}
+                s_atk = ", ".join(bio_s.get("attack", []) or []) or "不明"
+                s_def = ", ".join(bio_s.get("defense", []) or []) or "不明"
+                s_tec = ", ".join(bio_s.get("technique", []) or []) or "なし"
+                g_atk = ", ".join(bio_g.get("attack", []) or []) or "不明"
+                g_def = ", ".join(bio_g.get("defense", []) or []) or "不明"
+                g_tec = ", ".join(bio_g.get("technique", []) or []) or "なし"
+                bio_block = (
+                    f"\n【戦型・囲い情報】\n"
+                    f"- {sente_name}（先手）: 戦型={s_atk}, 囲い={s_def}, 手筋={s_tec}\n"
+                    f"- {gote_name}（後手）: 戦型={g_atk}, 囲い={g_def}, 手筋={g_tec}\n"
+                )
+
+            # --- notable moves block ---
+            notes_block = ""
+            if notes:
+                notable = sorted(
+                    [n for n in notes if isinstance(n.get("delta_cp"), (int, float))],
+                    key=lambda n: abs(n["delta_cp"]),
+                    reverse=True,
+                )[:5]
+                if notable:
+                    lines = [
+                        f"  - {n['ply']}手目 {n.get('move', '')} (Δ{n['delta_cp']:+d}cp)"
+                        for n in notable
+                    ]
+                    notes_block = "\n【注目手（評価値変動が大きかった手）】\n" + "\n".join(lines) + "\n"
+
             prompt = f"""
 将棋の対局データを元に、観戦記風の総評レポート（400文字程度）を作成してください。
+- 対局者: {sente_name}（先手）vs {gote_name}（後手）
 - 総手数: {total_moves}手
 - 評価値推移: {', '.join(eval_summary)}
+{bio_block}{notes_block}
 【構成】
-1. 序盤 2. 中盤 3. 終盤 4. 総括
+1. 序盤（戦型・囲いに触れる） 2. 中盤 3. 終盤 4. 総括
 """
             model_name = get_model_name()
             prompt_size = len(prompt)
@@ -360,8 +400,28 @@ class AIService:
             return _build_digest_payload(explanation, source="fallback", limited=False, retry_after=None)
 
 
-def _digest_cache_key(total_moves: int, eval_history: List[int], winner: Optional[str]) -> str:
-    payload = {"total_moves": total_moves, "eval_history": eval_history, "winner": winner}
+def _digest_cache_key(
+    total_moves: int,
+    eval_history: List[int],
+    winner: Optional[str],
+    notes: Optional[list] = None,
+    bioshogi: Optional[dict] = None,
+    sente_name: Optional[str] = None,
+    gote_name: Optional[str] = None,
+) -> str:
+    # Use condensed note/bioshogi summary to keep key compact
+    bio_s = ((bioshogi or {}).get("sente") or {})
+    bio_g = ((bioshogi or {}).get("gote") or {})
+    payload = {
+        "total_moves": total_moves,
+        "eval_history": eval_history,
+        "winner": winner,
+        "notes_len": len(notes or []),
+        "bio_s_atk": (bio_s.get("attack") or [])[:1],
+        "bio_g_atk": (bio_g.get("attack") or [])[:1],
+        "sente_name": sente_name,
+        "gote_name": gote_name,
+    }
     raw = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 

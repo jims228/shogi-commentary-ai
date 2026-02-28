@@ -15,6 +15,7 @@ from backend.api.auth import Principal, require_api_key, require_user
 from backend.api.tsume_data import TSUME_PROBLEMS
 from backend.api import engine_state as _es
 from backend.api.routers.annotate import AnalyzeIn
+from backend.api.services.bioshogi import analyze_kifu, is_available
 
 router = APIRouter()
 
@@ -128,3 +129,64 @@ async def stream_endpoint(
 async def solve_mate_endpoint(req: MateRequest):
     """詰み探索エンドポイント（stub: solve_mate未実装）"""
     return await _es.stream_engine.solve_tsume_hand(req.sfen)
+
+
+@router.get("/api/analysis/report")
+def get_report(usi: str):
+    """
+    棋譜のサマリーレポートを返す。
+    フロントは GET /api/analysis/report?usi=... で呼び出す。
+    """
+    from backend.api.routers.annotate import annotate as annotate_fn
+
+    result = annotate_fn({"usi": usi})
+    notes = result.notes or []
+
+    # 悪手カウント（delta_cp は自分視点: 負 = 悪化）
+    blunder_count = sum(
+        1 for n in notes
+        if isinstance(n.get("delta_cp"), (int, float)) and -300 < n["delta_cp"] <= -150
+    )
+    big_blunder_count = sum(
+        1 for n in notes
+        if isinstance(n.get("delta_cp"), (int, float)) and n["delta_cp"] <= -300
+    )
+
+    # ターニングポイント（|delta_cp| >= 150 の手）
+    turning_points = [
+        {"ply": n["ply"], "move": n["move"], "delta_cp": n["delta_cp"]}
+        for n in notes
+        if isinstance(n.get("delta_cp"), (int, float)) and abs(n["delta_cp"]) >= 150
+    ][:5]
+
+    # bioshogi（annotate内で取得済みの場合はそのまま利用）
+    bioshogi_data = result.bioshogi
+    if bioshogi_data is None and is_available():
+        try:
+            br = analyze_kifu(usi)
+            if br.ok:
+                bioshogi_data = {
+                    "sente": {
+                        "attack":    br.players[0].attack    if br.players else [],
+                        "defense":   br.players[0].defense   if br.players else [],
+                        "technique": br.players[0].technique if br.players else [],
+                    },
+                    "gote": {
+                        "attack":    br.players[1].attack    if len(br.players) > 1 else [],
+                        "defense":   br.players[1].defense   if len(br.players) > 1 else [],
+                        "technique": br.players[1].technique if len(br.players) > 1 else [],
+                    },
+                }
+        except Exception:
+            pass
+
+    return {
+        "ok": True,
+        "summary": {
+            "total_moves": len(notes),
+            "blunders": blunder_count,
+            "big_blunders": big_blunder_count,
+        },
+        "turning_points": turning_points,
+        "bioshogi": bioshogi_data,
+    }

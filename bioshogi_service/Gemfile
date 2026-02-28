@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "json"
+gem "bioshogi", github: "akicho8/bioshogi", branch: "master"
+
+gem "rackup", "~> 2.3"
+gem "puma", "~> 7.2"

@@ -745,6 +745,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
         const notesForDigest = moveSequence
           .map((move, index) => {
             const ply = index + 1;
+            // turnSideDiff: 手番プレイヤー視点の評価変化 (負=悪手)
             const delta_cp = moveImpacts[ply]?.diff ?? null;
             return { ply, move, delta_cp };
           })
@@ -760,6 +761,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
               winner: null,
               notes: notesForDigest,
               bioshogi: bioshogiData ?? null,
+              initial_turn: initialTurn,
             }),
         });
         if (!res.ok) {
@@ -794,7 +796,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     } finally {
         setIsDigesting(false);
     }
-  }, [batchData, totalMoves, isDigesting, digestCooldownUntil]);
+  }, [batchData, totalMoves, isDigesting, digestCooldownUntil, bioshogiData, moveSequence, moveImpacts, initialTurn]);
 
   const handleBatchAnalysisClick = useCallback(async () => {
     if (isEditMode || isBatchAnalyzing) return;

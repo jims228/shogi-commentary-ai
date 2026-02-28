@@ -93,9 +93,12 @@ export const buildMoveImpacts = (
     }
 
     const rawDiff = currentScore - prevScore;
-    
-    // 手番側にとっての得失点に変換
-    const turnSideDiff = (i % 2 !== 0) ? rawDiff : -rawDiff;
+
+    // 手番側にとっての得失点に変換（initialTurn を考慮）
+    // initialTurn='b'(先手先行): 奇数ply=先手, 偶数ply=後手
+    // initialTurn='w'(後手先行): 奇数ply=後手, 偶数ply=先手
+    const isSenteTurn = initialTurn === 'b' ? (i % 2 !== 0) : (i % 2 === 0);
+    const turnSideDiff = isSenteTurn ? rawDiff : -rawDiff;
 
     const classification = classifyEvalImpact(turnSideDiff);
 

@@ -46,6 +46,26 @@ HOST="${HOST:-0.0.0.0}"
 PORT="${PORT:-8787}"
 RELOAD="${RELOAD:-1}"
 
+# Start bioshogi Ruby/Sinatra microservice (requires Ruby >= 3.2 via rbenv)
+BIOSHOGI_DIR="$(pwd)/bioshogi_service"
+RUBY_BIN="${HOME}/.rbenv/versions/3.2.2/bin"
+if [[ -f "${RUBY_BIN}/ruby" && -f "${BIOSHOGI_DIR}/server.rb" ]]; then
+  if ! curl -sf http://localhost:7070/health >/dev/null 2>&1; then
+    echo "== Starting bioshogi service on :7070 =="
+    (
+      cd "${BIOSHOGI_DIR}"
+      PATH="${RUBY_BIN}:/usr/bin:${PATH}" \
+      GEM_HOME="${HOME}/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0" \
+      GEM_PATH="vendor/bundle/ruby/3.2.0:${HOME}/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0" \
+      "${RUBY_BIN}/bundle" exec ruby server.rb &>> /tmp/bioshogi.log &
+    )
+  else
+    echo "== bioshogi service already running on :7070 =="
+  fi
+else
+  echo "== bioshogi: Ruby 3.2+ not found at ${RUBY_BIN}, skipping =="
+fi
+
 echo "== Backend starting on :${PORT} (USE_LLM=${USE_LLM}, LLM_PROVIDER=${LLM_PROVIDER:-unset}) =="
 
 uvicorn_args=(backend.api.main:app --host "$HOST" --port "$PORT")

@@ -47,6 +47,7 @@ class GameDigestInput(BaseModel):
     bioshogi: Optional[dict] = None
     sente_name: Optional[str] = None
     gote_name: Optional[str] = None
+    initial_turn: Optional[str] = None  # 'b'=先手先行, 'w'=後手先行
 
 
 @router.post("/explain")

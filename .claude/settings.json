@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(PYTHONPATH=. python3 -c \"from backend.api.services.bioshogi import is_available; print\\(''bioshogi available:'', is_available\\(\\)\\)\")",
+      "Bash(curl -s \"http://localhost:8787/api/analysis/report?usi=startpos%20moves%207g7f%203c3d%202g2f\")",
+      "Bash(curl -sv \"http://localhost:8787/api/analysis/report?usi=startpos%20moves%207g7f%203c3d%202g2f\")",
+      "Bash(curl -s http://localhost:8787/api/analysis/report?usi=startpos%20moves%207g7f%203c3d)",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}

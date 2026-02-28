@@ -291,6 +291,14 @@ class AIService:
         bioshogi: Dict[str, Any] = data.get("bioshogi") or {}
         sente_name: str = data.get("sente_name") or "先手"
         gote_name: str = data.get("gote_name") or "後手"
+        initial_turn: str = data.get("initial_turn") or "b"  # 'b'=先手先行, 'w'=後手先行
+
+        _LOG.info(
+            "[digest] input rid=%s total_moves=%s notes_count=%s bioshogi=%s initial_turn=%s",
+            request_id, total_moves, len(notes),
+            "yes" if bioshogi else "no",
+            initial_turn,
+        )
 
         cache_key = _digest_cache_key(total_moves, eval_history, winner,
                                       notes=notes, bioshogi=bioshogi,
@@ -342,18 +350,24 @@ class AIService:
                 )
 
             # --- notable moves block ---
+            # delta_cp は手番プレイヤー視点: 負=悪手, 正=好手
+            # initial_turn='b': 奇数ply=先手(▲), 偶数ply=後手(△)
+            # initial_turn='w': 奇数ply=後手(△), 偶数ply=先手(▲)
             notes_block = ""
             if notes:
-                notable = sorted(
-                    [n for n in notes if isinstance(n.get("delta_cp"), (int, float))],
-                    key=lambda n: abs(n["delta_cp"]),
-                    reverse=True,
-                )[:5]
+                def _is_sente_ply(ply: int) -> bool:
+                    return (ply % 2 != 0) if initial_turn == "b" else (ply % 2 == 0)
+
+                valid_notes = [n for n in notes if isinstance(n.get("delta_cp"), (int, float))]
+                notable = sorted(valid_notes, key=lambda n: abs(n["delta_cp"]), reverse=True)[:5]
                 if notable:
-                    lines = [
-                        f"  - {n['ply']}手目 {n.get('move', '')} (Δ{n['delta_cp']:+d}cp)"
-                        for n in notable
-                    ]
+                    lines = []
+                    for n in notable:
+                        ply = n["ply"]
+                        d = int(n["delta_cp"])
+                        player = "▲" if _is_sente_ply(ply) else "△"
+                        qualifier = "好手" if d >= 150 else ("悪手" if d <= -150 else "普通")
+                        lines.append(f"  - {ply}手目 {player}{n.get('move', '')} (Δ{d:+d}cp / {qualifier})")
                     notes_block = "\n【注目手（評価値変動が大きかった手）】\n" + "\n".join(lines) + "\n"
 
             prompt = f"""

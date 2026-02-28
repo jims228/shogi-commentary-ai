@@ -1,0 +1,17 @@
+FROM python:3.11-slim AS base
+WORKDIR /app
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends gcc libpq-dev build-essential curl \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY backend/ /app/backend/
+COPY docker/entrypoint.api.sh /entrypoint.api.sh
+RUN chmod +x /entrypoint.api.sh
+
+EXPOSE 8787
+ENV PYTHONPATH=/app
+CMD ["/entrypoint.api.sh"]

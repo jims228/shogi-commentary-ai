@@ -1,0 +1,6 @@
+# Place the real YaneuraOu binary at: docker/engine/yaneuraou
+# - Do NOT commit the real binary.
+# - Make it executable:
+#     chmod +x docker/engine/yaneuraou
+#
+# This file exists only as a tracked hint.

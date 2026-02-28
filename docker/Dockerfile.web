@@ -1,0 +1,23 @@
+FROM node:20-bullseye AS deps
+WORKDIR /app/apps/web
+# copy only lockfiles for deterministic install
+COPY apps/web/package*.json ./
+RUN npm ci --prefer-offline --no-audit --no-fund
+
+FROM node:20-bullseye AS builder
+WORKDIR /app
+# bring node_modules from deps and copy source into the image
+COPY --from=deps /app/apps/web/node_modules /app/apps/web/node_modules
+COPY apps/web /app/apps/web
+WORKDIR /app/apps/web
+RUN npm run build
+
+FROM node:20-bullseye AS runner
+ENV NODE_ENV=production
+WORKDIR /app/apps/web
+COPY --from=builder /app/apps/web /app/apps/web
+COPY docker/entrypoint.web.sh /entrypoint.web.sh
+RUN chmod +x /entrypoint.web.sh
+EXPOSE 3000
+ENTRYPOINT ["/entrypoint.web.sh"]
+

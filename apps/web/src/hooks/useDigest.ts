@@ -6,6 +6,23 @@ import type { BioshogiData } from "@/components/annotate/BioshogiPanel";
 
 const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8787";
 
+export type SkillScore = {
+  score: number;
+  grade: string;
+  details: {
+    best: number;
+    second: number;
+    blunder: number;
+    evaluated: number;
+  };
+};
+
+export type TensionData = {
+  timeline: number[];
+  avg: number;
+  label: string;
+};
+
 export type UseDigestParams = {
   batchData: AnalysisCache;
   isBatchAnalyzing: boolean;
@@ -20,6 +37,8 @@ export type UseDigestReturn = {
   gameDigest: string;
   digestMetaSource: string;
   bioshogiData: BioshogiData | null;
+  skillScore: SkillScore | null;
+  tensionData: TensionData | null;
   isDigesting: boolean;
   digestCooldownLeft: number;
   isReportModalOpen: boolean;
@@ -44,6 +63,8 @@ export const useDigest = ({
   const [digestCooldownUntil, setDigestCooldownUntil] = useState(0);
   const [digestCooldownLeft, setDigestCooldownLeft] = useState(0);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [skillScore, setSkillScore] = useState<SkillScore | null>(null);
+  const [tensionData, setTensionData] = useState<TensionData | null>(null);
 
   const isDigestingRef = useRef(false);
   const digestCooldownRef = useRef(0);
@@ -91,6 +112,8 @@ export const useDigest = ({
       setIsReportModalOpen(true);
       setGameDigest("");
       setDigestMetaSource("");
+      setSkillScore(null);
+      setTensionData(null);
       const evalList = [];
       for (let i = 0; i <= totalMoves; i++) {
         const score = getPrimaryEvalScore(batchData[i]);
@@ -150,6 +173,8 @@ export const useDigest = ({
         const data = await res.json();
         setGameDigest(data.explanation);
         setDigestMetaSource(data?.meta?.source || "");
+        if (data.skill_score) setSkillScore(data.skill_score as SkillScore);
+        if (data.tension) setTensionData(data.tension as TensionData);
       } catch {
         setGameDigest("レポート生成に失敗しました。");
       } finally {
@@ -163,12 +188,16 @@ export const useDigest = ({
   const resetDigest = useCallback(() => {
     setGameDigest("");
     setDigestMetaSource("");
+    setSkillScore(null);
+    setTensionData(null);
   }, []);
 
   return {
     gameDigest,
     digestMetaSource,
     bioshogiData,
+    skillScore,
+    tensionData,
     isDigesting,
     digestCooldownLeft,
     isReportModalOpen,

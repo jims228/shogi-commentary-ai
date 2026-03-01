@@ -27,7 +27,7 @@ import MoveListPanel from "@/components/annotate/MoveListPanel";
 import EvalGraph from "@/components/annotate/EvalGraph";
 import BioshogiPanel from "@/components/annotate/BioshogiPanel";
 import { useBatchAnalysis } from "@/hooks/useBatchAnalysis";
-import { useDigest } from "@/hooks/useDigest";
+import { useDigest, type SkillScore, type TensionData } from "@/hooks/useDigest";
 import { useExplanation } from "@/hooks/useExplanation";
 import { useRealtimeAnalysis } from "@/hooks/useRealtimeAnalysis";
 import { useBoardEdit } from "@/hooks/useBoardEdit";
@@ -163,6 +163,111 @@ const getSubsetUSI = (originalUsi: string, ply: number): string => {
   if (neededMoves.length === 0) return header;
   
   return `${header} moves ${neededMoves.join(" ")}`;
+};
+
+// ---------------------------------------------------------------------------
+// SkillScoreCard
+// ---------------------------------------------------------------------------
+const GRADE_COLORS: Record<string, { bg: string; text: string; bar: string }> = {
+  S: { bg: "bg-amber-50", text: "text-amber-700", bar: "bg-amber-400" },
+  A: { bg: "bg-blue-50", text: "text-blue-700", bar: "bg-blue-400" },
+  B: { bg: "bg-emerald-50", text: "text-emerald-700", bar: "bg-emerald-400" },
+  C: { bg: "bg-orange-50", text: "text-orange-700", bar: "bg-orange-400" },
+  D: { bg: "bg-red-50", text: "text-red-700", bar: "bg-red-400" },
+};
+
+const SkillScoreCard: React.FC<{ data: SkillScore }> = ({ data }) => {
+  const colors = GRADE_COLORS[data.grade] || GRADE_COLORS.D;
+  const { best, second, blunder, evaluated } = data.details;
+  const bestPct = evaluated > 0 ? (best / evaluated) * 100 : 0;
+  const secondPct = evaluated > 0 ? (second / evaluated) * 100 : 0;
+  const blunderPct = evaluated > 0 ? (blunder / evaluated) * 100 : 0;
+  const otherPct = Math.max(0, 100 - bestPct - secondPct - blunderPct);
+
+  return (
+    <div className={`rounded-lg border p-3 ${colors.bg}`}>
+      <div className="flex items-baseline gap-2 mb-2">
+        <span className={`text-3xl font-bold ${colors.text}`}>{data.score}</span>
+        <span className={`text-lg font-bold ${colors.text}`}>{data.grade}</span>
+        <span className="text-xs text-slate-500 ml-auto">/ 100</span>
+      </div>
+      {/* 内訳バー */}
+      <div className="flex h-3 w-full rounded-full overflow-hidden bg-slate-200 mb-1.5">
+        {bestPct > 0 && (
+          <div className="bg-emerald-400" style={{ width: `${bestPct}%` }} title={`最善手 ${best}`} />
+        )}
+        {secondPct > 0 && (
+          <div className="bg-sky-400" style={{ width: `${secondPct}%` }} title={`次善手 ${second}`} />
+        )}
+        {otherPct > 0 && (
+          <div className="bg-slate-300" style={{ width: `${otherPct}%` }} />
+        )}
+        {blunderPct > 0 && (
+          <div className="bg-red-400" style={{ width: `${blunderPct}%` }} title={`悪手 ${blunder}`} />
+        )}
+      </div>
+      <div className="flex gap-3 text-[10px] text-slate-500">
+        <span className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-emerald-400" />最善 {best}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-sky-400" />次善 {second}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-red-400" />悪手 {blunder}</span>
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// TensionChart (SVG area chart)
+// ---------------------------------------------------------------------------
+const TensionChart: React.FC<{ data: TensionData }> = ({ data }) => {
+  const { timeline, avg, label } = data;
+  const W = 260;
+  const H = 80;
+  const n = timeline.length;
+  if (n === 0) return null;
+
+  const stepX = W / Math.max(n - 1, 1);
+
+  // Build path for area fill
+  const points = timeline.map((v, i) => `${i * stepX},${H - v * H}`).join(" L");
+  const areaPath = `M0,${H} L${points} L${(n - 1) * stepX},${H} Z`;
+
+  // Build gradient stops based on tension zones
+  // We'll do a simple two-color area: use avg to pick color
+  const areaColor = avg >= 0.6 ? "rgba(239,68,68,0.35)" : avg >= 0.3 ? "rgba(251,146,60,0.35)" : "rgba(96,165,250,0.35)";
+  const lineColor = avg >= 0.6 ? "rgb(239,68,68)" : avg >= 0.3 ? "rgb(251,146,60)" : "rgb(96,165,250)";
+
+  // Zone backgrounds
+  const zones = [
+    { y: 0, h: H * 0.3, color: "rgba(239,68,68,0.08)" },     // 0.7-1.0 激戦
+    { y: H * 0.3, h: H * 0.3, color: "rgba(251,146,60,0.08)" }, // 0.4-0.7 攻防
+    { y: H * 0.6, h: H * 0.4, color: "rgba(96,165,250,0.08)" },  // 0-0.4 穏やか
+  ];
+
+  return (
+    <div className="rounded-lg border bg-white p-3">
+      <div className="flex items-center justify-between mb-1.5">
+        <span className="text-xs font-semibold text-slate-600">テンション推移</span>
+        <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">{label}</span>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 80 }} preserveAspectRatio="none">
+        {zones.map((z, i) => (
+          <rect key={i} x={0} y={z.y} width={W} height={z.h} fill={z.color} />
+        ))}
+        <path d={areaPath} fill={areaColor} />
+        <polyline
+          points={timeline.map((v, i) => `${i * stepX},${H - v * H}`).join(" ")}
+          fill="none"
+          stroke={lineColor}
+          strokeWidth={1.5}
+        />
+        {/* avg line */}
+        <line
+          x1={0} y1={H - avg * H} x2={W} y2={H - avg * H}
+          stroke={lineColor} strokeWidth={0.5} strokeDasharray="4 2" opacity={0.6}
+        />
+      </svg>
+    </div>
+  );
 };
 
 type AnalysisTabProps = {
@@ -309,6 +414,8 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     gameDigest,
     digestMetaSource,
     bioshogiData,
+    skillScore,
+    tensionData,
     isDigesting,
     digestCooldownLeft,
     isReportModalOpen,
@@ -871,12 +978,23 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
                     <p className="text-sm text-slate-500">将棋仙人が対局を振り返っています...</p>
                 </div>
             ) : (
-                <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap">
+                <>
+                  {/* 棋力スコア & テンション */}
+                  {(skillScore || tensionData) && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                      {skillScore && <SkillScoreCard data={skillScore} />}
+                      {tensionData && tensionData.timeline.length > 0 && (
+                        <TensionChart data={tensionData} />
+                      )}
+                    </div>
+                  )}
+                  <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap">
                     {digestMetaSource ? (
                       <div className="mb-2 text-xs text-slate-500">生成元: {digestMetaSource}</div>
                     ) : null}
                     {gameDigest}
-                </div>
+                  </div>
+                </>
             )}
           </div>
           <DialogFooter className="border-t border-slate-100 bg-slate-50 px-6 py-3">

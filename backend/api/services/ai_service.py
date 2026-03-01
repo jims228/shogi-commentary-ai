@@ -4,15 +4,12 @@ import logging
 import re
 import json
 import hashlib
-from typing import List, Optional, Dict, Any, Tuple, cast
+from typing import List, Optional, Dict, Any, Tuple
 
 import google.generativeai as genai
 from google.api_core import exceptions as gax_exceptions
-from backend.api.utils.gemini_client import ensure_configured, get_model_name
-from fastapi import HTTPException
+from backend.api.utils.gemini_client import ensure_configured
 from backend.api.utils.shogi_utils import ShogiUtils
-
-from backend.api.db.wkbk_db import lookup_by_sfen
 
 _LOG = logging.getLogger("uvicorn.error")
 

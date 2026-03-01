@@ -11,10 +11,8 @@ import {
   boardToPlaced,
   buildBoardTimeline,
   buildPositionFromUsi,
-  cloneBoard,
   getStartBoard,
   applyMove,
-  cloneHands,
   type BoardMatrix,
   type HandsState,
   type Side,
@@ -23,14 +21,17 @@ import { toStartposUSI } from "@/lib/ingest";
 import { formatUsiMoveJapanese, usiMoveToCoords, type PieceBase, type PieceCode } from "@/lib/sfen";
 import { buildUsiPositionForPly } from "@/lib/usi";
 import type { EngineAnalyzeResponse, EngineMultipvItem } from "@/lib/annotateHook";
-import { AnalysisCache, buildMoveImpacts, getPrimaryEvalScore } from "@/lib/analysisUtils";
+import { buildMoveImpacts, getPrimaryEvalScore } from "@/lib/analysisUtils";
 import { FileText, RotateCcw, Search, Play, Sparkles, Upload, ChevronFirst, ChevronLeft, ChevronRight, ChevronLast, ArrowRight, BrainCircuit, X, ScrollText, Eye, ArrowLeft, Pencil, ArrowLeftRight, GraduationCap, BookOpen } from "lucide-react";
 import MoveListPanel from "@/components/annotate/MoveListPanel";
 import EvalGraph from "@/components/annotate/EvalGraph";
-import BioshogiPanel, { type BioshogiData } from "@/components/annotate/BioshogiPanel";
+import BioshogiPanel from "@/components/annotate/BioshogiPanel";
 import { useBatchAnalysis } from "@/hooks/useBatchAnalysis";
+import { useDigest } from "@/hooks/useDigest";
+import { useExplanation } from "@/hooks/useExplanation";
+import { useRealtimeAnalysis } from "@/hooks/useRealtimeAnalysis";
+import { useBoardEdit } from "@/hooks/useBoardEdit";
 import { useRouter } from "next/navigation";
-import { fetchWithAuth, getSupabaseAccessToken } from "@/lib/fetchWithAuth";
 
 const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8787";
 
@@ -173,28 +174,18 @@ type AnalysisTabProps = {
 export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }: AnalysisTabProps) {
   const router = useRouter();
   const [currentPly, setCurrentPly] = useState(0);
-  const [realtimeAnalysis, setRealtimeAnalysis] = useState<AnalysisCache>({});
 
-  
-  const { 
-    batchData, 
+  const {
+    batchData,
     setBatchData,
-    isBatchAnalyzing, 
+    isBatchAnalyzing,
     setIsBatchAnalyzing,
     progress: batchProgress,
-    runBatchAnalysis, 
+    runBatchAnalysis,
     cancelBatchAnalysis,
-    resetBatchData 
+    resetBatchData
   } = useBatchAnalysis();
 
-  const eventSourceRef = useRef<EventSource | null>(null);
-  const activeStreamPlyRef = useRef<number | null>(null);
-  const requestedPlyRef = useRef<number | null>(null);
-  const realtimeAnalysisRef = useRef<AnalysisCache>({});
-  const requestIdRef = useRef<string | null>(null);
-  const isDigestingRef = useRef(false);
-  const digestCooldownRef = useRef(0);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [kifuText, setKifuText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
@@ -203,27 +194,11 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
   const [boardOrientation, setBoardOrientation] = useState<"sente" | "gote">("sente");
   const [selectedHand, setSelectedHand] = useState<SelectedHand>(null);
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [snapshotOverrides, setSnapshotOverrides] = useState<Record<number, BoardMatrix>>({});
-  const [handsOverrides, setHandsOverrides] = useState<Record<number, HandsState>>({});
-  const [editHistory, setEditHistory] = useState<{ board: BoardMatrix; hands: HandsState }[]>([]);
-  const [explanation, setExplanation] = useState<string>("");
-  const [gameDigest, setGameDigest] = useState<string>("");
-  const [digestMetaSource, setDigestMetaSource] = useState<string>("");
-  const [bioshogiData, setBioshogiData] = useState<BioshogiData | null>(null);
-  const [isExplaining, setIsExplaining] = useState(false);
-  const [isDigesting, setIsDigesting] = useState(false);
-  const [digestCooldownUntil, setDigestCooldownUntil] = useState(0);
-  const [digestCooldownLeft, setDigestCooldownLeft] = useState(0);
 
   const [previewSequence, setPreviewSequence] = useState<string[] | null>(null);
   const [previewStep, setPreviewStep] = useState<number>(0);
-
-  useEffect(() => {
-    realtimeAnalysisRef.current = realtimeAnalysis;
-  }, [realtimeAnalysis]);
 
   const timeline = useMemo(() => {
     try { return buildBoardTimeline(usi); } 
@@ -245,15 +220,38 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const maxPly = totalMoves;
   const safeCurrentPly = useMemo(() => clampIndex(currentPly, timeline.boards), [currentPly, timeline.boards]);
 
+  const {
+    realtimeAnalysis,
+    setRealtimeAnalysis,
+    isAnalyzing,
+    setIsAnalyzing,
+    stopEngineAnalysis,
+    startEngineAnalysis,
+    requestAnalysisForPly,
+    disconnectStream,
+    cleanup: cleanupRealtimeAnalysis,
+  } = useRealtimeAnalysis({ safeCurrentPly, isEditMode, usi });
+
+  const {
+    snapshotOverrides,
+    handsOverrides,
+    editHistory,
+    handleUndo,
+    handleBoardEdit: handleBoardEditRaw,
+    handleHandsEdit: handleHandsEditRaw,
+    clearEditHistory,
+    resetBoardEdit,
+  } = useBoardEdit({ safeCurrentPly, isEditMode, isTsumeMode, isAnalyzing, stopEngineAnalysis });
+
   const baseBoard = timeline.boards[safeCurrentPly] ?? getStartBoard();
-  
+
   const previewState = useMemo(() => {
     if (!previewSequence) return null;
     const currentUsi = getSubsetUSI(usi, safeCurrentPly);
     if (!currentUsi) return null;
-    
+
     const activeMoves = previewSequence.slice(0, previewStep);
-    
+
     const baseStr = currentUsi;
     const connector = baseStr.includes("moves") ? " " : " moves ";
     const finalUsi = activeMoves.length > 0 ? baseStr + connector + activeMoves.join(" ") : baseStr;
@@ -277,6 +275,15 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const baseHands = timelineHands[safeCurrentPly] ?? fallbackHands;
   const activeHands = previewState ? previewState.hands : (handsOverrides[safeCurrentPly] ?? baseHands);
 
+  // useBoardEdit の raw ハンドラに現在の盤面・持駒を束縛
+  const handleBoardEdit = useCallback((next: BoardMatrix) => {
+    handleBoardEditRaw(next, displayedBoard, activeHands);
+  }, [handleBoardEditRaw, displayedBoard, activeHands]);
+
+  const handleHandsEdit = useCallback((next: HandsState) => {
+    handleHandsEditRaw(next, displayedBoard, activeHands);
+  }, [handleHandsEditRaw, displayedBoard, activeHands]);
+
   const timelinePlacedPieces = useMemo(() => {
     if (!timeline.boards.length) return [boardToPlaced(getStartBoard())];
     return timeline.boards.map((board) => boardToPlaced(board));
@@ -289,18 +296,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     return side;
   }, [safeCurrentPly, initialTurn]);
 
-  // ★重要: これは「停止ボタン」用。UIの状態もFalseにする。
-  const stopEngineAnalysis = useCallback(() => {
-    if (eventSourceRef.current) {
-      eventSourceRef.current.close();
-      eventSourceRef.current = null;
-    }
-    activeStreamPlyRef.current = null;
-    requestedPlyRef.current = null;
-    requestIdRef.current = null;
-    setIsAnalyzing(false);
-  }, []);
-
   const evalSource = useMemo(() => {
     return { ...batchData, ...realtimeAnalysis };
   }, [batchData, realtimeAnalysis]);
@@ -309,6 +304,45 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     () => buildMoveImpacts(evalSource, totalMoves, initialTurn),
     [evalSource, initialTurn, totalMoves]
   );
+
+  const {
+    gameDigest,
+    digestMetaSource,
+    bioshogiData,
+    isDigesting,
+    digestCooldownLeft,
+    isReportModalOpen,
+    setIsReportModalOpen,
+    handleGenerateGameDigest,
+    resetDigest,
+  } = useDigest({
+    batchData,
+    isBatchAnalyzing,
+    totalMoves,
+    moveSequence,
+    moveImpacts,
+    initialTurn,
+    usi,
+  });
+
+  const {
+    explanation,
+    isExplaining,
+    handleGenerateExplanation,
+    resetExplanation,
+  } = useExplanation({
+    isEditMode,
+    safeCurrentPly,
+    initialTurn,
+    displayedBoard,
+    activeHands,
+    evalSource,
+    moveSequence,
+    timelineBoards: timeline.boards,
+    timelineHands,
+    moveImpacts,
+    boardToSfen,
+  });
 
   const currentAnalysis = evalSource[safeCurrentPly];
   const hasCurrentAnalysis = Boolean(currentAnalysis);
@@ -324,186 +358,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
       ? (previewState.lastMove ? usiMoveToCoords(previewState.lastMove) : null)
       : (!isEditMode && prevMove ? usiMoveToCoords(prevMove) : null);
   
-  const startEngineAnalysis = useCallback(async (command: string, ply: number) => {
-    if (!command) return;
-
-    if (activeStreamPlyRef.current === ply && eventSourceRef.current) {
-      return;
-    }
-
-    let requestId: string | null = null;
-
-    try {
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-      }
-
-      setRealtimeAnalysis(prev => {
-          const next = { ...prev };
-          delete next[ply];
-          return next;
-      });
-      
-      const token = await getSupabaseAccessToken();
-      const url = new URL(`${API_BASE}/api/analysis/stream`);
-      requestId =
-        typeof crypto !== "undefined" && "randomUUID" in crypto
-          ? crypto.randomUUID()
-          : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-      requestIdRef.current = requestId;
-      url.searchParams.set("position", command);
-      url.searchParams.set("request_id", requestId);
-      if (token) {
-        url.searchParams.set("access_token", token);
-      }
-      const es = new EventSource(url.toString());
-      eventSourceRef.current = es;
-      activeStreamPlyRef.current = ply;
-
-      es.onopen = () => {
-        console.log("[Analysis] connect", { requestId, ply });
-      };
-
-      es.onmessage = (event) => {
-        if (eventSourceRef.current !== es) return;
-        try {
-          const payload = JSON.parse(event.data);
-          if (payload.multipv_update) {
-              setRealtimeAnalysis((prev) => {
-                  const previousEntry = prev[ply] || { ok: true, multipv: [] };
-                  const currentList = previousEntry.multipv ? [...previousEntry.multipv] : [];
-                  const newItem = payload.multipv_update;
-                  if (!newItem.multipv) return prev;
-                  const index = currentList.findIndex(item => item.multipv === newItem.multipv);
-                  if (index !== -1) {
-                      currentList[index] = newItem;
-                  } else {
-                      currentList.push(newItem);
-                  }
-                  currentList.sort((a, b) => (a.multipv || 0) - (b.multipv || 0));
-                  return {
-                      ...prev,
-                      [ply]: {
-                          ...previousEntry,
-                          multipv: currentList
-                      }
-                  };
-              });
-          }
-          if (payload.bestmove) {
-              setRealtimeAnalysis(prev => {
-                  const previousEntry = prev[ply] || { ok: true };
-                  return {
-                      ...prev,
-                      [ply]: {
-                          ...previousEntry,
-                          bestmove: payload.bestmove,
-                          multipv: previousEntry.multipv 
-                      }
-                  };
-              });
-              es.close();
-              if (eventSourceRef.current === es) {
-                  eventSourceRef.current = null;
-                  activeStreamPlyRef.current = null;
-                  requestedPlyRef.current = null;
-                  requestIdRef.current = null;
-              }
-              console.log("[Analysis] disconnect", { requestId, ply, reason: "bestmove" });
-          }
-        } catch (e) {
-          console.error("[Analysis] Parse error:", e);
-        }
-      };
-      es.onerror = () => { 
-          console.debug("[Analysis] Stream closed/ended (onerror)"); 
-          es.close();
-          if (eventSourceRef.current === es) {
-              eventSourceRef.current = null;
-              activeStreamPlyRef.current = null;
-              requestedPlyRef.current = null;
-              requestIdRef.current = null;
-          }
-          console.log("[Analysis] disconnect", { requestId, ply, reason: "error" });
-      };
-    } catch (e) {
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-      }
-      if (activeStreamPlyRef.current === ply) {
-        activeStreamPlyRef.current = null;
-      }
-      if (requestIdRef.current === requestId) {
-        requestIdRef.current = null;
-      }
-      if (requestedPlyRef.current === ply) {
-        requestedPlyRef.current = null;
-      }
-      console.error("[Analysis] start failed:", e);
-    }
-  }, []);
-
-  const requestAnalysisForPly = useCallback((ply: number, options?: { force?: boolean }) => {
-    if (options?.force) {
-      setRealtimeAnalysis(prev => {
-         const next = { ...prev };
-         delete next[ply];
-         return next;
-      });
-      requestedPlyRef.current = null;
-    }
-    if (requestedPlyRef.current === ply) return;
-    const command = getSubsetUSI(usi, ply);
-    if (!command) return;
-    requestedPlyRef.current = ply;
-    void startEngineAnalysis(command, ply);
-  }, [startEngineAnalysis, usi]);
-
-  // ★連続検討のキモ: 局面が変わっても isAnalyzing が true なら新しい局面を解析しに行く
-  useEffect(() => {
-    if (isAnalyzing && !isEditMode) {
-        const hasRealtimeResult = !!realtimeAnalysisRef.current[safeCurrentPly]?.bestmove;
-        const isCurrentlyStreamingThis = activeStreamPlyRef.current === safeCurrentPly;
-        
-        // 解析済み(キャッシュあり)でなく、現在ストリーミング中でもない場合のみリクエスト
-        if (!isCurrentlyStreamingThis && !hasRealtimeResult) {
-             requestAnalysisForPly(safeCurrentPly);
-        }
-    }
-  }, [safeCurrentPly, isAnalyzing, isEditMode, requestAnalysisForPly, usi]);
-
-  const saveToHistory = useCallback((board: BoardMatrix, hands: HandsState) => {
-    setEditHistory((prev) => {
-      const newHistory = [...prev, { board: cloneBoard(board), hands: { ...hands } }];
-      return newHistory.length > 5 ? newHistory.slice(newHistory.length - 5) : newHistory;
-    });
-  }, []);
-
-  const handleUndo = useCallback(() => {
-    if (editHistory.length === 0) return;
-    const prevState = editHistory[editHistory.length - 1];
-    setEditHistory((prev) => prev.slice(0, -1));
-    setSnapshotOverrides((prev) => ({ ...prev, [safeCurrentPly]: cloneBoard(prevState.board) }));
-    setHandsOverrides((prev) => ({ ...prev, [safeCurrentPly]: { ...prevState.hands } }));
-    if (isAnalyzing) { stopEngineAnalysis(); }
-  }, [editHistory, safeCurrentPly, isAnalyzing, stopEngineAnalysis]);
-
-  const handleBoardEdit = useCallback((next: BoardMatrix) => {
-    if (!isEditMode && !isTsumeMode) return;
-    saveToHistory(displayedBoard, activeHands);
-    setSnapshotOverrides((prev) => ({ ...prev, [safeCurrentPly]: cloneBoard(next) }));
-    if (isAnalyzing) { stopEngineAnalysis(); }
-  }, [isEditMode, isTsumeMode, safeCurrentPly, displayedBoard, activeHands, saveToHistory, isAnalyzing, stopEngineAnalysis]);
-
-  const handleHandsEdit = useCallback((next: HandsState) => {
-    if (!isEditMode && !isTsumeMode) return;
-    saveToHistory(displayedBoard, activeHands);
-    setHandsOverrides((prev) => ({ ...prev, [safeCurrentPly]: next }));
-    if (isAnalyzing) { stopEngineAnalysis(); }
-  }, [isEditMode, isTsumeMode, safeCurrentPly, displayedBoard, activeHands, saveToHistory, isAnalyzing, stopEngineAnalysis]);
-
   const handleHandClick = useCallback((base: PieceBase, side: Side) => {
     if (!isEditMode) return;
     if (selectedHand && selectedHand.base === base && selectedHand.side === side) {
@@ -516,21 +370,15 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   // ★修正: 手数を変更したときの処理
   const handlePlyChange = useCallback((nextPly: number) => {
     if (isEditMode) return;
-    
+
     // ここで stopEngineAnalysis() を呼んでしまうと「検討モード」自体がOFFになってしまうため削除。
     // 代わりに「通信だけ」を切断して、リソースを解放する。
-    if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-    }
-    activeStreamPlyRef.current = null;
-    requestedPlyRef.current = null;
-    requestIdRef.current = null;
+    disconnectStream();
 
     setPreviewSequence(null);
     setPreviewStep(0);
     setCurrentPly(clampIndex(nextPly, timeline.boards));
-  }, [isEditMode, timeline.boards]);
+  }, [isEditMode, timeline.boards, disconnectStream]);
 
   const goToStart = useCallback(() => {
       if (previewSequence) {
@@ -598,172 +446,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     showToast({ title: "編集局面の解析を開始しました", variant: "default" });
   }, [isEditMode, displayedBoard, activeHands, currentSideToMove, safeCurrentPly, startEngineAnalysis]);
 
-  const handleGenerateExplanation = useCallback(async () => {
-    const analyzePly = (!isEditMode && safeCurrentPly > 0) ? safeCurrentPly - 1 : safeCurrentPly;
-
-    const analysis = evalSource[analyzePly];
-    if (!analysis || !analysis.bestmove) {
-      showToast({ title: "先に解析を行ってください", variant: "default" });
-      return;
-    }
-
-    const board = timeline.boards[analyzePly] ?? displayedBoard;
-    const hands = timelineHands[analyzePly] ?? activeHands;
-    const sideToMove: Side = (analyzePly % 2 === 0) ? initialTurn : flipTurn(initialTurn);
-    const positionSfen = `position ${boardToSfen(board, hands, sideToMove)}`;
-
-    const userMove = (!isEditMode && safeCurrentPly > 0) ? moveSequence[analyzePly] : null;
-
-    const candidates =
-      analysis.multipv?.slice(0, 3).map((item) => ({
-        move: (item.pv?.split(" ")[0] || ""),
-        score_cp: item.score.type === "cp" ? item.score.cp : null,
-        score_mate: item.score.type === "mate" ? item.score.mate : null,
-      })) ?? [];
-
-    const deltaCp = (!isEditMode && safeCurrentPly > 0)
-      ? (moveImpacts[safeCurrentPly]?.diff ?? null)
-      : null;
-
-    setIsExplaining(true);
-    setExplanation("");
-    try {
-      const res = await fetchWithAuth(`${API_BASE}/api/explain`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ply: analyzePly,
-          sfen: positionSfen,
-          candidates,
-          user_move: userMove,
-          delta_cp: deltaCp,
-        }),
-      });
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      setExplanation(data.explanation);
-    } catch {
-      showToast({ title: "解説生成エラー", variant: "error" });
-    } finally {
-      setIsExplaining(false);
-    }
-  }, [
-    isEditMode,
-    safeCurrentPly,
-    initialTurn,
-    displayedBoard,
-    activeHands,
-    evalSource,
-    moveSequence,
-    timeline.boards,
-    timelineHands,
-    moveImpacts,
-  ]);
-
-  useEffect(() => {
-    if (!digestCooldownUntil) {
-      setDigestCooldownLeft(0);
-      return;
-    }
-    const timer = setInterval(() => {
-      const left = Math.max(0, Math.ceil((digestCooldownUntil - Date.now()) / 1000));
-      setDigestCooldownLeft(left);
-      if (left <= 0) setDigestCooldownUntil(0);
-    }, 500);
-    return () => clearInterval(timer);
-  }, [digestCooldownUntil]);
-
-  // バッチ解析完了時にbioshogi情報を自動取得
-  useEffect(() => {
-    if (isBatchAnalyzing) return;
-    if (Object.keys(batchData).length < 5) return;
-    if (!usi) return;
-    fetch(`${API_BASE}/api/analysis/report?usi=${encodeURIComponent(usi)}`)
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => {
-        if (data?.bioshogi) setBioshogiData(data.bioshogi as BioshogiData);
-      })
-      .catch(() => {/* bioshogiなしで続行 */});
-  }, [isBatchAnalyzing, usi]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleGenerateGameDigest = useCallback(async (forceLlm = false) => {
-    if (isDigestingRef.current) return;
-    if (digestCooldownRef.current && Date.now() < digestCooldownRef.current) return;
-    const hasData = Object.keys(batchData).length > 0;
-    if (!hasData) {
-        showToast({ title: "先に全体解析を行ってください", variant: "default" });
-        return;
-    }
-    isDigestingRef.current = true;
-    setIsDigesting(true);
-    setIsReportModalOpen(true);
-    setGameDigest("");
-    setDigestMetaSource("");
-    const evalList = [];
-    for (let i = 0; i <= totalMoves; i++) {
-        const score = getPrimaryEvalScore(batchData[i]);
-        evalList.push(score || 0);
-    }
-    try {
-        const notesForDigest = moveSequence
-          .map((move, index) => {
-            const ply = index + 1;
-            // turnSideDiff: 手番プレイヤー視点の評価変化 (負=悪手)
-            const delta_cp = moveImpacts[ply]?.diff ?? null;
-            return { ply, move, delta_cp };
-          })
-          .filter((n) => n.delta_cp !== null);
-
-        const url = forceLlm ? `${API_BASE}/api/explain/digest?force_llm=1` : `${API_BASE}/api/explain/digest`;
-        const res = await fetchWithAuth(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              total_moves: totalMoves,
-              eval_history: evalList,
-              winner: null,
-              notes: notesForDigest,
-              bioshogi: bioshogiData ?? null,
-              initial_turn: initialTurn,
-            }),
-        });
-        if (!res.ok) {
-            let detail = "";
-            try {
-              const data = await res.json();
-              detail = data?.detail || "";
-            } catch {
-              try {
-                detail = await res.text();
-              } catch {
-                detail = "";
-              }
-            }
-            if (res.status === 429) {
-              const ra = Number(res.headers.get("retry-after") ?? "30");
-              const waitSec = Number.isFinite(ra) && ra > 0 ? Math.ceil(ra) : 30;
-              console.log("[digest] retry-after:", waitSec);
-              const cooldownTime = Date.now() + waitSec * 1000;
-              digestCooldownRef.current = cooldownTime;
-              setDigestCooldownUntil(cooldownTime);
-              const base = detail || "レポート生成の利用制限に達しました。しばらく待ってから再度お試しください。";
-              setGameDigest(`${base}\n\nあと ${waitSec} 秒待ってください。`);
-            } else {
-              setGameDigest(detail || `レポート生成に失敗しました。(status=${res.status})`);
-            }
-            return;
-        }
-        const data = await res.json();
-        setGameDigest(data.explanation);
-        setDigestMetaSource(data?.meta?.source || "");
-    } catch {
-        setGameDigest("レポート生成に失敗しました。");
-    } finally {
-        isDigestingRef.current = false;
-        setIsDigesting(false);
-    }
-  }, [batchData, totalMoves, bioshogiData, moveSequence, moveImpacts, initialTurn]);
-
   const handleBatchAnalysisClick = useCallback(async () => {
     if (isEditMode || isBatchAnalyzing) return;
     if (!timeline.boards.length) return;
@@ -801,40 +483,33 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   useEffect(() => {
       return () => {
           cancelBatchAnalysis();
-          if (eventSourceRef.current) {
-              eventSourceRef.current.close();
-          }
-          activeStreamPlyRef.current = null;
-          requestedPlyRef.current = null;
-          requestIdRef.current = null;
+          cleanupRealtimeAnalysis();
       };
-  }, []);
+  }, [cancelBatchAnalysis, cleanupRealtimeAnalysis]);
   
   useEffect(() => {
     setCurrentPly(0);
     setRealtimeAnalysis({});
-    setSnapshotOverrides({});
-    setHandsOverrides({});
-    setEditHistory([]);
-    setExplanation("");
-    setGameDigest("");
+    resetBoardEdit();
+    resetExplanation();
+    resetDigest();
     setPreviewSequence(null);
     setPreviewStep(0);
     stopEngineAnalysis();
-    resetBatchData(); 
-  }, [stopEngineAnalysis, usi, resetBatchData]);
+    resetBatchData();
+  }, [stopEngineAnalysis, usi, resetBatchData, resetDigest, resetExplanation, resetBoardEdit]);
 
   useEffect(() => {
     if (isEditMode) {
-      setEditHistory([]);
-      setExplanation("");
+      clearEditHistory();
+      resetExplanation();
       setPreviewSequence(null);
       setPreviewStep(0);
     } else {
       // 編集モードでない場合はここでは何もしない（継続解析のため）
       // ただし、「停止ボタン」を押したときは stopEngineAnalysis が呼ばれるのでOK
     }
-  }, [isEditMode]);
+  }, [isEditMode, resetExplanation, clearEditHistory]);
 
   const moveListEntries = useMemo(() => {
     if (!moveSequence.length) return [];

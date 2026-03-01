@@ -1,15 +1,18 @@
+import asyncio
 import os
 import time
 import logging
 import re
 import json
 import hashlib
+from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any, Tuple
 
 import google.generativeai as genai
 from google.api_core import exceptions as gax_exceptions
 from backend.api.utils.gemini_client import ensure_configured
 from backend.api.utils.shogi_utils import ShogiUtils
+from backend.api.services.training_logger import training_logger
 
 _LOG = logging.getLogger("uvicorn.error")
 
@@ -161,6 +164,55 @@ def build_features_block(features: Dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+async def _log_explanation(**kwargs: Any) -> None:
+    """Fire-and-forget: log explanation to training logger."""
+    try:
+        record = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "type": "explanation",
+            "input": {
+                "sfen": kwargs.get("sfen"),
+                "ply": kwargs.get("ply"),
+                "candidates": kwargs.get("candidates"),
+                "user_move": kwargs.get("user_move"),
+                "delta_cp": kwargs.get("delta_cp"),
+                "features": kwargs.get("features"),
+            },
+            "output": {
+                "explanation": kwargs.get("explanation", ""),
+                "model": kwargs.get("model_name", ""),
+                "tokens": kwargs.get("tokens"),
+            },
+        }
+        await training_logger.log_explanation(record)
+    except Exception as e:
+        _LOG.debug("[training_logger] explanation log failed: %s", e)
+
+
+async def _log_digest(**kwargs: Any) -> None:
+    """Fire-and-forget: log digest to training logger."""
+    try:
+        record = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "type": "digest",
+            "input": {
+                "total_moves": kwargs.get("total_moves"),
+                "eval_history_len": kwargs.get("eval_history_len"),
+                "notes_count": kwargs.get("notes_count"),
+                "digest_features_count": kwargs.get("digest_features_count"),
+            },
+            "output": {
+                "explanation": kwargs.get("explanation", ""),
+                "model": kwargs.get("model_name", ""),
+                "tokens": kwargs.get("tokens"),
+                "source": kwargs.get("source", ""),
+            },
+        }
+        await training_logger.log_digest(record)
+    except Exception as e:
+        _LOG.debug("[training_logger] digest log failed: %s", e)
+
+
 class AIService:
     @staticmethod
     async def generate_position_comment(
@@ -240,9 +292,11 @@ AI推奨手: {best_move_jp}
             generation_config=genai.types.GenerationConfig(max_output_tokens=300),
         )
         res = await model.generate_content_async(prompt)
+        tokens_info = None
         try:
             if hasattr(res, 'usage_metadata') and res.usage_metadata:
                 meta = res.usage_metadata
+                tokens_info = {"prompt": meta.prompt_token_count, "completion": meta.candidates_token_count}
                 _LOG.info(
                     "[TokenUsage] %s - input: %d, output: %d, total: %d",
                     "generate_position_comment",
@@ -254,6 +308,15 @@ AI推奨手: {best_move_jp}
                 _LOG.warning("[TokenUsage] %s - usage_metadata not available", "generate_position_comment")
         except Exception:
             _LOG.warning("[TokenUsage] %s - failed to read usage_metadata", "generate_position_comment")
+
+        # Fire-and-forget training log
+        asyncio.ensure_future(_log_explanation(
+            sfen=sfen, ply=ply, candidates=candidates,
+            user_move=user_move, delta_cp=delta_cp, features=features,
+            explanation=res.text, model_name="gemini-2.5-flash-lite",
+            tokens=tokens_info,
+        ))
+
         return res.text
 
     @staticmethod
@@ -376,9 +439,11 @@ AI推奨手: {best_move_jp}
             response = await model.generate_content_async(prompt)
             elapsed_ms = int((time.time() - t0) * 1000)
             _LOG.info("[digest] llm.ok rid=%s ms=%s", request_id, elapsed_ms)
+            digest_tokens = None
             try:
                 if hasattr(response, 'usage_metadata') and response.usage_metadata:
                     meta = response.usage_metadata
+                    digest_tokens = {"prompt": meta.prompt_token_count, "completion": meta.candidates_token_count}
                     _LOG.info(
                         "[TokenUsage] %s - input: %d, output: %d, total: %d",
                         "generate_game_digest",
@@ -391,6 +456,15 @@ AI推奨手: {best_move_jp}
             except Exception:
                 _LOG.warning("[TokenUsage] %s - failed to read usage_metadata", "generate_game_digest")
             explanation = response.text
+
+            # Fire-and-forget training log
+            asyncio.ensure_future(_log_digest(
+                total_moves=total_moves, eval_history_len=len(eval_history),
+                notes_count=len(notes), digest_features_count=len(digest_features),
+                explanation=explanation, model_name=digest_model,
+                tokens=digest_tokens, source="llm",
+            ))
+
             _digest_cache_set(cache_key, explanation, limited=False)
             return _build_digest_payload(explanation, source="llm", limited=False, retry_after=None)
         except gax_exceptions.ResourceExhausted as e:

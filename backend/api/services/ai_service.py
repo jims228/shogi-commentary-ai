@@ -205,9 +205,11 @@ AI推奨手: {best_move_jp}
                     for n in notable:
                         ply = n["ply"]
                         d = int(n["delta_cp"])
-                        player = "▲" if _is_sente_ply(ply) else "△"
+                        is_sente = _is_sente_ply(ply)
+                        turn = "b" if is_sente else "w"
+                        move_jp = ShogiUtils.format_move_label(n.get("move", ""), turn)
                         qualifier = "好手" if d >= 150 else ("悪手" if d <= -150 else "普通")
-                        lines.append(f"  - {ply}手目 {player}{n.get('move', '')} (Δ{d:+d}cp / {qualifier})")
+                        lines.append(f"  - {ply}手目 {move_jp} (Δ{d:+d}cp / {qualifier})")
                     notes_block = "\n【注目手（評価値変動が大きかった手）】\n" + "\n".join(lines) + "\n"
 
             prompt = f"""以下の3点を含む200文字以内の文章を出力せよ。
@@ -218,7 +220,7 @@ AI推奨手: {best_move_jp}
 {sente_name}（先手）vs {gote_name}（後手）、{total_moves}手
 評価値推移: {', '.join(eval_summary)}
 {bio_block}{notes_block}
-例: 石田流 vs 棒金の一局。42手目△7c8dが悪手となり形勢逆転。先手が中盤以降の優勢を維持し73手で勝利した。
+例: 石田流 vs 棒金の一局。42手目△7三(82)が悪手となり形勢逆転。先手が中盤以降の優勢を維持し73手で勝利した。
 
 見出し・箇条書き・挨拶文・装飾すべて禁止。地の文のみ。
 【厳守】200文字以内。文章を途中で切らず最後まで完結させること。"""

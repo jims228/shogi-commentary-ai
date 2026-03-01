@@ -40,6 +40,127 @@ def _cache_set(key: str, text: str) -> None:
     _EXPLAIN_CACHE[key] = (time.time(), text)
 
 
+def _describe_safety(value: int) -> str:
+    """king_safety (0-100) を人間が読める説明に変換."""
+    if value >= 80:
+        return "堅い囲いで安定"
+    if value >= 55:
+        return "ある程度守られている"
+    if value >= 30:
+        return "やや不安定"
+    return "玉が危険な状態"
+
+
+def _describe_pressure(value: int) -> str:
+    """attack_pressure (0-100) を人間が読める説明に変換."""
+    if value >= 70:
+        return "強い攻撃態勢"
+    if value >= 40:
+        return "攻めの形ができつつある"
+    if value >= 15:
+        return "まだ様子見"
+    return "攻めの形なし"
+
+
+_PHASE_JP = {"opening": "序盤", "midgame": "中盤", "endgame": "終盤"}
+
+_INTENT_JP = {
+    "attack": "攻め（相手玉や駒を狙う手）",
+    "defense": "守り（自玉を固める手）",
+    "development": "駒組み（陣形を整える手）",
+    "exchange": "駒交換（互いに取り合う手）",
+    "sacrifice": "犠牲（駒損を承知で踏み込む手）",
+}
+
+
+def build_digest_features_block(features_list: List[Dict[str, Any]]) -> str:
+    """棋譜全体の特徴量サマリーをダイジェストプロンプト用に構築."""
+    if not features_list:
+        return ""
+    n = len(features_list)
+
+    # フェーズ推移を検出
+    phases = [f.get("phase", "midgame") for f in features_list]
+    phase_transitions: List[str] = []
+    for label in ("opening", "midgame", "endgame"):
+        indices = [i for i, p in enumerate(phases) if p == label]
+        if indices:
+            jp = _PHASE_JP.get(label, label)
+            phase_transitions.append(f"{jp}({indices[0]+1}〜{indices[-1]+1}手目)")
+
+    # 攻守の平均推移 (序盤/中盤/終盤)
+    thirds = max(1, n // 3)
+    segments = [
+        ("序盤", features_list[:thirds]),
+        ("中盤", features_list[thirds:2 * thirds]),
+        ("終盤", features_list[2 * thirds:]),
+    ]
+
+    def _avg(lst: List[Dict[str, Any]], key: str) -> int:
+        vals = [f.get(key, 0) for f in lst]
+        return int(sum(vals) / max(1, len(vals)))
+
+    lines = ["\n【局面特徴量サマリー】"]
+    if phase_transitions:
+        lines.append(f"局面推移: {' → '.join(phase_transitions)}")
+
+    for seg_name, seg_data in segments:
+        if not seg_data:
+            continue
+        ks = _avg(seg_data, "king_safety")
+        ap = _avg(seg_data, "attack_pressure")
+        lines.append(
+            f"{seg_name}: 玉の安全度={ks}/100({_describe_safety(ks)}), "
+            f"攻めの圧力={ap}/100({_describe_pressure(ap)})"
+        )
+
+    # 攻守切り替わりポイント: attack_pressure が大きく変化した箇所
+    pressure_vals = [f.get("attack_pressure", 0) for f in features_list]
+    max_jump = 0
+    jump_idx = 0
+    for i in range(1, len(pressure_vals)):
+        d = abs(pressure_vals[i] - pressure_vals[i - 1])
+        if d > max_jump:
+            max_jump = d
+            jump_idx = i
+    if max_jump >= 15:
+        lines.append(f"攻守の切り替わり: {jump_idx + 1}手目付近（圧力変化 {max_jump}pt）")
+
+    lines.append("上記を踏まえ、対局全体の流れを自然な文章で説明してください。")
+    return "\n".join(lines)
+
+
+def build_features_block(features: Dict[str, Any]) -> str:
+    """特徴量辞書からプロンプト用の日本語ブロックを構築."""
+    phase = _PHASE_JP.get(features.get("phase", ""), "不明")
+    ks = features.get("king_safety", 0)
+    ap = features.get("attack_pressure", 0)
+    intent = features.get("move_intent")
+    intent_jp = _INTENT_JP.get(intent, "") if intent else ""
+
+    # 相手側の情報があれば (after に入っている)
+    after = features.get("after") or {}
+    opp_ks = after.get("king_safety")
+    opp_ap = after.get("attack_pressure")
+
+    lines = [
+        "\n【局面の状況】",
+        f"局面: {phase}",
+        f"手番側の玉の安全度: {ks}/100（{_describe_safety(ks)}）",
+    ]
+    if opp_ks is not None:
+        lines.append(f"相手側の玉の安全度: {opp_ks}/100（{_describe_safety(opp_ks)}）")
+    lines.append(f"手番側の攻めの圧力: {ap}/100（{_describe_pressure(ap)}）")
+    if opp_ap is not None:
+        lines.append(f"相手側の攻めの圧力: {opp_ap}/100（{_describe_pressure(opp_ap)}）")
+    if intent_jp:
+        lines.append(f"この手の意図: {intent_jp}")
+    lines.append("")
+    lines.append("上記を踏まえ、「なぜこの手が指されたか」を局面の状況と結びつけて説明してください。")
+
+    return "\n".join(lines)
+
+
 class AIService:
     @staticmethod
     async def generate_position_comment(
@@ -48,6 +169,7 @@ class AIService:
         candidates: List[Dict[str, Any]],
         user_move: Optional[str],
         delta_cp: Optional[int],
+        features: Optional[Dict[str, Any]] = None,
     ) -> str:
         """現在局面の将棋仙人コメントを生成する"""
         if not ensure_configured():
@@ -95,6 +217,9 @@ class AIService:
         best_move_jp = ShogiUtils.format_move_label(best_move_usi, turn) if best_move_usi else "なし"
         user_move_jp = ShogiUtils.format_move_label(user_move, turn) if user_move else "なし"
 
+        # 特徴量ブロック
+        features_block = build_features_block(features) if features else ""
+
         prompt = f"""あなたは将棋の局面解説AIです。
 以下の局面について、80文字以内で解説してください。
 
@@ -102,7 +227,7 @@ class AIService:
 指された手: {user_move_jp}（この手の評価: {good_or_bad}）
 AI推奨手: {best_move_jp}
 形勢: {situation}
-
+{features_block}
 ルール:
 - 80文字以内で完結すること
 - 地の文のみ。箇条書き・見出し・記号禁止
@@ -143,6 +268,7 @@ AI推奨手: {best_move_jp}
         sente_name: str = data.get("sente_name") or "先手"
         gote_name: str = data.get("gote_name") or "後手"
         initial_turn: str = data.get("initial_turn") or "b"  # 'b'=先手先行, 'w'=後手先行
+        digest_features: List[Dict[str, Any]] = data.get("digest_features") or []
 
         _LOG.info(
             "[digest] input rid=%s total_moves=%s notes_count=%s bioshogi=%s initial_turn=%s",
@@ -223,6 +349,9 @@ AI推奨手: {best_move_jp}
                         lines.append(f"  - {ply}手目 {move_jp} (Δ{d:+d}cp / {qualifier})")
                     notes_block = "\n【注目手（評価値変動が大きかった手）】\n" + "\n".join(lines) + "\n"
 
+            # --- digest features block ---
+            digest_feat_block = build_digest_features_block(digest_features)
+
             prompt = f"""以下の3点を含む200文字以内の文章を出力せよ。
 1. 先手と後手の戦型
 2. 最大の転換点（何手目の何の手）
@@ -230,7 +359,7 @@ AI推奨手: {best_move_jp}
 
 {sente_name}（先手）vs {gote_name}（後手）、{total_moves}手
 評価値推移: {', '.join(eval_summary)}
-{bio_block}{notes_block}
+{bio_block}{notes_block}{digest_feat_block}
 例: 石田流 vs 棒金の一局。42手目△7三(82)が悪手となり形勢逆転。先手が中盤以降の優勢を維持し73手で勝利した。
 
 見出し・箇条書き・挨拶文・装飾すべて禁止。地の文のみ。

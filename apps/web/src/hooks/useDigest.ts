@@ -141,6 +141,7 @@ export const useDigest = ({
             notes: notesForDigest,
             bioshogi: bioshogiData ?? null,
             initial_turn: initialTurn,
+            moves: moveSequence,
           }),
         });
         if (!res.ok) {

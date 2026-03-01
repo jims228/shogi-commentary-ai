@@ -3,6 +3,7 @@ backend/api/routers/explain.py
 Routes: /api/explain, /api/explain/digest
 """
 from __future__ import annotations
+import logging
 import uuid
 from typing import Optional, List
 
@@ -11,6 +12,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from backend.api.auth import Principal, require_user
+
+_LOG = logging.getLogger("uvicorn.error")
 from backend.api.services.ai_service import AIService
 from backend.api.routers.annotate import _dump_model
 
@@ -64,7 +67,7 @@ async def digest_endpoint(
 ):
     rid = uuid.uuid4().hex[:12]
     ip = request.client.host if request.client else "unknown"
-    print(f"[digest] in rid={rid} ip={ip} path=/api/explain/digest")
+    _LOG.info("[digest] in rid=%s ip=%s path=/api/explain/digest", rid, ip)
     payload = _dump_model(req) or {}
     payload["_request_id"] = rid
     payload["force_llm"] = force_llm

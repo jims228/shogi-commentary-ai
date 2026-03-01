@@ -43,6 +43,9 @@ docker/engine/yaneuraou
 docker/engine/eval/
 docker/engine/book/
 
+# Next.js build
+apps/web/.next/
+
 # Test artifacts
 .pytest_cache/
 htmlcov/

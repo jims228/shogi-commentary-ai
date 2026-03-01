@@ -1,4 +1,4 @@
-fastapi==0.115.2
+fastapi>=0.115.2
 uvicorn[standard]==0.30.6
 httpx>=0.24.0,<1.0
 pytest>=7.0.0
@@ -6,3 +6,13 @@ pytest>=7.0.0
 google-generativeai>=0.8.5,<1.0
 supabase>=2.0.0,<3.0
 pydantic>=2.0.0,<3.0
+
+# Security: minimum versions for vulnerable transitive deps
+cryptography>=44.0.0
+jinja2>=3.1.6
+certifi>=2024.7.4
+urllib3>=2.2.2
+idna>=3.7
+protobuf>=5.29.6,<6.0
+starlette>=0.47.2
+pyjwt>=2.4.0

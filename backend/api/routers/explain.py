@@ -15,6 +15,7 @@ from backend.api.auth import Principal, require_user
 
 _LOG = logging.getLogger("uvicorn.error")
 from backend.api.services.ai_service import AIService
+from backend.api.services.game_metrics import calculate_skill_score, calculate_tension_timeline
 from backend.api.routers.annotate import _dump_model
 
 router = APIRouter(prefix="/api")
@@ -72,5 +73,7 @@ async def digest_endpoint(
     payload["_request_id"] = rid
     payload["force_llm"] = force_llm
     result = await AIService.generate_game_digest(payload)
+    result["skill_score"] = calculate_skill_score(req.notes, req.total_moves)
+    result["tension"] = calculate_tension_timeline(req.eval_history)
     headers = result.pop("_headers", None) or {}
     return JSONResponse(result, headers=headers)

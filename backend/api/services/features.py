@@ -1,7 +1,12 @@
 """
 backend/api/services/features.py
-エンジン解析結果（AnnotateResponse）と bioshogi 結果から
-MoveExplanation（backend/models/explanation.py）を生成する。
+
+!! 未使用（デッドコード）!!
+現在どこからもインポートされていない。
+実際の特徴抽出・悪手分類は backend/ai/reasoning_features.py で行われている。
+将来の ML パイプライン用に残してあるが、閾値は reasoning_features.py と
+annotate.py の統一基準（大悪手<=-300, 悪手<=-150, 疑問手<=-50, 好手>=150）に
+合わせる必要がある。
 """
 from __future__ import annotations
 

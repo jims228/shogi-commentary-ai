@@ -28,31 +28,20 @@ const formatScore = (score?: EngineMultipvItem["score"]) => {
   return score.cp !== undefined ? `${score.cp > 0 ? "+" : ""}${score.cp}` : "-";
 };
 
-// ★修正: 悪手などの判定バッジ（大悪手を廃止し、基準を緩和）
+// 統一閾値: blunder<=-300, mistake<=-150, inaccuracy<=-50, good>=150
 const getQualityBadge = (diff: number | null | undefined) => {
   if (diff === null || diff === undefined) return null;
-  
-  // 旧基準: -400で大悪手, -200で悪手
-  // 新基準: -500で悪手 (大悪手は廃止), -350で疑問手
-  
-  // if (diff <= -400) return <span className="...">大悪手</span>; // 廃止
-  
-  if (diff <= -500) {
-      // 500点以上悪くなったら「悪手」
+
+  if (diff <= -150) {
       return <span className="px-1.5 py-0.5 text-[10px] rounded bg-red-600 text-white font-bold">悪手</span>;
   }
-  if (diff <= -350) {
-      // 350点以上悪くなったら「疑問」
-      return <span className="px-1.5 py-0.5 text-[10px] rounded bg-orange-500 text-white font-bold">疑問</span>;
+  if (diff <= -50) {
+      return <span className="px-1.5 py-0.5 text-[10px] rounded bg-orange-500 text-white font-bold">疑問手</span>;
   }
-  // -80点程度ならスルー（表示なし）にするか、もっと緩い基準にする
-  // if (diff <= -200) ... 
-
-  if (diff >= 400) {
-      // 400点以上良くなったら「好手」
+  if (diff >= 150) {
       return <span className="px-1.5 py-0.5 text-[10px] rounded bg-blue-500 text-white font-bold">好手</span>;
   }
-  
+
   return null;
 };
 

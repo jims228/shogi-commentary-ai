@@ -255,24 +255,22 @@ def analyze_position_features(moves: List[str], scores: List[Optional[int]]) -> 
 
 
 def classify_move_strength(delta_cp: Optional[int]) -> str:
-    """評価値変化から手の強さを分類"""
+    """評価値変化から手の強さを分類。delta_cpは手番側視点（負=悪化）。
+    統一閾値: 大悪手<=-300, 悪手<=-150, 疑問手<=-50, 好手>=150
+    """
     if delta_cp is None:
         return "不明"
-    
-    if delta_cp >= 200:
-        return "絶好手"
-    elif delta_cp >= 120:
-        return "好手"
-    elif delta_cp >= 30:
-        return "良手"
-    elif delta_cp >= -30:
-        return "通常手"
-    elif delta_cp >= -80:
-        return "疑問手"
-    elif delta_cp >= -150:
-        return "悪手"
-    else:
+
+    if delta_cp <= -300:
         return "大悪手"
+    elif delta_cp <= -150:
+        return "悪手"
+    elif delta_cp <= -50:
+        return "疑問手"
+    elif delta_cp >= 150:
+        return "好手"
+    else:
+        return "通常手"
 
 
 def detect_phase(note: Dict[str, Any]) -> Dict[str, str]:

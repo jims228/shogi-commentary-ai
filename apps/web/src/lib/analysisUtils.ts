@@ -14,10 +14,10 @@ export type EvalImpactCategory =
 export type HighlightClassification = "good" | "inaccuracy" | "mistake" | "blunder";
 
 export const THRESH = {
-  good: 200,
-  inaccuracy: -200,
-  mistake: -350,
-  blunder: -500,
+  good: 150,
+  inaccuracy: -50,
+  mistake: -150,
+  blunder: -300,
 } as const;
 
 const DIFF_LABEL = {

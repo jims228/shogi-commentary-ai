@@ -134,10 +134,17 @@ def _extract_moves_from_usi(usi: str) -> List[str]:
 
 
 def _tag_from_delta(delta_cp: Optional[int]) -> List[str]:
+    """delta_cpは手番側視点（負=悪化）。閾値は統一基準を使用。"""
     if not isinstance(delta_cp, (int, float)):
         return []
+    if delta_cp <= -300:
+        return ["大悪手"]
     if delta_cp <= -150:
         return ["悪手"]
+    if delta_cp <= -50:
+        return ["疑問手"]
+    if delta_cp >= 150:
+        return ["好手"]
     return []
 
 
@@ -196,18 +203,28 @@ def annotate(payload: Any) -> AnnotateResponse:
         req = {"usi": usi, "ply": i + 1, "move": mv}
         res = engine.analyze(req)
 
-        score_after: Optional[int] = None
+        score_raw: Optional[int] = None
         depth: Optional[int] = None
         pv_line: List[str] = []
         if res.candidates:
             cand0 = res.candidates[0]
-            score_after = cand0.score_cp
+            score_raw = cand0.score_cp
             depth = cand0.depth
             pv_line = cand0.pv or []
 
+        # エンジンは手番視点(side-to-move)でスコアを返す。先手視点に統一する。
+        # ply手指した後: plyが奇数→後手の手番(反転), plyが偶数→先手の手番(そのまま)
+        ply = i + 1
+        score_after: Optional[int] = None
+        if isinstance(score_raw, int):
+            score_after = -score_raw if ply % 2 != 0 else score_raw
+
         delta_cp: Optional[int] = None
         if isinstance(score_after, int) and isinstance(prev_score, int):
-            delta_cp = score_after - prev_score
+            sente_diff = score_after - prev_score
+            # 手番側視点に変換（負=手番側にとって悪化）
+            is_sente_move = (ply % 2 != 0)
+            delta_cp = sente_diff if is_sente_move else -sente_diff
 
         note: Dict[str, Any] = {
             "ply": i + 1,
@@ -316,13 +333,20 @@ def digest_endpoint_compat(payload: Dict[str, Any]):
     for i, mv in enumerate(moves):
         req = {"usi": usi, "ply": i + 1, "move": mv}
         res = engine.analyze(req)
-        score_after: Optional[int] = None
+        score_raw: Optional[int] = None
         if res.candidates:
-            score_after = res.candidates[0].score_cp
+            score_raw = res.candidates[0].score_cp
+        # 先手視点に統一（plyが奇数→後手の手番→反転）
+        ply = i + 1
+        score_after: Optional[int] = None
+        if isinstance(score_raw, int):
+            score_after = -score_raw if ply % 2 != 0 else score_raw
         delta_cp: Optional[int] = None
         if isinstance(score_after, int) and isinstance(prev_score, int):
-            delta_cp = score_after - prev_score
-        notes.append({"ply": i + 1, "move": mv, "score_after_cp": score_after, "delta_cp": delta_cp})
+            sente_diff = score_after - prev_score
+            is_sente_move = (ply % 2 != 0)
+            delta_cp = sente_diff if is_sente_move else -sente_diff
+        notes.append({"ply": ply, "move": mv, "score_after_cp": score_after, "delta_cp": delta_cp})
         if isinstance(score_after, int):
             prev_score = score_after
     return _digest_from_notes(notes)

@@ -212,6 +212,8 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const requestedPlyRef = useRef<number | null>(null);
   const realtimeAnalysisRef = useRef<AnalysisCache>({});
   const requestIdRef = useRef<string | null>(null);
+  const isDigestingRef = useRef(false);
+  const digestCooldownRef = useRef(0);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [kifuText, setKifuText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -725,13 +727,14 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   }, [isBatchAnalyzing, usi]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleGenerateGameDigest = useCallback(async (forceLlm = false) => {
-    if (isDigesting) return;
-    if (digestCooldownUntil && Date.now() < digestCooldownUntil) return;
+    if (isDigestingRef.current) return;
+    if (digestCooldownRef.current && Date.now() < digestCooldownRef.current) return;
     const hasData = Object.keys(batchData).length > 0;
     if (!hasData) {
         showToast({ title: "先に全体解析を行ってください", variant: "default" });
         return;
     }
+    isDigestingRef.current = true;
     setIsDigesting(true);
     setIsReportModalOpen(true);
     setGameDigest("");
@@ -780,7 +783,9 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
               const ra = Number(res.headers.get("retry-after") ?? "30");
               const waitSec = Number.isFinite(ra) && ra > 0 ? Math.ceil(ra) : 30;
               console.log("[digest] retry-after:", waitSec);
-              setDigestCooldownUntil(Date.now() + waitSec * 1000);
+              const cooldownTime = Date.now() + waitSec * 1000;
+              digestCooldownRef.current = cooldownTime;
+              setDigestCooldownUntil(cooldownTime);
               const base = detail || "レポート生成の利用制限に達しました。しばらく待ってから再度お試しください。";
               setGameDigest(`${base}\n\nあと ${waitSec} 秒待ってください。`);
             } else {
@@ -794,9 +799,10 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     } catch {
         setGameDigest("レポート生成に失敗しました。");
     } finally {
+        isDigestingRef.current = false;
         setIsDigesting(false);
     }
-  }, [batchData, totalMoves, isDigesting, digestCooldownUntil, bioshogiData, moveSequence, moveImpacts, initialTurn]);
+  }, [batchData, totalMoves, bioshogiData, moveSequence, moveImpacts, initialTurn]);
 
   const handleBatchAnalysisClick = useCallback(async () => {
     if (isEditMode || isBatchAnalyzing) return;

@@ -11,8 +11,12 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+import logging
+
 from backend.api.auth import Principal, require_api_key, require_user
 from backend.api.tsume_data import TSUME_PROBLEMS
+
+_LOG = logging.getLogger("uvicorn.error")
 from backend.api import engine_state as _es
 from backend.api.routers.annotate import AnalyzeIn
 from backend.api.services.bioshogi import analyze_kifu, is_available
@@ -71,19 +75,19 @@ async def batch_endpoint(
     ip = request.client.host if request.client else "unknown"
 
     async def generator():
-        print(f"[batch] start rid={rid} ip={ip}")
+        _LOG.info("[batch] start rid=%s ip=%s", rid, ip)
         try:
             async for line in _es.batch_engine.stream_batch_analyze(moves, req.time_budget_ms):
                 if await request.is_disconnected():
-                    print(f"[batch] client_disconnect rid={rid}")
+                    _LOG.info("[batch] client_disconnect rid=%s", rid)
                     await _es.batch_engine.cancel_current()
                     break
                 yield line
         except Exception as e:
-            print(f"[batch] error rid={rid}: {e}")
-            yield json.dumps({"error": str(e)}) + "\n"
+            _LOG.exception("[batch] error rid=%s", rid)
+            yield json.dumps({"error": "内部エラーが発生しました"}) + "\n"
         finally:
-            print(f"[batch] end rid={rid}")
+            _LOG.info("[batch] end rid=%s", rid)
 
     return StreamingResponse(generator(), media_type="application/x-ndjson")
 
@@ -109,18 +113,18 @@ async def stream_endpoint(
     ip = request.client.host if request.client else "unknown"
 
     async def generator():
-        print(f"[analysis] stream_start rid={rid} ip={ip}")
+        _LOG.info("[analysis] stream_start rid=%s ip=%s", rid, ip)
         try:
             async for chunk in _es.stream_engine.stream_analyze(
                 AnalyzeIn(position=position, depth=15, multipv=3)
             ):
                 if await request.is_disconnected():
-                    print(f"[analysis] client_disconnect rid={rid}")
+                    _LOG.info("[analysis] client_disconnect rid=%s", rid)
                     await _es.stream_engine.cancel_current()
                     break
                 yield chunk
         finally:
-            print(f"[analysis] stream_end rid={rid}")
+            _LOG.info("[analysis] stream_end rid=%s", rid)
 
     return StreamingResponse(generator(), media_type="text/event-stream")
 
@@ -132,7 +136,7 @@ async def solve_mate_endpoint(req: MateRequest):
 
 
 @router.get("/api/analysis/report")
-def get_report(usi: str):
+def get_report(usi: str, _principal: Principal = Depends(require_user)):
     """
     棋譜のサマリーレポートを返す。
     フロントは GET /api/analysis/report?usi=... で呼び出す。

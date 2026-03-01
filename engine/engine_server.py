@@ -1,7 +1,9 @@
 from __future__ import annotations
-import asyncio, os, re, shlex
+import asyncio, logging, os, re, shlex
 from typing import Optional, Dict, Any, List
 from fastapi import FastAPI, Body, Request
+
+_LOG = logging.getLogger("uvicorn.error")
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -22,8 +24,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "X-API-Key"],
 )
 
 class AnalyzeIn(BaseModel):
@@ -146,15 +148,16 @@ def health():
 async def analyze(body: AnalyzeIn, request: Request):
     # minimal request logging
     try:
-        print(f"[engine] /analyze from {request.client.host if request.client else '?'} position[:60]={body.position[:60]!r} depth={body.depth} multipv={body.multipv}")
+        _LOG.info("[engine] /analyze from %s position[:60]=%r depth=%s multipv=%s", request.client.host if request.client else "?", body.position[:60], body.depth, body.multipv)
     except Exception:
         pass
     try:
         result = await engine.analyze(body.position, body.depth, body.multipv)
         status = 200 if result.get("ok") else 502
         return result if status == 200 else (result, status)
-    except Exception as e:
-        return {"ok": False, "error": "engine_exception", "detail": str(e)}, 500
+    except Exception:
+        _LOG.exception("[engine] analyze error")
+        return {"ok": False, "error": "engine_exception"}, 500
 
 @app.post("/reload")
 async def reload_engine():
@@ -167,11 +170,11 @@ async def reload_engine():
 # ====== entrypoint ======
 if __name__ == "__main__":
     import uvicorn
-    host = os.getenv("ENGINE_HOST", os.getenv("HOST", "0.0.0.0"))
+    host = os.getenv("ENGINE_HOST", os.getenv("HOST", "127.0.0.1"))
     try:
         port = int(os.getenv("ENGINE_PORT", os.getenv("PORT", "8001")))
     except Exception:
         port = 8001
     log_level = os.getenv("LOG_LEVEL", "info")
-    print(f"[engine] Starting uvicorn on http://{host}:{port}")
+    _LOG.info("[engine] Starting uvicorn on http://%s:%s", host, port)
     uvicorn.run(app, host=host, port=port, log_level=log_level)

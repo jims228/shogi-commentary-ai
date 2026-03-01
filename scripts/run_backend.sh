@@ -44,7 +44,7 @@ fi
 
 HOST="${HOST:-0.0.0.0}"
 PORT="${PORT:-8787}"
-RELOAD="${RELOAD:-1}"
+RELOAD="${RELOAD:-0}"
 
 # Start bioshogi Ruby/Sinatra microservice (requires Ruby >= 3.2 via rbenv)
 BIOSHOGI_DIR="$(pwd)/bioshogi_service"

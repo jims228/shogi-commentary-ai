@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.api.middleware.rate_limit import RateLimitMiddleware
 from backend.api.routers import annotate, analysis, explain, games
 
 
@@ -35,9 +36,12 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "X-API-Key"],
 )
+
+# --- Rate Limiting ---
+app.add_middleware(RateLimitMiddleware)
 
 # --- Routers ---
 app.include_router(annotate.router)

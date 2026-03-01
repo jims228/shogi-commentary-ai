@@ -3,7 +3,7 @@ require "json"
 require "bioshogi"
 
 set :port, 7070
-set :bind, "0.0.0.0"
+set :bind, ENV.fetch('BIOSHOGI_BIND', '127.0.0.1')
 
 post "/analyze" do
   content_type :json

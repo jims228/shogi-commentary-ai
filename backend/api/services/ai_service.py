@@ -118,6 +118,20 @@ AI推奨手: {best_move_jp}
             generation_config=genai.types.GenerationConfig(max_output_tokens=300),
         )
         res = await model.generate_content_async(prompt)
+        try:
+            if hasattr(res, 'usage_metadata') and res.usage_metadata:
+                meta = res.usage_metadata
+                _LOG.info(
+                    "[TokenUsage] %s - input: %d, output: %d, total: %d",
+                    "generate_position_comment",
+                    meta.prompt_token_count,
+                    meta.candidates_token_count,
+                    meta.total_token_count,
+                )
+            else:
+                _LOG.warning("[TokenUsage] %s - usage_metadata not available", "generate_position_comment")
+        except Exception:
+            _LOG.warning("[TokenUsage] %s - failed to read usage_metadata", "generate_position_comment")
         return res.text
 
     @staticmethod
@@ -236,6 +250,20 @@ AI推奨手: {best_move_jp}
             response = await model.generate_content_async(prompt)
             elapsed_ms = int((time.time() - t0) * 1000)
             _LOG.info("[digest] llm.ok rid=%s ms=%s", request_id, elapsed_ms)
+            try:
+                if hasattr(response, 'usage_metadata') and response.usage_metadata:
+                    meta = response.usage_metadata
+                    _LOG.info(
+                        "[TokenUsage] %s - input: %d, output: %d, total: %d",
+                        "generate_game_digest",
+                        meta.prompt_token_count,
+                        meta.candidates_token_count,
+                        meta.total_token_count,
+                    )
+                else:
+                    _LOG.warning("[TokenUsage] %s - usage_metadata not available", "generate_game_digest")
+            except Exception:
+                _LOG.warning("[TokenUsage] %s - failed to read usage_metadata", "generate_game_digest")
             explanation = response.text
             _digest_cache_set(cache_key, explanation, limited=False)
             return _build_digest_payload(explanation, source="llm", limited=False, retry_after=None)

@@ -2,8 +2,11 @@
 bioshogi_service (Ruby/Sinatra) への HTTP クライアント
 """
 from __future__ import annotations
+import logging
 import os
 import httpx
+
+_LOG = logging.getLogger("uvicorn.error")
 from typing import Optional
 from pydantic import BaseModel
 
@@ -34,8 +37,9 @@ def analyze_kifu(kifu: str) -> BioshogiResult:
         )
         resp.raise_for_status()
         return BioshogiResult(**resp.json())
-    except Exception as e:
-        return BioshogiResult(ok=False, error=str(e))
+    except Exception:
+        _LOG.exception("[bioshogi] analyze_kifu error")
+        return BioshogiResult(ok=False, error="bioshogi接続エラー")
 
 
 def is_available() -> bool:

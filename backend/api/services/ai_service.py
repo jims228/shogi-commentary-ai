@@ -10,20 +10,9 @@ import google.generativeai as genai
 from google.api_core import exceptions as gax_exceptions
 from backend.api.utils.gemini_client import ensure_configured, get_model_name
 from fastapi import HTTPException
-from backend.api.utils.shogi_utils import ShogiUtils, StrategyAnalyzer
-
-from backend.api.utils.shogi_explain_core import (
-    build_explain_facts,
-    render_rule_based_explanation,
-)
+from backend.api.utils.shogi_utils import ShogiUtils
 
 from backend.api.db.wkbk_db import lookup_by_sfen
-
-from backend.api.utils.ai_explain_json import (
-    ExplainJson,
-    build_explain_json_from_facts,
-    validate_explain_json,
-)
 
 _LOG = logging.getLogger("uvicorn.error")
 
@@ -33,14 +22,8 @@ _DIGEST_CACHE: Dict[str, Dict[str, Any]] = {}
 
 
 
-USE_EXPLAIN_V2 = os.getenv("USE_EXPLAIN_V2", "0") == "1"
-USE_GEMINI_REWRITE = os.getenv("USE_GEMINI_REWRITE", "1") == "1"
-
-# --- 超軽量キャッシュ（同局面で連打しても課金しない） ---
 _EXPLAIN_CACHE: Dict[str, Tuple[float, str]] = {}
 _EXPLAIN_CACHE_TTL_SEC = int(os.getenv("EXPLAIN_CACHE_TTL_SEC", "600"))
-
-_EXPLAIN_PAYLOAD_CACHE: Dict[str, Tuple[float, Dict[str, Any]]] = {}
 
 
 def _cache_get(key: str) -> Optional[str]:
@@ -55,228 +38,85 @@ def _cache_get(key: str) -> Optional[str]:
 
 
 def _cache_set(key: str, text: str) -> None:
-    # 雑に増えすぎないように上限
     if len(_EXPLAIN_CACHE) > 500:
         _EXPLAIN_CACHE.clear()
     _EXPLAIN_CACHE[key] = (time.time(), text)
 
-def _payload_cache_get(key: str) -> Optional[Dict[str, Any]]:
-    v = _EXPLAIN_PAYLOAD_CACHE.get(key)
-    if not v:
-        return None
-    ts, payload = v
-    if time.time() - ts > _EXPLAIN_CACHE_TTL_SEC:
-        _EXPLAIN_PAYLOAD_CACHE.pop(key, None)
-        return None
-    return payload
-
-def _payload_cache_set(key: str, payload: Dict[str, Any]) -> None:
-    if len(_EXPLAIN_PAYLOAD_CACHE) > 500:
-        _EXPLAIN_PAYLOAD_CACHE.clear()
-    _EXPLAIN_PAYLOAD_CACHE[key] = (time.time(), payload)
-
 
 class AIService:
     @staticmethod
-    async def generate_shogi_explanation(data: Dict[str, Any]) -> str:
-        """
-        既存を壊さず、新方式は feature flag で切り替える
-        """
-        payload = await AIService.generate_shogi_explanation_payload(data)
-        return str(payload.get("explanation") or "")
-
-    @staticmethod
-    async def generate_shogi_explanation_payload(data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Backward compatible API payload:
-          - explanation: string (always present)
-          - explanation_json: structured JSON (optional but usually present)
-          - verify: { ok, errors } (debug-friendly)
-        """
-        cache_key = str(
-            {
-                "v2": USE_EXPLAIN_V2,
-                "sfen": data.get("sfen"),
-                "ply": data.get("ply"),
-                "turn": data.get("turn"),
-                "explain_level": data.get("explain_level"),
-                "delta_cp": data.get("delta_cp"),
-                "bestmove": data.get("bestmove"),
-                "pv": data.get("pv"),
-                "user_move": data.get("user_move"),
-                "cands": [
-                    (
-                        c.get("move"),
-                        c.get("score_cp"),
-                        c.get("score_mate"),
-                        c.get("pv"),
-                    )
-                    for c in (data.get("candidates") or [])
-                ][:3],
-            }
-        )
-        hit_payload = _payload_cache_get(cache_key)
-        if hit_payload:
-            return hit_payload
-
-        # v2 OFF なら完全に旧挙動
-        if not USE_EXPLAIN_V2:
-            text = await AIService._generate_shogi_explanation_legacy(data)
-            payload = AIService._build_structured_payload(data, text=text)
-            _payload_cache_set(cache_key, payload)
-            _cache_set(cache_key, text)
-            return payload
-
-        # v2 ON（失敗したら旧へフォールバック）
-        try:
-            text = await AIService._generate_shogi_explanation_v2(data)
-            payload = AIService._build_structured_payload(data, text=text)
-            _payload_cache_set(cache_key, payload)
-            _cache_set(cache_key, text)
-            return payload
-        except Exception as e:
-            print("[ExplainV2] error -> fallback legacy:", e)
-            text = await AIService._generate_shogi_explanation_legacy(data)
-            payload = AIService._build_structured_payload(data, text=text)
-            _payload_cache_set(cache_key, payload)
-            _cache_set(cache_key, text)
-            return payload
-
-    @staticmethod
-    async def _generate_shogi_explanation_v2(data: Dict[str, Any]) -> str:
-        # 1) 事実抽出（嘘をつけない）
-        facts = build_explain_facts(data)
-
-        # 2) まずはルールベース文章（LLMなしで成立）
-        # NOTE: We intentionally keep v2 explanation deterministic to avoid contradictions.
-        # UI can prefer explanation_json (structured). The text remains a stable fallback.
-        return render_rule_based_explanation(facts)
-
-    @staticmethod
-    def _build_structured_payload(data: Dict[str, Any], text: str) -> Dict[str, Any]:
-        """
-        Build explanation_json from facts, validate it, and fallback safely.
-        """
-        facts = build_explain_facts(data)
-        explain_json: Optional[ExplainJson] = None
-        verify_errors: List[str] = []
-        try:
-            candidate = build_explain_json_from_facts(facts)
-            parsed, errs = validate_explain_json(candidate.model_dump(), facts)
-            if parsed is None:
-                verify_errors.extend(errs)
-            else:
-                explain_json = parsed
-        except Exception as e:
-            verify_errors.append(f"exception: {e}")
-
-        payload: Dict[str, Any] = {"explanation": text}
-        if explain_json is not None:
-            payload["explanation_json"] = explain_json.model_dump()
-        payload["verify"] = {"ok": len(verify_errors) == 0, "errors": verify_errors}
-
-        # --- DB 参照（wkbk / shogi-extend 由来） ---
-        sfen = (data.get("sfen") or "").strip()
-        try:
-            db_result = lookup_by_sfen(sfen)
-            db_refs: Dict[str, Any] = {"hit": db_result.hit, "items": []}
-            if db_result.hit:
-                db_refs["items"] = [
-                    {
-                        "key": db_result.key,
-                        "lineage_key": db_result.lineage_key,
-                        "tags": db_result.tags,
-                        "difficulty": db_result.difficulty,
-                        "category_hint": db_result.category_hint,
-                        "goal_summary": db_result.goal_summary,
-                        "author": db_result.author,
-                        "short_note": db_result.short_note,
-                    }
-                ]
-            payload["db_refs"] = db_refs
-        except Exception as e:
-            _LOG.debug("[ai_service] db_refs lookup failed (non-fatal): %s", e)
-            payload["db_refs"] = {"hit": False, "items": []}
-
-        return payload
-
-    @staticmethod
-    async def _generate_shogi_explanation_legacy(data: Dict[str, Any]) -> str:
-        """
-        既存の生成を丸ごと残す（旧方式）
-        """
+    async def generate_position_comment(
+        ply: int,
+        sfen: str,
+        candidates: List[Dict[str, Any]],
+        user_move: Optional[str],
+        delta_cp: Optional[int],
+    ) -> str:
+        """現在局面の将棋仙人コメントを生成する"""
         if not ensure_configured():
             return "APIキーが設定されていません。環境変数 GEMINI_API_KEY を確認してください。"
 
-        ply = data.get("ply", 0)
-        turn = data.get("turn", "b")
-        bestmove = data.get("bestmove", "")
-        score_cp = data.get("score_cp")
-        score_mate = data.get("score_mate")
-        history: List[str] = data.get("history", [])
-        sfen = data.get("sfen", "")
+        # 形勢判定
+        best_cp = None
+        best_move_usi = ""
+        if candidates:
+            top = candidates[0]
+            best_move_usi = top.get("move", "")
+            if top.get("score_mate") is not None:
+                best_cp = 30000 if top["score_mate"] >= 0 else -30000
+            elif top.get("score_cp") is not None:
+                best_cp = top["score_cp"]
 
-        strategy = StrategyAnalyzer.analyze_sfen(sfen)
-        bestmove_jp = ShogiUtils.format_move_label(bestmove, turn)
+        if best_cp is None:
+            situation = "不明"
+        elif abs(best_cp) > 2000:
+            situation = "先手勝勢" if best_cp > 0 else "後手勝勢"
+        elif abs(best_cp) > 800:
+            situation = "先手優勢" if best_cp > 0 else "後手優勢"
+        elif abs(best_cp) > 300:
+            situation = "先手有利" if best_cp > 0 else "後手有利"
+        else:
+            situation = "互角"
 
-        phase = "序盤" if ply < 24 else "終盤" if ply > 100 else "中盤"
-        perspective = "先手" if turn == "b" else "後手"
+        # 指し手の評価
+        good_or_bad = "普通"
+        if delta_cp is not None:
+            if delta_cp <= -150:
+                good_or_bad = "悪手"
+            elif delta_cp <= -50:
+                good_or_bad = "疑問手"
+            elif delta_cp >= 150:
+                good_or_bad = "好手"
 
-        score_desc = "互角"
-        if score_mate:
-            score_desc = "詰みあり"
-        elif score_cp is not None:
-            sc = score_cp
-            if abs(sc) > 2000:
-                score_desc = "勝勢"
-            elif abs(sc) > 800:
-                score_desc = "優勢" if sc > 0 else "劣勢"
-            elif abs(sc) > 300:
-                score_desc = "有利" if sc > 0 else "不利"
+        # 日本語ラベル
+        turn = "b"  # sfen から判定
+        parts = sfen.replace("position ", "").split()
+        for p in parts:
+            if p in ("b", "w"):
+                turn = p
+                break
+        best_move_jp = ShogiUtils.format_move_label(best_move_usi, turn) if best_move_usi else "なし"
+        user_move_jp = ShogiUtils.format_move_label(user_move, turn) if user_move else "なし"
 
-        history_str = " -> ".join(history[-5:]) if history else "初手"
+        prompt = f"""あなたは将棋の局面解説AIです。
+以下の局面について、80文字以内で解説してください。
 
-        # DB参照（wkbk / shogi-extend 由来）— faithfulness補助情報
-        # 注意: db_refs はあくまで補助。エンジン評価値/PV が最優先根拠。
-        # 著作権方針: タグ/カテゴリのみ渡す。元テキスト丸写し禁止。
-        db_hint_block = ""
-        try:
-            db_result = lookup_by_sfen(sfen)
-            if db_result.hit:
-                hint_lines = [f"- パターン種別: {db_result.category_hint} ({db_result.lineage_key})"]
-                if db_result.tags:
-                    hint_lines.append(f"- タグ: {', '.join(db_result.tags)}")
-                if db_result.difficulty is not None:
-                    hint_lines.append(f"- 難易度: {db_result.difficulty}/5")
-                if db_result.short_note:
-                    hint_lines.append(f"- 補足メモ: {db_result.short_note}")
-                if db_result.goal_summary:
-                    hint_lines.append(f"- 問題の狙い（要約）: {db_result.goal_summary}")
-                db_hint_block = "\n\n【参考パターン情報（補助のみ・断言不可）】\n" + "\n".join(hint_lines)
-                db_hint_block += "\n※この情報はヒント程度。エンジン評価値/PVが最優先根拠であること。"
-        except Exception:
-            pass  # DB参照失敗は非致命的
+手数: {ply}手目
+指された手: {user_move_jp}（この手の評価: {good_or_bad}）
+AI推奨手: {best_move_jp}
+形勢: {situation}
 
-        prompt = f"""
-あなたはプロの将棋解説者です。以下の局面を**{perspective}視点**で、初心者にも分かりやすく解説してください。
+ルール:
+- 80文字以内で完結すること
+- 地の文のみ。箇条書き・見出し・記号禁止
+- です/ます調
+- 文章を途中で切らないこと"""
 
-【局面情報】
-- 手数: {ply}手目 ({phase})
-- 戦型目安: {strategy}
-- 形勢: {score_desc} (評価値: {score_cp if score_cp is not None else 'Mate'})
-- AI推奨手: {bestmove_jp} ({bestmove})
-- 直近の進行: {history_str}{db_hint_block}
-
-【指示】
-1. 局面ダイジェスト
-2. この一手の狙い
-3. 次の方針
-【制約】
-- 評価値/PV 以外の事実を断言しない（根拠がない推測は「〜の可能性があります」と書く）
-- 参考パターン情報がある場合はヒントとして活用するが、パターン名を断言しない
-"""
-
-        model = genai.GenerativeModel(get_model_name())
+        # 短文生成には 2.5-flash-lite を固定（2.5-flash の thinking モードが tokens を消費するため）
+        model = genai.GenerativeModel(
+            "gemini-2.5-flash-lite",
+            generation_config=genai.types.GenerationConfig(max_output_tokens=300),
+        )
         res = await model.generate_content_async(prompt)
         return res.text
 
@@ -370,20 +210,27 @@ class AIService:
                         lines.append(f"  - {ply}手目 {player}{n.get('move', '')} (Δ{d:+d}cp / {qualifier})")
                     notes_block = "\n【注目手（評価値変動が大きかった手）】\n" + "\n".join(lines) + "\n"
 
-            prompt = f"""
-将棋の対局データを元に、観戦記風の総評レポート（400文字程度）を作成してください。
-- 対局者: {sente_name}（先手）vs {gote_name}（後手）
-- 総手数: {total_moves}手
-- 評価値推移: {', '.join(eval_summary)}
+            prompt = f"""以下の3点を含む200文字以内の文章を出力せよ。
+1. 先手と後手の戦型
+2. 最大の転換点（何手目の何の手）
+3. 勝者と勝因
+
+{sente_name}（先手）vs {gote_name}（後手）、{total_moves}手
+評価値推移: {', '.join(eval_summary)}
 {bio_block}{notes_block}
-【構成】
-1. 序盤（戦型・囲いに触れる） 2. 中盤 3. 終盤 4. 総括
-"""
-            model_name = get_model_name()
+例: 石田流 vs 棒金の一局。42手目△7c8dが悪手となり形勢逆転。先手が中盤以降の優勢を維持し73手で勝利した。
+
+見出し・箇条書き・挨拶文・装飾すべて禁止。地の文のみ。
+【厳守】200文字以内。文章を途中で切らず最後まで完結させること。"""
+            # 短文生成には 2.5-flash-lite を固定（2.5-flash の thinking モードが tokens を消費するため）
+            digest_model = "gemini-2.5-flash-lite"
             prompt_size = len(prompt)
             t0 = time.time()
-            _LOG.info("[digest] llm.start rid=%s model=%s prompt_chars=%s", request_id, model_name, prompt_size)
-            model = genai.GenerativeModel(model_name)
+            _LOG.info("[digest] llm.start rid=%s model=%s prompt_chars=%s", request_id, digest_model, prompt_size)
+            model = genai.GenerativeModel(
+                digest_model,
+                generation_config=genai.types.GenerationConfig(max_output_tokens=1500),
+            )
             response = await model.generate_content_async(prompt)
             elapsed_ms = int((time.time() - t0) * 1000)
             _LOG.info("[digest] llm.ok rid=%s ms=%s", request_id, elapsed_ms)

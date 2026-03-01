@@ -21,22 +21,14 @@ class ExplainCandidate(BaseModel):
     move: str
     score_cp: Optional[int] = None
     score_mate: Optional[int] = None
-    pv: str = ""
 
 
-class ExplainRequest(BaseModel):
-    sfen: str
+class PositionCommentRequest(BaseModel):
     ply: int
-    bestmove: str
-    score_cp: Optional[int] = None
-    score_mate: Optional[int] = None
-    pv: str
-    turn: str
-    history: List[str] = []
-    user_move: Optional[str] = None
-    explain_level: str = "beginner"
-    delta_cp: Optional[int] = None
+    sfen: str
     candidates: List[ExplainCandidate] = []
+    user_move: Optional[str] = None
+    delta_cp: Optional[int] = None
 
 
 class GameDigestInput(BaseModel):
@@ -51,8 +43,16 @@ class GameDigestInput(BaseModel):
 
 
 @router.post("/explain")
-async def explain_endpoint(req: ExplainRequest, _principal: Principal = Depends(require_user)):
-    return await AIService.generate_shogi_explanation_payload(_dump_model(req))
+async def explain_endpoint(req: PositionCommentRequest, _principal: Principal = Depends(require_user)):
+    candidates = [c.model_dump() for c in req.candidates]
+    comment = await AIService.generate_position_comment(
+        ply=req.ply,
+        sfen=req.sfen,
+        candidates=candidates,
+        user_move=req.user_move,
+        delta_cp=req.delta_cp,
+    )
+    return {"explanation": comment}
 
 
 @router.post("/explain/digest")

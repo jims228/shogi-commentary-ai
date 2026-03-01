@@ -23,7 +23,6 @@ import { toStartposUSI } from "@/lib/ingest";
 import { formatUsiMoveJapanese, usiMoveToCoords, type PieceBase, type PieceCode } from "@/lib/sfen";
 import { buildUsiPositionForPly } from "@/lib/usi";
 import type { EngineAnalyzeResponse, EngineMultipvItem } from "@/lib/annotateHook";
-import type { DbRefs, ExplainJson } from "@/types/explain";
 import { AnalysisCache, buildMoveImpacts, getPrimaryEvalScore } from "@/lib/analysisUtils";
 import { FileText, RotateCcw, Search, Play, Sparkles, Upload, ChevronFirst, ChevronLeft, ChevronRight, ChevronLast, ArrowRight, BrainCircuit, X, ScrollText, Eye, ArrowLeft, Pencil, ArrowLeftRight, GraduationCap, BookOpen } from "lucide-react";
 import MoveListPanel from "@/components/annotate/MoveListPanel";
@@ -176,25 +175,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const [currentPly, setCurrentPly] = useState(0);
   const [realtimeAnalysis, setRealtimeAnalysis] = useState<AnalysisCache>({});
 
-  const [explainLevel, setExplainLevel] = useState<"beginner" | "intermediate" | "advanced">("beginner");
-
-  useEffect(() => {
-    // SSRガード: window/localStorage 未定義環境では何もしない
-    if (typeof window === "undefined") return;
-    try {
-      const v = window.localStorage.getItem("explainLevel");
-      if (v === "beginner" || v === "intermediate" || v === "advanced") {
-        setExplainLevel(v);
-      }
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      window.localStorage.setItem("explainLevel", explainLevel);
-    } catch {}
-  }, [explainLevel]);
   
   const { 
     batchData, 
@@ -230,8 +210,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const [handsOverrides, setHandsOverrides] = useState<Record<number, HandsState>>({});
   const [editHistory, setEditHistory] = useState<{ board: BoardMatrix; hands: HandsState }[]>([]);
   const [explanation, setExplanation] = useState<string>("");
-  const [explanationJson, setExplanationJson] = useState<ExplainJson | null>(null);
-  const [dbRefs, setDbRefs] = useState<DbRefs | null>(null);
   const [gameDigest, setGameDigest] = useState<string>("");
   const [digestMetaSource, setDigestMetaSource] = useState<string>("");
   const [bioshogiData, setBioshogiData] = useState<BioshogiData | null>(null);
@@ -621,7 +599,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   }, [isEditMode, displayedBoard, activeHands, currentSideToMove, safeCurrentPly, startEngineAnalysis]);
 
   const handleGenerateExplanation = useCallback(async () => {
-    // ★対象を決める：棋譜閲覧なら“直前の指し手”
     const analyzePly = (!isEditMode && safeCurrentPly > 0) ? safeCurrentPly - 1 : safeCurrentPly;
 
     const analysis = evalSource[analyzePly];
@@ -630,7 +607,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
       return;
     }
 
-    // ★局面はSFENで送る（嘘を減らすため）
     const board = timeline.boards[analyzePly] ?? displayedBoard;
     const hands = timelineHands[analyzePly] ?? activeHands;
     const sideToMove: Side = (analyzePly % 2 === 0) ? initialTurn : flipTurn(initialTurn);
@@ -641,46 +617,31 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     const candidates =
       analysis.multipv?.slice(0, 3).map((item) => ({
         move: (item.pv?.split(" ")[0] || ""),
-        pv: item.pv || "",
         score_cp: item.score.type === "cp" ? item.score.cp : null,
         score_mate: item.score.type === "mate" ? item.score.mate : null,
       })) ?? [];
 
-    const recentMoves = moveSequence.slice(Math.max(0, analyzePly - 5), analyzePly);
-
-    // インパクト（その手で評価がどれだけ動いたか）
     const deltaCp = (!isEditMode && safeCurrentPly > 0)
       ? (moveImpacts[safeCurrentPly]?.diff ?? null)
       : null;
 
     setIsExplaining(true);
     setExplanation("");
-    setExplanationJson(null);
     try {
       const res = await fetchWithAuth(`${API_BASE}/api/explain`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          sfen: positionSfen,
           ply: analyzePly,
-          turn: sideToMove,
-          user_move: userMove,
-          bestmove: analysis.bestmove,
-          score_cp: analysis.multipv?.[0]?.score.type === "cp" ? analysis.multipv[0].score.cp : null,
-          score_mate: analysis.multipv?.[0]?.score.type === "mate" ? analysis.multipv[0].score.mate : null,
-          pv: analysis.multipv?.[0]?.pv || "",
-          history: recentMoves,
+          sfen: positionSfen,
           candidates,
-
-          explain_level: explainLevel,
+          user_move: userMove,
           delta_cp: deltaCp,
         }),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
       setExplanation(data.explanation);
-      if (data.explanation_json) setExplanationJson(data.explanation_json);
-      setDbRefs(data.db_refs ?? null);
     } catch {
       showToast({ title: "解説生成エラー", variant: "error" });
     } finally {
@@ -697,7 +658,6 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     timeline.boards,
     timelineHands,
     moveImpacts,
-    explainLevel,
   ]);
 
   useEffect(() => {
@@ -987,7 +947,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
               {Object.keys(batchData).length > 5 && (
                   <Button
                     variant="outline"
-                    onClick={() => handleGenerateGameDigest(false)}
+                    onClick={() => handleGenerateGameDigest(true)}
                     disabled={isDigesting || digestCooldownLeft > 0}
                     className="border-amber-400 text-amber-700 bg-amber-50 h-9 text-sm px-3"
                   >
@@ -995,55 +955,13 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
                       {isDigesting ? "生成中..." : (digestCooldownLeft > 0 ? `クールダウン(残り${digestCooldownLeft}s)` : "レポート")}
                   </Button>
               )}
-              {Object.keys(batchData).length > 5 && (
-                  <Button
-                    variant="outline"
-                    onClick={() => handleGenerateGameDigest(true)}
-                    disabled={isDigesting}
-                    className="border-purple-400 text-purple-700 bg-purple-50 h-9 text-sm px-3"
-                  >
-                      <Sparkles className="w-4 h-4 mr-2" /> AIで再生成
-                  </Button>
-              )}
               <Button variant="outline" onClick={handleStartStreamingAnalysis} disabled={isAnalyzing} className="border-slate-300 text-slate-700 h-9 text-sm px-3"><Play className="w-4 h-4 mr-2" /> 検討開始</Button>
-              <div className="flex items-center gap-2">
-                <select
-                  className="h-9 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-700"
-                  value={explainLevel}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    if (v === "beginner" || v === "intermediate" || v === "advanced") {
-                      setExplainLevel(v);
-                    }
-                  }}
-                  aria-label="解説レベル"
-                >
-                  <option value="beginner">初心者</option>
-                  <option value="intermediate">中級</option>
-                  <option value="advanced">上級</option>
-                </select>
-                <Button variant="default" onClick={handleGenerateExplanation} disabled={isExplaining || !hasCurrentAnalysis} className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-none h-9 text-sm px-3 shadow-sm hover:shadow-md transition-all">{isExplaining ? "思考中..." : <><Sparkles className="w-4 h-4 mr-2" /> AI解説</>}</Button>
-              </div>
+              <Button variant="default" onClick={handleGenerateExplanation} disabled={isExplaining || !hasCurrentAnalysis} className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-none h-9 text-sm px-3 shadow-sm hover:shadow-md transition-all">{isExplaining ? "思考中..." : <><Sparkles className="w-4 h-4 mr-2" /> AI解説</>}</Button>
             </>
           ) : (
             <div className="flex items-center gap-2">
                 <Button variant="outline" onClick={handleUndo} disabled={editHistory.length === 0} className="border-slate-300 text-slate-700 h-9 text-sm px-3"><RotateCcw className="w-4 h-4 mr-2" /> 1手戻す</Button>
                 <Button variant="outline" onClick={handleAnalyzeEditedPosition} disabled={isAnalyzing} className="border-amber-600 text-amber-700 h-9 text-sm px-3"><Search className="w-4 h-4 mr-2" /> 現局面を解析</Button>
-                <select
-                  className="h-9 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-700"
-                  value={explainLevel}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    if (v === "beginner" || v === "intermediate" || v === "advanced") {
-                      setExplainLevel(v);
-                    }
-                  }}
-                  aria-label="解説レベル"
-                >
-                  <option value="beginner">初心者</option>
-                  <option value="intermediate">中級</option>
-                  <option value="advanced">上級</option>
-                </select>
                 <Button variant="default" onClick={handleGenerateExplanation} disabled={isExplaining || !hasCurrentAnalysis} className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-none h-9 text-sm px-3 shadow-sm hover:shadow-md transition-all">{isExplaining ? "思考中..." : <><Sparkles className="w-4 h-4 mr-2" /> AI解説</>}</Button>
             </div>
           )}
@@ -1146,11 +1064,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
           </div>
           
           {/* レポート表示エリア (盤面の下) */}
-          {bioshogiData && (
-            <div className="flex-none animate-in fade-in slide-in-from-bottom-4">
-              <BioshogiPanel data={bioshogiData} />
-            </div>
-          )}
+          {/* BioshogiPanel: データ取得は維持（digest用）、UI表示のみ非表示 */}
           {gameDigest && (
             <div className="flex-none p-4 bg-white rounded-xl border border-amber-200 shadow-sm animate-in fade-in slide-in-from-bottom-4 max-h-[300px] overflow-y-auto">
                 <div className="font-bold text-amber-700 mb-2 flex items-center gap-2 border-b border-amber-100 pb-2 sticky top-0 bg-white z-10">
@@ -1203,64 +1117,14 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
             </div>
             
             {/* AI解説エリア (候補手の下) */}
-            {(explanation || explanationJson) && (
+            {explanation && (
                 <div className="flex-none p-3 bg-white rounded-xl border border-purple-200 shadow-sm animate-in fade-in slide-in-from-bottom-4 max-h-[40%] overflow-y-auto">
                     <div className="font-bold text-purple-700 mb-2 flex items-center gap-2 border-b border-purple-100 pb-2 sticky top-0 bg-white z-10">
                         <Sparkles className="w-4 h-4 fill-purple-100"/> 将棋仙人の解説
                     </div>
-                    {explanationJson ? (
-                        <div className="text-xs text-slate-700 leading-relaxed font-sans space-y-2">
-                            {explanationJson.headline && (
-                                <div className="font-bold text-slate-800">{explanationJson.headline}</div>
-                            )}
-                            {Array.isArray(explanationJson.why) && explanationJson.why.length > 0 && (
-                                <ul className="list-disc pl-4 space-y-1">
-                                    {explanationJson.why.slice(0, 6).map((s: string, i: number) => (
-                                        <li key={i}>{s}</li>
-                                    ))}
-                                </ul>
-                            )}
-                            {Array.isArray(explanationJson.pvGuide) && explanationJson.pvGuide.length > 0 && (
-                                <details className="rounded border border-slate-200 bg-slate-50 p-2">
-                                    <summary className="cursor-pointer select-none text-slate-600 font-bold">PV（読み筋）</summary>
-                                    <div className="mt-2 space-y-1 font-mono">
-                                        {explanationJson.pvGuide.slice(0, 8).map((x: any, i: number) => (
-                                            <div key={i} className="flex gap-2">
-                                                <span className="text-slate-900">{x.move}</span>
-                                                {x.note ? <span className="text-slate-500">{x.note}</span> : null}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </details>
-                            )}
-                            {Array.isArray(explanationJson.risks) && explanationJson.risks.length > 0 && (
-                                <div className="rounded border border-amber-200 bg-amber-50 p-2">
-                                    <div className="font-bold text-amber-800 mb-1">注意</div>
-                                    <ul className="list-disc pl-4 space-y-1">
-                                        {explanationJson.risks.slice(0, 4).map((s: string, i: number) => (
-                                            <li key={i}>{s}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap font-sans text-xs">
-                            {explanation}
-                        </div>
-                    )}
-                    {dbRefs?.hit && dbRefs.items.length > 0 && (
-                        <div className="mt-2 rounded border border-blue-200 bg-blue-50 px-2 py-1.5 text-xs text-blue-800">
-                            <span className="font-bold">類似パターン: </span>
-                            {dbRefs.items[0].category_hint ?? dbRefs.items[0].lineage_key}
-                            {dbRefs.items[0].tags?.length > 0 && (
-                                <span className="ml-1 text-blue-600">[{dbRefs.items[0].tags.join(", ")}]</span>
-                            )}
-                            {dbRefs.items[0].goal_summary && (
-                                <div className="mt-0.5 text-blue-700 italic">{dbRefs.items[0].goal_summary}</div>
-                            )}
-                        </div>
-                    )}
+                    <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap font-sans text-xs">
+                        {explanation}
+                    </div>
                 </div>
             )}
         </div>

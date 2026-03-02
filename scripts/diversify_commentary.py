@@ -26,6 +26,12 @@ from typing import Any, Dict, List, Optional
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(_PROJECT_ROOT / ".env")
+except ImportError:
+    pass
+
 from backend.api.schemas.annotation import DEPTH_LEVELS, FOCUS_LABELS
 from backend.api.services.annotation_service import annotate_text
 from backend.api.services.diverse_prompts import (

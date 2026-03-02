@@ -1,6 +1,6 @@
 # 将棋AI解説システム - ベースラインレポート
 
-Generated: 2026-03-02T19:26:29 UTC
+Generated: 2026-03-02T20:23:26 UTC
 
 ## 1. Project Overview
 
@@ -19,7 +19,7 @@ Generated: 2026-03-02T19:26:29 UTC
 |--------|-------|
 | Sample games | 10 |
 | Pipeline features | 152 |
-| Training log records | 322 |
+| Training log records | 356 |
 | Batch commentary records | 50 |
 | Feature dimensions | 8 |
 
@@ -33,7 +33,7 @@ Generated: 2026-03-02T19:26:29 UTC
 
 ## 3. Quality Evaluation
 
-- Evaluated records: 322
+- Evaluated records: 356
 - Average total score: 69.0
 - Low quality count (< 40): 0
 
@@ -43,7 +43,7 @@ Generated: 2026-03-02T19:26:29 UTC
 |------|--------|---------|
 | context_relevance | 0.30 | 82.9 |
 | naturalness | 0.25 | 65.4 |
-| informativeness | 0.25 | 43.8 |
+| informativeness | 0.25 | 43.9 |
 | readability | 0.20 | 83.9 |
 
 ### Score by Phase
@@ -56,24 +56,24 @@ Generated: 2026-03-02T19:26:29 UTC
 
 ## 4. ML Model Comparison
 
-- Samples: 322
+- Samples: 356
 - CV folds: 5
-- Best model: **DecisionTree**
+- Best model: **RandomForest**
 
 | Model | Accuracy | F1-macro | Train Time (s) |
 |-------|----------|----------|----------------|
-| **DecisionTree** | 0.96 +/- 0.03 | 0.96 +/- 0.03 | 0.02 |
-| RandomForest | 0.96 +/- 0.01 | 0.96 +/- 0.01 | 0.56 |
-| GradientBoosting | 0.96 +/- 0.03 | 0.96 +/- 0.03 | 0.47 |
+| DecisionTree | 0.96 +/- 0.02 | 0.96 +/- 0.02 | 0.02 |
+| **RandomForest** | 0.96 +/- 0.02 | 0.96 +/- 0.02 | 0.66 |
+| GradientBoosting | 0.96 +/- 0.02 | 0.96 +/- 0.02 | 0.48 |
 
 ### Training Data Style Distribution
 
 | Style | Count | Percentage |
 |-------|-------|-----------|
 | technical | 0 | 0.0% |
-| encouraging | 174 | 54.0% |
+| encouraging | 191 | 53.7% |
 | dramatic | 0 | 0.0% |
-| neutral | 148 | 46.0% |
+| neutral | 165 | 46.3% |
 
 ## 5. Feature Importance
 
@@ -81,47 +81,47 @@ Generated: 2026-03-02T19:26:29 UTC
 
 | Rank | Feature | Avg Rank |
 |------|---------|----------|
-| 1 | ply | 1.00 |
+| 1 | ply | 1.33 |
 | 2 | king_safety | 2.67 |
-| 3 | piece_activity | 3.33 |
-| 4 | d_king_safety | 4.67 |
+| 3 | piece_activity | 3.00 |
+| 4 | d_king_safety | 4.33 |
 | 5 | d_piece_activity | 5.33 |
-| 6 | attack_pressure | 6.33 |
-| 7 | d_attack_pressure | 6.33 |
-| 8 | phase_num | 6.33 |
+| 6 | phase_num | 6.00 |
+| 7 | attack_pressure | 6.67 |
+| 8 | d_attack_pressure | 6.67 |
 
 ### Tree-based (RandomForest)
 
-- ply: 0.3723
-- piece_activity: 0.1946
-- king_safety: 0.1339
-- d_piece_activity: 0.1317
-- d_king_safety: 0.1160
-- d_attack_pressure: 0.0236
-- attack_pressure: 0.0141
-- phase_num: 0.0139
+- ply: 0.3505
+- piece_activity: 0.2075
+- king_safety: 0.1359
+- d_piece_activity: 0.1328
+- d_king_safety: 0.1248
+- d_attack_pressure: 0.0209
+- attack_pressure: 0.0139
+- phase_num: 0.0136
 
 ### Permutation Importance
 
-- ply: 0.2385
-- piece_activity: 0.1342
-- king_safety: 0.0422
-- d_piece_activity: 0.0102
+- piece_activity: 0.1486
+- ply: 0.0992
+- king_safety: 0.0357
+- d_piece_activity: 0.0124
 - d_king_safety: 0.0028
+- phase_num: 0.0008
 - d_attack_pressure: 0.0003
 - attack_pressure: 0.0000
-- phase_num: 0.0000
 
 ### Target Correlation (|r|)
 
-- ply: 0.6989
-- king_safety: 0.3458
-- phase_num: 0.2871
-- d_king_safety: 0.2743
-- attack_pressure: 0.2718
-- piece_activity: 0.1288
-- d_attack_pressure: 0.0340
-- d_piece_activity: 0.0311
+- ply: 0.7031
+- king_safety: 0.3490
+- d_king_safety: 0.2844
+- phase_num: 0.2841
+- attack_pressure: 0.2759
+- piece_activity: 0.1376
+- d_attack_pressure: 0.0355
+- d_piece_activity: 0.0281
 
 ## 6. Style Classification Analysis
 
@@ -130,29 +130,29 @@ Generated: 2026-03-02T19:26:29 UTC
 | Style | Percentage |
 |-------|-----------|
 | technical | 0.0% |
-| encouraging | 54.0% |
+| encouraging | 53.7% |
 | dramatic | 0.0% |
-| neutral | 46.0% |
+| neutral | 46.3% |
 
 ### Phase x Style Cross-tabulation
 
 | Phase | technical | encouraging | dramatic | neutral |
 |-------|-------|-------|-------|-------|
 | endgame | 0 | 2 | 0 | 0 |
-| midgame | 0 | 28 | 0 | 0 |
-| opening | 0 | 144 | 0 | 148 |
+| midgame | 0 | 30 | 0 | 0 |
+| opening | 0 | 159 | 0 | 165 |
 
 ### Warnings
 
-> **Warning**: Class imbalance: 'technical' has only 0.0% of samples (0/322)
-> **Warning**: Class imbalance: 'dramatic' has only 0.0% of samples (0/322)
+> **Warning**: Class imbalance: 'technical' has only 0.0% of samples (0/356)
+> **Warning**: Class imbalance: 'dramatic' has only 0.0% of samples (0/356)
 
 ## 7. Issues and Next Steps
 
 ### Known Issues
 
-- Class imbalance: 'technical' has only 0.0% of samples (0/322)
-- Class imbalance: 'dramatic' has only 0.0% of samples (0/322)
+- Class imbalance: 'technical' has only 0.0% of samples (0/356)
+- Class imbalance: 'dramatic' has only 0.0% of samples (0/356)
 
 ### Next Steps
 

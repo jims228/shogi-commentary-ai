@@ -17,6 +17,12 @@ import logging
 import os
 from typing import Optional
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 import google.generativeai as genai
 
 _LOG = logging.getLogger("uvicorn.error")

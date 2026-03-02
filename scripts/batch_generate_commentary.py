@@ -23,6 +23,12 @@ from typing import Any, Dict, List, Optional
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(_PROJECT_ROOT / ".env")
+except ImportError:
+    pass
+
 from backend.api.services.position_features import extract_position_features
 from backend.api.services.template_commentary import generate_template_commentary
 from backend.api.services.explanation_evaluator import evaluate_explanation

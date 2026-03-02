@@ -44,6 +44,7 @@ data/reports/*
 !data/annotated/
 data/annotated/*
 !data/annotated/*.jsonl
+data/annotated/*_backup.jsonl
 
 # Engine binaries
 engine/yaneuraou

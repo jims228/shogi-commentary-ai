@@ -16,6 +16,12 @@ from typing import Any, Dict
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(_PROJECT_ROOT / ".env")
+except ImportError:
+    pass
+
 import google.generativeai as genai  # noqa: E402
 from google.api_core import exceptions as gax_exceptions  # noqa: E402
 

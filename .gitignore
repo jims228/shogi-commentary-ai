@@ -37,6 +37,7 @@ logs/
 data/*
 !data/benchmark_positions.json
 !data/sample_games.txt
+!data/collection_config.json
 
 # Engine binaries
 engine/yaneuraou

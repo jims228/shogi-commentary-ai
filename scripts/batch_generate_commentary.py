@@ -29,6 +29,13 @@ from backend.api.services.explanation_evaluator import evaluate_explanation
 from backend.api.services.training_logger import training_logger
 from scripts.batch_extract_features import _parse_game_line
 
+# Cost constants (Gemini Flash family pricing, approximate)
+_INPUT_COST_PER_1M = 0.075  # USD per 1M input tokens
+_OUTPUT_COST_PER_1M = 0.30  # USD per 1M output tokens
+_USD_TO_JPY = 150.0
+_AVG_INPUT_TOKENS = 500
+_AVG_OUTPUT_TOKENS = 100
+
 
 def _progress_path(output_dir: str) -> str:
     return os.path.join(output_dir, "batch_commentary_progress.jsonl")
@@ -61,6 +68,70 @@ def _save_progress(output_dir: str, game_index: int, ply: int) -> None:
         f.write(json.dumps({"game_index": game_index, "ply": ply}) + "\n")
 
 
+def load_collection_config(
+    config_path: Optional[str] = None,
+) -> Dict[str, Any]:
+    """collection_config.json を読み込む.
+
+    Returns
+    -------
+    dict
+        Config values with defaults applied for any missing keys
+    """
+    defaults: Dict[str, Any] = {
+        "daily_budget_yen": 100,
+        "rate_limit_per_minute": 10,
+        "max_requests_per_run": 200,
+        "min_quality_score": 40,
+        "max_retries": 2,
+        "phase_targets": {"opening": 0.3, "midgame": 0.4, "endgame": 0.3},
+        "style_targets": {
+            "technical": 0.25,
+            "encouraging": 0.25,
+            "dramatic": 0.25,
+            "neutral": 0.25,
+        },
+        "model": None,
+    }
+    if config_path is None:
+        config_path = str(_PROJECT_ROOT / "data" / "collection_config.json")
+
+    if not os.path.exists(config_path):
+        return defaults
+
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            user_config = json.load(f)
+        return {**defaults, **user_config}
+    except Exception:
+        return defaults
+
+
+def _is_phase_over_represented(
+    phase: str,
+    phase_counts: Dict[str, int],
+    phase_targets: Dict[str, float],
+    total_processed: int,
+) -> bool:
+    """現在のフェーズが目標比率を超えているか判定."""
+    if total_processed < 10:
+        return False
+
+    target_ratio = phase_targets.get(phase, 0.33)
+    current_ratio = phase_counts.get(phase, 0) / max(1, total_processed)
+
+    # Allow 50% overshoot tolerance
+    return current_ratio > target_ratio * 1.5
+
+
+def _estimate_cost_yen(request_count: int) -> float:
+    """推定コスト（円）を計算."""
+    input_cost = (request_count * _AVG_INPUT_TOKENS / 1_000_000) * _INPUT_COST_PER_1M
+    output_cost = (request_count * _AVG_OUTPUT_TOKENS / 1_000_000) * _OUTPUT_COST_PER_1M
+    total_usd = input_cost + output_cost
+    return total_usd * _USD_TO_JPY
+
+
 async def _generate_api_commentary(
     sfen: str,
     ply: int,
@@ -87,6 +158,10 @@ async def batch_generate(
     rate_limit: int = 10,
     max_requests: int = 100,
     dry_run: bool = True,
+    min_quality_score: float = 40.0,
+    max_retries: int = 2,
+    daily_budget_yen: float = 100.0,
+    phase_targets: Optional[Dict[str, float]] = None,
 ) -> Dict[str, Any]:
     """棋譜ファイルからバッチで解説を生成する.
 
@@ -104,6 +179,14 @@ async def batch_generate(
         最大リクエスト数
     dry_run : bool
         True の場合テンプレート解説を使用
+    min_quality_score : float
+        最低品質スコア（これ以下はリトライ）
+    max_retries : int
+        品質不足時の最大リトライ回数
+    daily_budget_yen : float
+        日次予算（円）。API使用時のみ適用
+    phase_targets : dict, optional
+        フェーズ別目標比率
 
     Returns
     -------
@@ -113,7 +196,11 @@ async def batch_generate(
     input_path = Path(input_file)
     if not input_path.exists():
         print(f"Error: input file not found: {input_file}", file=sys.stderr)
-        return {"processed": 0, "skipped": 0, "avg_quality": 0.0, "elapsed_sec": 0.0}
+        return {
+            "processed": 0, "skipped": 0, "avg_quality": 0.0,
+            "elapsed_sec": 0.0, "total_retries": 0,
+            "estimated_cost_yen": 0.0, "phase_distribution": {},
+        }
 
     lines = [
         l.strip()
@@ -130,7 +217,12 @@ async def batch_generate(
     total_processed = 0
     total_skipped = 0
     total_quality = 0.0
+    total_retries = 0
+    total_phase_skipped = 0
+    budget_stopped = False
     start_time = time.time()
+
+    phase_counts: Dict[str, int] = {"opening": 0, "midgame": 0, "endgame": 0}
 
     with open(output_path, "a", encoding="utf-8") as out:
         for game_idx, line in enumerate(lines):
@@ -171,9 +263,29 @@ async def batch_generate(
                     )
                     continue
 
+                # Phase balance check
+                phase = features.get("phase", "midgame")
+                if phase_targets and _is_phase_over_represented(
+                    phase, phase_counts, phase_targets, total_processed
+                ):
+                    total_phase_skipped += 1
+                    continue
+
+                # Budget check (API mode only)
+                if not dry_run:
+                    estimated_cost = _estimate_cost_yen(total_processed + 1)
+                    if estimated_cost > daily_budget_yen:
+                        print(
+                            f"\n  Budget limit reached: ¥{estimated_cost:.2f} > ¥{daily_budget_yen}",
+                        )
+                        budget_stopped = True
+                        break
+
                 # 解説生成
                 if dry_run:
-                    commentary = generate_template_commentary(features, seed=game_idx * 1000 + ply)
+                    commentary = generate_template_commentary(
+                        features, seed=game_idx * 1000 + ply
+                    )
                 else:
                     if sleep_interval > 0 and total_processed > 0:
                         time.sleep(sleep_interval)
@@ -188,6 +300,27 @@ async def batch_generate(
 
                 # 品質評価
                 quality = evaluate_explanation(commentary, features)
+
+                # Quality retry
+                for retry in range(max_retries):
+                    if quality["total"] >= min_quality_score:
+                        break
+                    total_retries += 1
+                    if dry_run:
+                        commentary = generate_template_commentary(
+                            features,
+                            seed=game_idx * 1000 + ply + retry + 1,
+                        )
+                    else:
+                        if sleep_interval > 0:
+                            time.sleep(sleep_interval)
+                        try:
+                            commentary = await _generate_api_commentary(
+                                sfen, ply, features
+                            )
+                        except Exception:
+                            break
+                    quality = evaluate_explanation(commentary, features)
 
                 # レコード書き出し
                 record = {
@@ -205,7 +338,9 @@ async def batch_generate(
                 # Training logger (async)
                 try:
                     await training_logger.log_explanation({
-                        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        "timestamp": time.strftime(
+                            "%Y-%m-%dT%H:%M:%SZ", time.gmtime()
+                        ),
                         "type": "explanation",
                         "input": {
                             "sfen": sfen,
@@ -223,9 +358,10 @@ async def batch_generate(
                 _save_progress(output_dir, game_idx, ply)
                 total_processed += 1
                 total_quality += quality["total"]
+                phase_counts[phase] = phase_counts.get(phase, 0) + 1
                 prev_features = features
 
-            if total_processed >= max_requests:
+            if total_processed >= max_requests or budget_stopped:
                 break
 
             # 進捗表示
@@ -242,16 +378,23 @@ async def batch_generate(
     print()
 
     avg_quality = round(total_quality / max(1, total_processed), 1)
-    stats = {
+    stats: Dict[str, Any] = {
         "processed": total_processed,
         "skipped": total_skipped,
         "avg_quality": avg_quality,
         "elapsed_sec": round(elapsed, 2),
+        "total_retries": total_retries,
+        "estimated_cost_yen": round(_estimate_cost_yen(total_processed), 4),
+        "phase_distribution": dict(phase_counts),
     }
+    if total_phase_skipped > 0:
+        stats["phase_skipped"] = total_phase_skipped
     print(
         f"Done: {stats['processed']} processed, "
         f"{stats['skipped']} skipped, "
         f"avg quality: {stats['avg_quality']}, "
+        f"retries: {stats['total_retries']}, "
+        f"cost: ¥{stats['estimated_cost_yen']}, "
         f"{stats['elapsed_sec']}s"
     )
     return stats
@@ -280,29 +423,65 @@ def main() -> None:
     parser.add_argument(
         "--rate-limit",
         type=int,
-        default=10,
-        help="API呼び出し回数/分 (default: 10)",
+        default=None,
+        help="API呼び出し回数/分 (default: config or 10)",
     )
     parser.add_argument(
         "--max-requests",
         type=int,
-        default=100,
-        help="最大リクエスト数 (default: 100)",
+        default=None,
+        help="最大リクエスト数 (default: config or 100)",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="テンプレート解説を使用（API不使用）",
     )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="collection_config.json のパス",
+    )
+    parser.add_argument(
+        "--min-quality",
+        type=float,
+        default=None,
+        help="最低品質スコア (default: config or 40)",
+    )
+    parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=None,
+        help="品質リトライ回数 (default: config or 2)",
+    )
+    parser.add_argument(
+        "--daily-budget",
+        type=float,
+        default=None,
+        help="日次予算（円） (default: config or 100)",
+    )
     args = parser.parse_args()
+
+    config = load_collection_config(args.config)
+
+    # CLI args override config values
+    rate_limit = args.rate_limit if args.rate_limit is not None else config["rate_limit_per_minute"]
+    max_requests = args.max_requests if args.max_requests is not None else config["max_requests_per_run"]
+    min_quality = args.min_quality if args.min_quality is not None else config["min_quality_score"]
+    max_retries = args.max_retries if args.max_retries is not None else config["max_retries"]
+    daily_budget = args.daily_budget if args.daily_budget is not None else config["daily_budget_yen"]
 
     asyncio.run(batch_generate(
         input_file=args.input,
         output_dir=args.output_dir,
         sample_interval=args.interval,
-        rate_limit=args.rate_limit,
-        max_requests=args.max_requests,
+        rate_limit=rate_limit,
+        max_requests=max_requests,
         dry_run=args.dry_run,
+        min_quality_score=min_quality,
+        max_retries=max_retries,
+        daily_budget_yen=daily_budget,
+        phase_targets=config.get("phase_targets"),
     ))
 
 

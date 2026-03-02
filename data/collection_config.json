@@ -1,0 +1,19 @@
+{
+  "daily_budget_yen": 100,
+  "rate_limit_per_minute": 10,
+  "max_requests_per_run": 200,
+  "min_quality_score": 40,
+  "max_retries": 2,
+  "phase_targets": {
+    "opening": 0.3,
+    "midgame": 0.4,
+    "endgame": 0.3
+  },
+  "style_targets": {
+    "technical": 0.25,
+    "encouraging": 0.25,
+    "dramatic": 0.25,
+    "neutral": 0.25
+  },
+  "model": null
+}

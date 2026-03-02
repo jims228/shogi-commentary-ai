@@ -34,7 +34,8 @@ logs/
 *.db
 *.db-shm
 *.db-wal
-data/
+data/*
+!data/benchmark_positions.json
 
 # Engine binaries
 engine/yaneuraou

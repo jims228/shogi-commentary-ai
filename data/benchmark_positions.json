@@ -1,0 +1,59 @@
+[
+  {
+    "name": "平手初期局面",
+    "description": "Standard starting position",
+    "sfen": "position startpos",
+    "ply": 0,
+    "expected": {
+      "phase": "opening",
+      "king_safety_min": 35,
+      "piece_activity_min": 40,
+      "attack_pressure_max": 10
+    }
+  },
+  {
+    "name": "矢倉囲い完成",
+    "description": "Yagura castle completed (~32 moves in)",
+    "sfen": "position sfen ln1g1g1nl/1ks1r4/1pppp1p1p/p4s2P/9/P1P1PS1p1/1P1PP1P2/1BK1G2R1/LNSG3NL b - 32",
+    "ply": 32,
+    "expected": {
+      "phase": "midgame",
+      "king_safety_min": 40,
+      "piece_activity_min": 40,
+      "attack_pressure_max": 15
+    }
+  },
+  {
+    "name": "中飛車 vs 居飛車",
+    "description": "Central rook vs static rook (~20 moves in)",
+    "sfen": "position sfen lnsgk2nl/5g1b1/ppppppspp/5rp2/9/2P1P4/PP1P1PPPP/1B3S1R1/LNSGKG1NL b - 20",
+    "ply": 20,
+    "expected": {
+      "phase": "opening",
+      "piece_activity_min": 40,
+      "piece_activity_max": 75
+    }
+  },
+  {
+    "name": "終盤の寄せ合い",
+    "description": "Endgame race to checkmate",
+    "sfen": "position sfen 4k4/9/4G4/9/9/9/9/9/4K4 b G2r2b4s4n4l18p 120",
+    "ply": 120,
+    "expected": {
+      "phase": "endgame",
+      "king_safety_max": 30,
+      "attack_pressure_min": 10
+    }
+  },
+  {
+    "name": "詰み直前の局面",
+    "description": "Near checkmate position",
+    "sfen": "position sfen 4k4/4G4/4P4/9/9/9/9/9/4K4 b r2b2g3s4n4l17p 150",
+    "ply": 150,
+    "expected": {
+      "phase": "endgame",
+      "king_safety_max": 30,
+      "attack_pressure_min": 40
+    }
+  }
+]

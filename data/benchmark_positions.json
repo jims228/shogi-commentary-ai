@@ -55,5 +55,38 @@
       "king_safety_max": 30,
       "attack_pressure_min": 40
     }
+  },
+  {
+    "name": "玉頭攻め",
+    "description": "King head attack - king under pressure",
+    "sfen": "position sfen ln3g1nl/1r2s2b1/p1pppp2p/9/1s3P3/P1P3p1P/1P1PP4/1BG1K2R1/LN1G3NL b 2p 50",
+    "ply": 50,
+    "expected": {
+      "phase": "midgame",
+      "king_safety_max": 40,
+      "piece_activity_min": 40
+    }
+  },
+  {
+    "name": "穴熊堅陣",
+    "description": "Anaguma castle - very solid king defense",
+    "sfen": "position sfen l3kg1nl/1r3gs2/p1pppp1bp/9/9/P1P1P2PP/1P1P1PP2/1BSG1S1R1/LN1GK3L b Np 35",
+    "ply": 35,
+    "expected": {
+      "phase": "midgame",
+      "king_safety_min": 50,
+      "piece_activity_min": 40
+    }
+  },
+  {
+    "name": "大駒交換直後",
+    "description": "Right after big piece exchange - low piece activity",
+    "sfen": "position sfen lnsgk1snl/6g2/p1pppp2p/9/9/P1P1P3P/1P1P1PP2/2SGK1S2/LN1G3NL b RBrb2p 42",
+    "ply": 42,
+    "expected": {
+      "phase": "midgame",
+      "piece_activity_max": 40,
+      "attack_pressure_max": 15
+    }
   }
 ]

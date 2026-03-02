@@ -103,7 +103,7 @@ class TestRunBenchmark(unittest.TestCase):
         self.assertIn("passed", result)
         self.assertIn("failed", result)
         self.assertIn("results", result)
-        self.assertEqual(result["total"], 5)
+        self.assertEqual(result["total"], 8)
 
 
 # ---------------------------------------------------------------------------

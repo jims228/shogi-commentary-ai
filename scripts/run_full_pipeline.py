@@ -52,7 +52,7 @@ def _text_bar(label: str, count: int, total: int, width: int = 30) -> str:
     return f"  {label:<12} {bar} {count:>3} ({pct})"
 
 
-def run_pipeline() -> Dict[str, Any]:
+def run_pipeline(sample_interval: int = 5) -> Dict[str, Any]:
     """パイプライン全体を実行."""
     print("=" * 60)
     print("  Full Pipeline Integration Test")
@@ -64,11 +64,12 @@ def run_pipeline() -> Dict[str, Any]:
     print("\n[Step 1] Batch Feature Extraction")
     print(f"  Input:  {_SAMPLE_GAMES}")
     print(f"  Output: {_PIPELINE_OUTPUT}")
+    print(f"  Interval: {sample_interval}")
 
     extract_stats = batch_extract(
         str(_SAMPLE_GAMES),
         str(_PIPELINE_OUTPUT),
-        sample_interval=5,
+        sample_interval=sample_interval,
     )
 
     # ------------------------------------------------------------------
@@ -185,5 +186,14 @@ def run_pipeline() -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    result = run_pipeline()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Full pipeline integration test")
+    parser.add_argument(
+        "--interval", type=int, default=5,
+        help="Sample interval for feature extraction (default: 5)",
+    )
+    args = parser.parse_args()
+
+    result = run_pipeline(sample_interval=args.interval)
     sys.exit(0 if result.get("quality_pass", False) else 1)

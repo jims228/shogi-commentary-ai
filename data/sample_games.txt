@@ -16,3 +16,18 @@ position startpos moves 2g2f 3c3d 7g7f 7c7d 2f2e 2c2d 2e2d 2b3c 2h2f 5a4b 3i3h 7
 
 # 角換わり腰掛け銀 (36手)
 position startpos moves 7g7f 3c3d 2g2f 5c5d 3i3h 5a4b 5g5f 4b3b 3h2g 3a4b 2g3f 7a6b 6g6f 6b5c 3f4e 5c4d 4e3f 2b8h+ 7i8h B*5e 3f2e 5e8h+ 8i7g 8h7h 2e3f 7h6h 5i6h P*5g 6h5g 4d5e 3f4e 5e4f 4g4f 3d3e 4e3f 3e3f
+
+# 乱戦型 終盤まで (120手)
+position startpos moves 4i3h 8b8g 1i1h 6a5b 6i7h 8g8c+ 6g6f 3c3d 3g3f 2c2d 9i9h 2b6f 3h4h 6f5g+ 4h5g 8c8h 7i8h 5a6b 7h6h 3d3e 3f3e 9a9b 5i5h 6c6d 6h7h 6d6e 3i3h 3a2b 5h6i 4a3a 6i5h 6e6f 5g6f 6b6a 6f7e 7a6b 2g2f 6a5a 5h4i 6b7a 7g7f 2b2c 4i4h 1c1d 7h8g 5a6b 2f2e 6b6a 2e2d 2c2d 2h2d 3a4a 2d2a 5b6c 2a4a 7c7d 4a5a+ 7d7e 5a1a 7e7f 8g7g 7f7g+ 8i7g 6c6b 7g6e 6a7b 6e5c+ 6b5c 4g4f 7a8b 1a1d 7b7c 8h7g 5c4d 1d4d 4c4d 7g8f 7c7d 4h3g 7d8e 3h2g 8e8f 3g3f 8a7c 3e3d 8f9g 4f4e 4d4e 3f4e 9g9h 2g3f 7c8e 4e5e 9h9i 5e6d 8b8c 6d7d 8c9d 7d8e 9i8i 8e9d 8i9i 9d9c 9i9h 9c9b 9h9i 9b8c 9i9h 8c7d 9h9i 1g1f 9i9h 1h1g 9h9g 3d3c+ 9g8g 7d8d 8g9h 2i3g 9h8i
+
+# 持久戦型 終盤まで (120手)
+position startpos moves 9i9h 6a7b 4i3h 8b8e 8h9i 3a4b 5i6h 8e8d 4g4f 8d8f 2g2f 1a1b 7i8h 8f8h 9i8h 9a9b 3g3f 7a6b 2h2g 2c2d 6i5i 6c6d 5g5f 4a3b 3h3g 5a4a 3g3h 2d2e 6h7h 2e2f 2g2f 9c9d 2f2b 3b2b 3h4g 9b9c 4g5g 4b3a 7h8g 1c1d 4f4e 4a3b 6g6f 7b8b 5i4h 3b4a 1i1h 5c5d 4h4g 4a5a 3f3e 5a6a 5f5e 5d5e 8g7f 2a1c 7f6g 4c4d 4e4d 6a5b 7g7f 3c3d 3e3d 2b3b 3i4h 3b2c 7f7e 7c7d 7e7d 2c3d 8h9i 3d4d 6f6e 6d6e 9i5e 4d5e 5g6f 6e6f 6g6f 1d1e 6f5e 6b7c 7d7c+ 8b7c 5e5f 3a3b 5f6f 7c8d 4g3f 8d7d 4h3i 3b2c 6f7g 1c2e 3f2e 7d8e 2e3d 2c3d 7g6h 3d4e 2i3g 8e8d 3g4e 5b5a 3i4h 8d8c 1g1f 8c8b 1f1b+ 8a7c 9g9f 5a6a 6h7g 8b9b 9f9e 9d9e 7g7f 6a7b
+
+# 中盤長期戦型 (100手)
+position startpos moves 7g7f 6a7b 8h4d 8b8i 1i1h 6c6d 5i5h 8i9i 4d7g 5a6b 7g5e 4a4b 4i4h 9i9h 5e6d 4c4d 6d7e 1c1d 7e8f 9h9i+ 8f9e 9i9g 9e7c+ 9g7g 7c6c 6b6a 6c5c 7g6g 5c6b 6g5f 6b7b 6a7b 5g5f 2a1c 7i8h 7b6b 2g2f 6b5c 8h9i 7a8b 5h6h 1a1b 3g3f 9a9b 6h6g 3c3d 6i6h 4b4a 4h3h 2b1a 6g5g 4a4b 6h7h 9c9d 7h6h 8a9c 5g6f 4b4a 9i8h 5c6d 6f6g 4a5a 1g1f 6d6c 3f3e 8b8c 3e3d 1c2e 4g4f 5a4b 2f2e 1a2b 1f1e 6c7d 1e1d 1b1d 8h9i 1d1h+ 6g5h 1h2i 6h6g 2i2h 3i2h 4b4c 6g6h 2b1a 2h1i 1a3c 6h7g 7d7c 3d3c+ 7c6d 3c4c 6d7e 4c4d 9d9e 5h6g 8c8d 5f5e 7e7f
+
+# 速攻型 終盤突入 (100手)
+position startpos moves 2h1h 8b7b 5i6h 7b4b 6h7h 6a5b 1h4h 4b3b 4h5h 7a6b 4i5i 5a4b 6g6f 1a1b 5h1h 2b1a 3i2h 1c1d 6i6h 5b5a 5g5f 1a2b 9i9h 2b1a 5f5e 3a2b 7h6i 6c6d 5e5d 9a9b 5d5c+ 7c7d 5c4c 4b4c 5i5h 6b7c 6h5g 2c2d 9g9f 3b6b 5g5f 7d7e 7g7f 7e7f 5h6g 6b4b 6g7f 7c8d 7f7g 5a6b 8h9i 4c4d 9h9g 1b1c 5f5e 4d5e 4g4f 4b4f 6i5i 6d6e 6f6e 5e6e 5i4h 4f9f 4h4g 2d2e 2h3i 9c9d 9g9f 4a3b 9f9d 8d8e 9d9b+ 6b7c 9b8a 3b2c 8a9a 2e2f 1h6h 2f2g+ 9a9b 7c8c 6h3h 2g3h 4g3h 8e7f 7g7f 6e7f 3h2h 8c9c 3i4h 9c9b 9i3c+ 2b3c 4h5i 7f8g 8i9g 9b9a 7i8h 8g8h
+
+# 大駒飛び交い型 終盤まで (120手)
+position startpos moves 1g1f 8b8e 4i5h 8e2e 7i6h 5a6b 6i7i 2e7e 9g9f 7e7d 2h1h 7d9d 8i9g 7c7d 5i6i 9d9f 3i2h 9f9g+ 8h9g 3c3d 9g5c 2b7g 5c3a+ 4a3a 6h7g 4c4d 9i9c+ 8a9c 1f1e 6a5a 5h6h 6c6d 6g6f 3a4a 6i5i 6b7c 1h1g 2a3c 1e1d 1c1d 1g1d 1a1d 1i1d 7c7b 5i6i 7b6c 4g4f 3d3e 5g5f 6d6e 6f6e 5a6b 7i8i 4a4b 6h5h 9c8e 7g7f 4b4a 7f8e 6b6a 8e7d 6c7d 6i7h 7d6e 2h1i 6e5f 7h8h 5f4f 8h7h 4f3g 7h6h 3g2g 6h7g 2g2h 8i9i 2h1i 7g6g 1i2i 5h4h 9a9i+ 6g5h 3e3f 4h3h 4a5b 3h2h 2i2h 5h6g 7a7b 6g7g 7b8a 7g8h 5b4c 8h9i 4d4e 9i8h 4c5c 8h7i 5c5d 1d1a+ 5d4d 7i6h 2h3i 6h5h 6a5b 5h5g 3c2e 5g6g 3i4h 6g7g 2e1g+ 7g8h 4d3d 8h9g 4h3h 1a1b 3h4g 1b2a 3d3c 2a3a 5b6c

@@ -3,11 +3,13 @@
 1. sample_games.txt から特徴量バッチ抽出
 2. 抽出結果に対して品質ベンチマーク
 3. 統計サマリー出力
+4. (--full-cycle) バッチ解説生成 + モデル訓練 + スタイル予測テスト
 
 Gemini APIは一切使わない。
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import sys
@@ -52,7 +54,7 @@ def _text_bar(label: str, count: int, total: int, width: int = 30) -> str:
     return f"  {label:<12} {bar} {count:>3} ({pct})"
 
 
-def run_pipeline(sample_interval: int = 5) -> Dict[str, Any]:
+def run_pipeline(sample_interval: int = 5, full_cycle: bool = False) -> Dict[str, Any]:
     """パイプライン全体を実行."""
     print("=" * 60)
     print("  Full Pipeline Integration Test")
@@ -153,7 +155,65 @@ def run_pipeline(sample_interval: int = 5) -> Dict[str, Any]:
     print(f"  {'TOTAL':<22} {score_stats['mean']:>6} {score_stats['min']:>6} {score_stats['max']:>6}")
 
     # ------------------------------------------------------------------
-    # Step 4: 結果まとめ
+    # Full-cycle: Steps 4-6
+    # ------------------------------------------------------------------
+    batch_stats = None
+    train_result = None
+    style_dist: Dict[str, int] = {}
+
+    if full_cycle:
+        from scripts.batch_generate_commentary import batch_generate
+        from backend.api.services.ml_trainer import (
+            CommentaryStyleSelector,
+            rule_based_predict,
+            _HAS_SKLEARN,
+        )
+
+        # Step 4: バッチ解説生成 (dry-run)
+        print("\n[Step 4] Batch Commentary Generation (dry-run)")
+        _BATCH_OUTPUT_DIR = _PROJECT_ROOT / "data" / "batch_commentary"
+        batch_stats = asyncio.run(batch_generate(
+            input_file=str(_SAMPLE_GAMES),
+            output_dir=str(_BATCH_OUTPUT_DIR),
+            sample_interval=sample_interval,
+            max_requests=50,
+            dry_run=True,
+        ))
+        print(f"  Processed: {batch_stats['processed']}, Avg quality: {batch_stats['avg_quality']}")
+
+        # Step 5: モデル訓練
+        print("\n[Step 5] Style Selector Training")
+        selector = CommentaryStyleSelector()
+        train_result = selector.train()
+        if "error" in train_result:
+            print(f"  Training skipped: {train_result['error']}")
+            print(f"  Samples found: {train_result['samples']}")
+        else:
+            print(f"  Samples: {train_result['samples']}")
+            print(f"  Accuracy: {train_result['accuracy']}")
+            print(f"  Distribution: {train_result['distribution']}")
+            if _HAS_SKLEARN:
+                saved_path = selector.save()
+                print(f"  Model saved: {saved_path}")
+
+        # Step 6: スタイル予測テスト
+        print("\n[Step 6] Style Prediction Test")
+        style_counter = Counter()
+        test_records = records[:20]
+        for record in test_records:
+            if selector.is_trained:
+                predicted = selector.predict(record)
+            else:
+                predicted = rule_based_predict(record)
+            style_counter[predicted] += 1
+        style_total = sum(style_counter.values())
+        for style in ["technical", "encouraging", "dramatic", "neutral"]:
+            count = style_counter.get(style, 0)
+            print(_text_bar(style, count, style_total))
+        style_dist = dict(style_counter)
+
+    # ------------------------------------------------------------------
+    # Results Summary
     # ------------------------------------------------------------------
     print("\n" + "=" * 60)
     print("  Pipeline Results")
@@ -166,9 +226,19 @@ def run_pipeline(sample_interval: int = 5) -> Dict[str, Any]:
 
     quality_pass = score_stats["mean"] >= 40
     print(f"\n  Quality threshold (avg >= 40): {'PASS' if quality_pass else 'FAIL'}")
+
+    if full_cycle:
+        print(f"\n  [Full Cycle]")
+        if batch_stats:
+            print(f"  Batch commentary:   {batch_stats['processed']} generated")
+        if train_result and "error" not in train_result:
+            print(f"  Model accuracy:     {train_result['accuracy']}")
+        if style_dist:
+            print(f"  Style distribution: {style_dist}")
+
     print("=" * 60)
 
-    return {
+    result: Dict[str, Any] = {
         "extract_stats": extract_stats,
         "feature_stats": {
             "king_safety": ks_stats,
@@ -184,6 +254,13 @@ def run_pipeline(sample_interval: int = 5) -> Dict[str, Any]:
         "quality_pass": quality_pass,
     }
 
+    if full_cycle:
+        result["batch_stats"] = batch_stats
+        result["train_result"] = train_result
+        result["style_distribution"] = style_dist
+
+    return result
+
 
 if __name__ == "__main__":
     import argparse
@@ -193,7 +270,11 @@ if __name__ == "__main__":
         "--interval", type=int, default=5,
         help="Sample interval for feature extraction (default: 5)",
     )
+    parser.add_argument(
+        "--full-cycle", action="store_true",
+        help="Run extended pipeline: batch commentary, model training, style prediction test",
+    )
     args = parser.parse_args()
 
-    result = run_pipeline(sample_interval=args.interval)
+    result = run_pipeline(sample_interval=args.interval, full_cycle=args.full_cycle)
     sys.exit(0 if result.get("quality_pass", False) else 1)

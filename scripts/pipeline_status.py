@@ -1,0 +1,164 @@
+#!/usr/bin/env python3
+"""ML パイプラインの状況ダッシュボード.
+
+Usage:
+    python scripts/pipeline_status.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+from collections import Counter
+from pathlib import Path
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_PROJECT_ROOT))
+
+_DATA_DIR = _PROJECT_ROOT / "data"
+
+
+def _count_lines(path: Path) -> int:
+    """ファイルの有効行数を数える (空行・コメント行除外)."""
+    if not path.exists():
+        return 0
+    count = 0
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#"):
+                count += 1
+    return count
+
+
+def _count_jsonl(path: Path) -> int:
+    """JSONLファイルのレコード数を数える."""
+    if not path.exists():
+        return 0
+    count = 0
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                count += 1
+    return count
+
+
+def _load_phase_distribution(path: Path) -> dict:
+    """pipeline_test_features.jsonl からフェーズ分布を取得."""
+    if not path.exists():
+        return {}
+    counts: Counter = Counter()
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+                counts[obj.get("phase", "unknown")] += 1
+            except Exception:
+                continue
+    return dict(counts)
+
+
+def main() -> None:
+    print()
+    print("=" * 56)
+    print("  Shogi Commentary AI - Pipeline Status")
+    print("=" * 56)
+
+    # --- Data Sources ---
+    print()
+    print("  [Data Sources]")
+
+    game_count = _count_lines(_DATA_DIR / "sample_games.txt")
+    print(f"  Sample games:           {game_count} games")
+
+    benchmark_count = 0
+    benchmark_path = _DATA_DIR / "benchmark_positions.json"
+    if benchmark_path.exists():
+        try:
+            with open(benchmark_path, encoding="utf-8") as f:
+                benchmark_count = len(json.load(f))
+        except Exception:
+            pass
+    print(f"  Benchmark positions:    {benchmark_count} positions")
+
+    features_path = _DATA_DIR / "pipeline_test_features.jsonl"
+    features_count = _count_jsonl(features_path)
+    print(f"  Pipeline features:      {features_count} records")
+
+    if features_count > 0:
+        phase_dist = _load_phase_distribution(features_path)
+        for phase in ["opening", "midgame", "endgame"]:
+            count = phase_dist.get(phase, 0)
+            pct = f"{count / features_count * 100:.0f}%" if features_count else "0%"
+            print(f"    {phase:<12} {count:>4} ({pct})")
+
+    # --- Training Data ---
+    print()
+    print("  [Training Data]")
+
+    from backend.api.services.training_logger import TrainingLogger
+    logger = TrainingLogger()
+    stats = logger.get_stats()
+    log_files = stats.get("files", [])
+    total_records = sum(f.get("records", 0) for f in log_files)
+    print(f"  Training log files:     {len(log_files)} files, {total_records} records")
+
+    batch_commentary_path = _DATA_DIR / "batch_commentary" / "batch_commentary.jsonl"
+    batch_count = _count_jsonl(batch_commentary_path)
+    print(f"  Batch commentary:       {batch_count} records")
+
+    # --- Quality ---
+    if total_records > 0:
+        print()
+        print("  [Quality]")
+        from backend.api.services.explanation_evaluator import evaluate_training_logs
+        log_dir = stats.get("log_dir", "")
+        if log_dir:
+            eval_stats = evaluate_training_logs(log_dir)
+            if eval_stats.get("total_records", 0) > 0:
+                print(f"  Evaluated records:      {eval_stats['total_records']}")
+                print(f"  Avg quality score:      {eval_stats.get('avg_total', 0)}")
+                print(f"  Low quality (<40):      {eval_stats.get('low_quality_count', 0)}")
+            else:
+                print("  No evaluable records yet")
+
+    # --- Model ---
+    print()
+    print("  [Model]")
+
+    from backend.api.services.ml_trainer import CommentaryStyleSelector, _HAS_SKLEARN
+    print(f"  scikit-learn:           {'YES' if _HAS_SKLEARN else 'NO'}")
+
+    model_path = _DATA_DIR / "models" / "style_selector.joblib"
+    if model_path.exists():
+        selector = CommentaryStyleSelector()
+        loaded = selector.load(str(model_path))
+        if loaded:
+            print(f"  Style selector:         TRAINED (loaded from {model_path.name})")
+        else:
+            print(f"  Style selector:         FILE EXISTS but failed to load")
+    else:
+        print(f"  Style selector:         rule-based (未訓練)")
+
+    # --- Next Action ---
+    print()
+    print("  [Next Action]")
+    if total_records == 0 and batch_count == 0:
+        print("  → Run: python3 scripts/batch_generate_commentary.py --dry-run")
+    elif total_records < 10:
+        print(f"  → あと {10 - total_records} 件でML訓練可能")
+    elif not model_path.exists():
+        print("  → Run: python3 scripts/train_style_model.py")
+    else:
+        print("  → パイプライン稼働中。API解説生成でデータ蓄積を継続")
+
+    print()
+    print("=" * 56)
+    print()
+
+
+if __name__ == "__main__":
+    main()

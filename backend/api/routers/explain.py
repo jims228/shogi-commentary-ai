@@ -14,8 +14,9 @@ from pydantic import BaseModel
 from backend.api.auth import Principal, require_user
 
 _LOG = logging.getLogger("uvicorn.error")
-from backend.api.services.ai_service import AIService
+from backend.api.services.ai_service import AIService, _get_style_selector
 from backend.api.services.game_metrics import calculate_skill_score, calculate_tension_timeline
+from backend.api.services.ml_trainer import rule_based_predict
 from backend.api.services.position_features import extract_position_features
 from backend.api.routers.annotate import _dump_model
 
@@ -34,6 +35,7 @@ class PositionCommentRequest(BaseModel):
     candidates: List[ExplainCandidate] = []
     user_move: Optional[str] = None
     delta_cp: Optional[int] = None
+    style: Optional[str] = None
 
 
 class GameDigestInput(BaseModel):
@@ -87,6 +89,15 @@ async def explain_endpoint(req: PositionCommentRequest, _principal: Principal = 
     except Exception:
         _LOG.warning("[explain] position_features extraction failed, continuing without features")
 
+    # Style selection: explicit > ML model > rule-based > neutral
+    style_used = req.style
+    if style_used is None and features:
+        try:
+            style_used = _get_style_selector().predict(features)
+        except Exception:
+            style_used = rule_based_predict(features)
+    style_used = style_used or "neutral"
+
     comment = await AIService.generate_position_comment(
         ply=req.ply,
         sfen=req.sfen,
@@ -94,8 +105,9 @@ async def explain_endpoint(req: PositionCommentRequest, _principal: Principal = 
         user_move=req.user_move,
         delta_cp=req.delta_cp,
         features=features,
+        style=style_used,
     )
-    return {"explanation": comment}
+    return {"explanation": comment, "style": style_used}
 
 
 @router.post("/explain/digest")

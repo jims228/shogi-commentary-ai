@@ -125,6 +125,46 @@ def main() -> None:
             else:
                 print("  No evaluable records yet")
 
+    # --- Annotated Data ---
+    print()
+    print("  [Annotated Data]")
+    annotated_path = _DATA_DIR / "annotated" / "annotated_corpus.jsonl"
+    if annotated_path.exists():
+        ann_count = _count_jsonl(annotated_path)
+        print(f"  Annotated records:      {ann_count} records")
+        if ann_count > 0:
+            from backend.api.schemas.annotation import FOCUS_LABELS, DEPTH_LEVELS
+            focus_counts: Counter = Counter()
+            depth_counts: Counter = Counter()
+            imp_sum = 0.0
+            with open(annotated_path, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        obj = json.loads(line)
+                        ann = obj.get("annotation", {})
+                        for lbl in ann.get("focus", []):
+                            focus_counts[lbl] += 1
+                        depth_counts[ann.get("depth", "unknown")] += 1
+                        imp_sum += ann.get("importance", 0)
+                    except Exception:
+                        continue
+            print(f"  Avg importance:         {imp_sum / ann_count:.2f}")
+            print(f"  Depth: ", end="")
+            parts = []
+            for d in DEPTH_LEVELS:
+                parts.append(f"{d}={depth_counts.get(d, 0)}")
+            print(", ".join(parts))
+            top_focus = focus_counts.most_common(3)
+            if top_focus:
+                fstr = ", ".join(f"{k}({v})" for k, v in top_focus)
+                print(f"  Top focus:              {fstr}")
+    else:
+        print("  No annotated data yet")
+        print("  → Run: python3 scripts/annotate_corpus.py")
+
     # --- Model ---
     print()
     print("  [Model]")

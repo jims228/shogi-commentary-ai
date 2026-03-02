@@ -183,6 +183,29 @@ def main() -> None:
         print("  No experiments yet")
         print("  → Run: python3 scripts/run_experiment.py --name baseline")
 
+    # --- Reports ---
+    print()
+    print("  [Reports]")
+    reports_dir = _DATA_DIR / "reports"
+    if reports_dir.is_dir():
+        md_files = sorted([
+            f for f in reports_dir.iterdir()
+            if f.suffix == ".md"
+        ])
+        if md_files:
+            latest_report = md_files[-1]
+            import datetime as _dt
+            mod_time = _dt.datetime.fromtimestamp(latest_report.stat().st_mtime)
+            print(f"  Latest report:          {latest_report.name}")
+            print(f"  Generated:              {mod_time.strftime('%Y-%m-%d %H:%M')}")
+            print(f"  Path:                   {latest_report}")
+        else:
+            print("  No reports yet")
+            print("  → Run: python3 scripts/generate_report.py")
+    else:
+        print("  No reports yet")
+        print("  → Run: python3 scripts/run_baseline.py && python3 scripts/generate_report.py")
+
     # --- Next Action ---
     print()
     print("  [Next Action]")

@@ -38,6 +38,9 @@ data/*
 !data/benchmark_positions.json
 !data/sample_games.txt
 !data/collection_config.json
+!data/reports/
+data/reports/*
+!data/reports/*.md
 
 # Engine binaries
 engine/yaneuraou

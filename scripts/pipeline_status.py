@@ -214,6 +214,18 @@ def main() -> None:
     else:
         print(f"  Focus predictor:        rule-based (未訓練)")
 
+    imp_model_path = _DATA_DIR / "models" / "importance_predictor.joblib"
+    if imp_model_path.exists():
+        from backend.api.services.importance_predictor import ImportancePredictor
+        ip = ImportancePredictor()
+        loaded_ip = ip.load(str(imp_model_path))
+        if loaded_ip:
+            print(f"  Importance predictor:   TRAINED (loaded from {imp_model_path.name})")
+        else:
+            print(f"  Importance predictor:   FILE EXISTS but failed to load")
+    else:
+        print(f"  Importance predictor:   rule-based (未訓練)")
+
     # --- Experiments ---
     print()
     print("  [Experiments]")

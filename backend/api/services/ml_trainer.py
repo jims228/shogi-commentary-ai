@@ -3,7 +3,7 @@
 ルールベース fallback + scikit-learn DecisionTreeClassifier で
 局面特徴量から最適な解説スタイルを予測する。
 
-Styles: technical, encouraging, dramatic, neutral
+Styles: technical, encouraging, neutral
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # 定数
 # ---------------------------------------------------------------------------
-STYLES = ("technical", "encouraging", "dramatic", "neutral")
+STYLES = ("technical", "encouraging", "neutral")
 
 _DEFAULT_MODEL_DIR = os.path.join(
     os.path.dirname(__file__), "..", "..", "..", "data", "models"
@@ -57,8 +57,7 @@ _PHASE_MAP = {"opening": 0, "midgame": 1, "endgame": 2}
 def rule_based_predict(features: Dict[str, Any]) -> str:
     """局面特徴量からルールベースでスタイルを選択する.
 
-    - dramatic: 攻撃圧力が高い or 終盤
-    - technical: 中盤で駒活用度が高い
+    - technical: 攻撃圧力が高い or 中盤で駒活用度が高い
     - encouraging: 序盤 or 安全度が高い
     - neutral: その他
     """
@@ -67,11 +66,10 @@ def rule_based_predict(features: Dict[str, Any]) -> str:
     ks = features.get("king_safety", 50)
     pa = features.get("piece_activity", 50)
 
-    # dramatic: 激しい局面
+    # technical: 激しい局面 or 中盤の複雑な駒運び
     if ap >= 50 or (phase == "endgame" and ap >= 30):
-        return "dramatic"
+        return "technical"
 
-    # technical: 中盤の複雑な駒運び
     if phase == "midgame" and pa >= 50:
         return "technical"
 
@@ -103,10 +101,6 @@ def label_style_from_scores(
     # informativeness が高い → technical
     if info >= 70:
         return "technical"
-
-    # dramatic: 攻撃圧力が高い局面でcontext_relevanceも高い
-    if ap >= 40 and context >= 70:
-        return "dramatic"
 
     # encouraging: naturalness が高く穏やかな局面
     if natural >= 70 and ap < 30:

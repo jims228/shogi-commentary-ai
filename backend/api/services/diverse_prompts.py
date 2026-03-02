@@ -17,7 +17,6 @@ from backend.api.services.ml_trainer import STYLES
 _STYLE_INSTRUCTIONS: Dict[str, str] = {
     "technical": "具体的な駒の配置や手順に言及し、数値的・論理的に解説してください。",
     "encouraging": "初心者にもわかりやすく、前向きで励ます口調で解説してください。",
-    "dramatic": "緊迫感のある、ドラマチックな語り口で解説してください。",
     "neutral": "客観的で淡々とした口調で解説してください。",
 }
 
@@ -50,13 +49,13 @@ DIVERSITY_TARGETS: List[Dict[str, Any]] = [
     {"style": "technical", "focus": ["attack_pressure"], "depth": "surface"},
     {"style": "technical", "focus": ["king_safety"], "depth": "deep"},
     {"style": "technical", "focus": ["positional", "tempo"], "depth": "strategic"},
-    {"style": "dramatic", "focus": ["attack_pressure"], "depth": "deep"},
-    {"style": "dramatic", "focus": ["king_safety", "endgame_technique"], "depth": "strategic"},
-    {"style": "dramatic", "focus": ["piece_activity"], "depth": "surface"},
-    {"style": "encouraging", "focus": ["endgame_technique"], "depth": "strategic"},
+    {"style": "technical", "focus": ["endgame_technique"], "depth": "strategic"},
+    {"style": "encouraging", "focus": ["endgame_technique"], "depth": "deep"},
     {"style": "encouraging", "focus": ["tempo"], "depth": "surface"},
+    {"style": "encouraging", "focus": ["piece_activity"], "depth": "strategic"},
     {"style": "neutral", "focus": ["positional"], "depth": "deep"},
     {"style": "neutral", "focus": ["attack_pressure", "tempo"], "depth": "strategic"},
+    {"style": "neutral", "focus": ["king_safety", "piece_activity"], "depth": "surface"},
 ]
 
 
@@ -76,7 +75,7 @@ def build_diverse_prompt(
     features : dict
         extract_position_features() 形式の局面特徴量。
     target_style : str
-        解説スタイル (technical / encouraging / dramatic / neutral)。
+        解説スタイル (technical / encouraging / neutral)。
     target_focus : list[str]
         着目すべき要素ラベルのリスト。
     target_depth : str

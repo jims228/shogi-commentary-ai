@@ -50,10 +50,9 @@ def _create_experiment_json(exp_dir: str) -> str:
             "n_splits": 5,
             "best_model": "RandomForest",
             "style_distribution": {
-                "technical": 15,
-                "encouraging": 12,
-                "dramatic": 10,
-                "neutral": 13,
+                "technical": 20,
+                "encouraging": 15,
+                "neutral": 15,
             },
             "models": [
                 {
@@ -114,28 +113,24 @@ def _create_experiment_json(exp_dir: str) -> str:
         "style_distribution": {
             "n_samples": 50,
             "class_balance": {
-                "technical": 30.0,
-                "encouraging": 24.0,
-                "dramatic": 20.0,
-                "neutral": 26.0,
+                "technical": 36.0,
+                "encouraging": 32.0,
+                "neutral": 32.0,
             },
             "phase_style_crosstab": {
                 "opening": {
-                    "technical": 3,
+                    "technical": 5,
                     "encouraging": 5,
-                    "dramatic": 2,
                     "neutral": 4,
                 },
                 "midgame": {
-                    "technical": 7,
-                    "encouraging": 4,
-                    "dramatic": 5,
-                    "neutral": 5,
+                    "technical": 8,
+                    "encouraging": 5,
+                    "neutral": 8,
                 },
                 "endgame": {
                     "technical": 5,
-                    "encouraging": 3,
-                    "dramatic": 3,
+                    "encouraging": 6,
                     "neutral": 4,
                 },
             },

@@ -56,11 +56,11 @@ class TestBuildDiversePrompt(unittest.TestCase):
         )
         self.assertIn("論理的", prompt)
 
-    def test_contains_style_instruction_dramatic(self) -> None:
+    def test_unknown_style_falls_back_to_neutral(self) -> None:
         prompt = build_diverse_prompt(
-            _make_features(), "dramatic", ["king_safety"], "strategic"
+            _make_features(), "unknown_style", ["king_safety"], "strategic"
         )
-        self.assertIn("ドラマチック", prompt)
+        self.assertIn("客観的", prompt)
 
     def test_contains_style_instruction_encouraging(self) -> None:
         prompt = build_diverse_prompt(
@@ -150,15 +150,15 @@ class TestTargetMatch(unittest.TestCase):
     """compute_target_match のテスト."""
 
     def test_perfect_match(self) -> None:
-        target = {"style": "dramatic", "focus": ["king_safety"], "depth": "deep"}
-        annotation = {"style": "dramatic", "focus": ["king_safety"], "depth": "deep"}
+        target = {"style": "technical", "focus": ["king_safety"], "depth": "deep"}
+        annotation = {"style": "technical", "focus": ["king_safety"], "depth": "deep"}
         match = compute_target_match(target, annotation)
         self.assertTrue(match["style_match"])
         self.assertEqual(match["focus_recall"], 1.0)
         self.assertTrue(match["depth_match"])
 
     def test_no_match(self) -> None:
-        target = {"style": "dramatic", "focus": ["king_safety"], "depth": "deep"}
+        target = {"style": "technical", "focus": ["king_safety"], "depth": "deep"}
         annotation = {"style": "neutral", "focus": ["positional"], "depth": "surface"}
         match = compute_target_match(target, annotation)
         self.assertFalse(match["style_match"])
@@ -260,7 +260,7 @@ class TestMergeAnnotations(unittest.TestCase):
         records_b = [
             {"sfen": "pos2", "ply": 10, "source": "b", "original_text": "text2",
              "annotation": {"focus": ["attack_pressure"], "importance": 0.7,
-                            "depth": "deep", "style": "dramatic"}},
+                            "depth": "deep", "style": "technical"}},
         ]
         self._write_jsonl("file_a.jsonl", records_a)
         self._write_jsonl("file_b.jsonl", records_b)

@@ -12,8 +12,8 @@ class TestPositionCommentRequest(unittest.TestCase):
     """PositionCommentRequest の style フィールドテスト."""
 
     def test_accepts_style_field(self) -> None:
-        req = PositionCommentRequest(ply=1, sfen="position startpos", style="dramatic")
-        self.assertEqual(req.style, "dramatic")
+        req = PositionCommentRequest(ply=1, sfen="position startpos", style="technical")
+        self.assertEqual(req.style, "technical")
 
     def test_style_defaults_to_none(self) -> None:
         req = PositionCommentRequest(ply=1, sfen="position startpos")
@@ -37,10 +37,10 @@ class TestStyleAutoSelection(unittest.TestCase):
         style = rule_based_predict(features)
         self.assertEqual(style, "encouraging")
 
-    def test_style_from_features_dramatic(self) -> None:
+    def test_style_from_features_technical(self) -> None:
         features = {"phase": "endgame", "attack_pressure": 60, "king_safety": 20, "piece_activity": 40}
         style = rule_based_predict(features)
-        self.assertEqual(style, "dramatic")
+        self.assertEqual(style, "technical")
 
     def test_explicit_style_used_as_is(self) -> None:
         """explicit style should be used without prediction."""
@@ -97,7 +97,7 @@ class TestEndpointStyleIntegration(unittest.TestCase):
             "phase": "endgame", "attack_pressure": 60,
             "king_safety": 20, "piece_activity": 40,
         }
-        mock_selector.return_value.predict.return_value = "dramatic"
+        mock_selector.return_value.predict.return_value = "technical"
         mock_comment.return_value = "終盤の攻め合いです。"
 
         # Create mock principal
@@ -112,10 +112,10 @@ class TestEndpointStyleIntegration(unittest.TestCase):
         finally:
             loop.close()
 
-        self.assertEqual(result["style"], "dramatic")
+        self.assertEqual(result["style"], "technical")
         mock_comment.assert_called_once()
         call_kwargs = mock_comment.call_args
-        self.assertEqual(call_kwargs.kwargs.get("style") or call_kwargs[1].get("style"), "dramatic")
+        self.assertEqual(call_kwargs.kwargs.get("style") or call_kwargs[1].get("style"), "technical")
 
     @patch("backend.api.routers.explain._get_style_selector")
     @patch("backend.api.routers.explain.extract_position_features")

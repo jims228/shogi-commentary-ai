@@ -64,8 +64,8 @@ def _section_overview(data: Dict[str, Any]) -> List[str]:
         "2. **Commentary Generation**: テンプレートベース (dry-run) および Gemini API",
         "3. **Quality Evaluation**: ルールベース4軸スコアリング "
         "(context_relevance, naturalness, informativeness, readability)",
-        "4. **Style Classification**: ML自動ラベリング → 4スタイル "
-        "(technical, encouraging, dramatic, neutral)",
+        "4. **Style Classification**: ML自動ラベリング → 3スタイル "
+        "(technical, encouraging, neutral)",
         "",
     ]
 
@@ -186,7 +186,7 @@ def _section_model_comparison(data: Dict[str, Any]) -> List[str]:
         lines.append("| Style | Count | Percentage |")
         lines.append("|-------|-------|-----------|")
         total = sum(dist.values()) or 1
-        for style in ["technical", "encouraging", "dramatic", "neutral"]:
+        for style in ["technical", "encouraging", "neutral"]:
             count = dist.get(style, 0)
             pct = f"{count / total * 100:.1f}%"
             lines.append(f"| {style} | {count} | {pct} |")
@@ -248,14 +248,14 @@ def _section_style_classification(data: Dict[str, Any]) -> List[str]:
         lines.append("")
         lines.append("| Style | Percentage |")
         lines.append("|-------|-----------|")
-        for style in ["technical", "encouraging", "dramatic", "neutral"]:
+        for style in ["technical", "encouraging", "neutral"]:
             pct = balance.get(style, 0)
             lines.append(f"| {style} | {pct:.1f}% |")
         lines.append("")
 
     crosstab = dist.get("phase_style_crosstab", {})
     if crosstab:
-        styles = ["technical", "encouraging", "dramatic", "neutral"]
+        styles = ["technical", "encouraging", "neutral"]
         lines.append("### Phase x Style Cross-tabulation")
         lines.append("")
         header = "| Phase |" + "|".join(f" {s} " for s in styles) + "|"

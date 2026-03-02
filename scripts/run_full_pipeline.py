@@ -207,7 +207,7 @@ def run_pipeline(sample_interval: int = 5, full_cycle: bool = False) -> Dict[str
                 predicted = rule_based_predict(record)
             style_counter[predicted] += 1
         style_total = sum(style_counter.values())
-        for style in ["technical", "encouraging", "dramatic", "neutral"]:
+        for style in ["technical", "encouraging", "neutral"]:
             count = style_counter.get(style, 0)
             print(_text_bar(style, count, style_total))
         style_dist = dict(style_counter)

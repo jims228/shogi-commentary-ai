@@ -21,13 +21,13 @@ from backend.api.services.ml_trainer import (
 # rule_based_predict
 # ---------------------------------------------------------------------------
 class TestRuleBasedPredict(unittest.TestCase):
-    def test_dramatic_high_attack_pressure(self) -> None:
+    def test_technical_high_attack_pressure(self) -> None:
         f = {"phase": "midgame", "attack_pressure": 55, "king_safety": 30, "piece_activity": 40}
-        self.assertEqual(rule_based_predict(f), "dramatic")
+        self.assertEqual(rule_based_predict(f), "technical")
 
-    def test_dramatic_endgame_moderate_pressure(self) -> None:
+    def test_technical_endgame_moderate_pressure(self) -> None:
         f = {"phase": "endgame", "attack_pressure": 35, "king_safety": 20, "piece_activity": 40}
-        self.assertEqual(rule_based_predict(f), "dramatic")
+        self.assertEqual(rule_based_predict(f), "technical")
 
     def test_technical_midgame_high_activity(self) -> None:
         f = {"phase": "midgame", "attack_pressure": 20, "king_safety": 40, "piece_activity": 60}
@@ -55,10 +55,10 @@ class TestLabelStyleFromScores(unittest.TestCase):
         f = {"phase": "midgame", "attack_pressure": 20}
         self.assertEqual(label_style_from_scores(scores, f), "technical")
 
-    def test_dramatic_high_pressure_and_context(self) -> None:
+    def test_neutral_moderate_pressure_and_context(self) -> None:
         scores = {"informativeness": 50, "naturalness": 50, "context_relevance": 75, "readability": 50}
         f = {"phase": "endgame", "attack_pressure": 50}
-        self.assertEqual(label_style_from_scores(scores, f), "dramatic")
+        self.assertEqual(label_style_from_scores(scores, f), "neutral")
 
     def test_encouraging_natural_low_pressure(self) -> None:
         scores = {"informativeness": 50, "naturalness": 75, "context_relevance": 50, "readability": 60}

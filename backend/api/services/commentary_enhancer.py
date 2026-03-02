@@ -74,3 +74,67 @@ def enhance_prompt_with_focus(
         "focus_descriptions": descriptions,
         "suggested_talking_points": talking_points,
     }
+
+
+# ---------------------------------------------------------------------------
+# Importance-based explanation timing
+# ---------------------------------------------------------------------------
+def should_explain_position(
+    features: Dict[str, Any],
+    threshold: float = 0.5,
+) -> Dict[str, Any]:
+    """局面の解説要否を判断.
+
+    ImportancePredictor が訓練済みならMLで予測、
+    なければルールベースで判定する。
+
+    Parameters
+    ----------
+    features : dict
+        extract_position_features() 形式の局面特徴量。
+    threshold : float
+        重要度がこの値以上なら解説する。
+
+    Returns
+    -------
+    dict
+        {should_explain: bool, importance: float, reason: str}
+    """
+    from backend.api.services.importance_predictor import (
+        ImportancePredictor,
+        _rule_based_importance,
+    )
+
+    predictor = ImportancePredictor()
+    predictor.load()
+
+    importance = predictor.predict(features)
+    reason = _classify_reason(features)
+
+    return {
+        "should_explain": importance >= threshold,
+        "importance": importance,
+        "reason": reason,
+    }
+
+
+def _classify_reason(features: Dict[str, Any]) -> str:
+    """解説理由を分類."""
+    td = features.get("tension_delta", {})
+    d_ks = abs(float(td.get("d_king_safety", 0.0)))
+    d_pa = abs(float(td.get("d_piece_activity", 0.0)))
+    d_ap = abs(float(td.get("d_attack_pressure", 0.0)))
+    tension_mag = d_ks + d_pa + d_ap
+
+    if tension_mag > 15:
+        return "high_tension"
+
+    intent = features.get("move_intent", "")
+    if intent in ("sacrifice", "attack"):
+        return "key_move"
+
+    phase = features.get("phase", "midgame")
+    if phase == "endgame":
+        return "phase_change"
+
+    return "routine"

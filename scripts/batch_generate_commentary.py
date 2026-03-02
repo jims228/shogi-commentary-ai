@@ -92,10 +92,9 @@ def load_collection_config(
         "max_retries": 2,
         "phase_targets": {"opening": 0.3, "midgame": 0.4, "endgame": 0.3},
         "style_targets": {
-            "technical": 0.25,
-            "encouraging": 0.25,
-            "dramatic": 0.25,
-            "neutral": 0.25,
+            "technical": 0.33,
+            "encouraging": 0.34,
+            "neutral": 0.33,
         },
         "model": None,
     }

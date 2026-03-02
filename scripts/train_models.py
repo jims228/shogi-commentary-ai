@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train all ML models (FocusPredictor + ImportancePredictor).
+"""Train all ML models (FocusPredictor + ImportancePredictor + StyleSelector).
 
 Usage:
     python scripts/train_models.py
@@ -16,6 +16,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from backend.api.services.focus_predictor import FocusPredictor
 from backend.api.services.importance_predictor import ImportancePredictor
+from backend.api.services.ml_trainer import CommentaryStyleSelector, _HAS_SKLEARN
 
 _DEFAULT_DATA = PROJECT_ROOT / "data" / "annotated" / "merged_corpus.jsonl"
 
@@ -101,6 +102,32 @@ def train_importance(data_path: str) -> None:
     print()
 
 
+def train_style_selector() -> None:
+    print("=" * 56)
+    print("  StyleSelector")
+    print("=" * 56)
+
+    if not _HAS_SKLEARN:
+        print("  Error: scikit-learn not installed")
+        return
+
+    sel = CommentaryStyleSelector()
+    result = sel.train()
+
+    if result.get("error"):
+        print(f"  Error: {result['error']}")
+        print(f"  Samples: {result.get('samples', 0)}")
+        return
+
+    print(f"  Samples:      {result['samples']}")
+    print(f"  Accuracy:     {result['accuracy']}")
+    print(f"  Distribution: {result['distribution']}")
+
+    save_path = sel.save()
+    print(f"  Saved: {save_path}")
+    print()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train all ML models")
     parser.add_argument(
@@ -116,6 +143,7 @@ def main() -> None:
 
     train_focus(data_path)
     train_importance(data_path)
+    train_style_selector()
 
     print("  All models trained successfully.")
     print()

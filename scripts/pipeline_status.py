@@ -242,10 +242,18 @@ def main() -> None:
                     exp = json.load(f)
                 print(f"  Latest experiment:      {exp.get('name', latest.stem)}")
                 print(f"  Timestamp:              {exp.get('timestamp', 'unknown')[:19]}")
-                print(f"  Samples:                {exp.get('n_samples', 0)}")
+                n_samples = exp.get("n_samples", 0)
+                if n_samples == 0:
+                    n_samples = exp.get("experiment", {}).get("n_samples", 0)
+                print(f"  Samples:                {n_samples}")
                 best_name = exp.get("best_model", "")
+                if not best_name:
+                    best_name = exp.get("experiment", {}).get("best_model", "")
+                models_list = exp.get("models", [])
+                if not models_list:
+                    models_list = exp.get("experiment", {}).get("models", [])
                 best_result = next(
-                    (m for m in exp.get("models", []) if m["name"] == best_name),
+                    (m for m in models_list if m["name"] == best_name),
                     {},
                 )
                 if best_result:

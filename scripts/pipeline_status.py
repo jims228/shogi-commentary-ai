@@ -143,6 +143,46 @@ def main() -> None:
     else:
         print(f"  Style selector:         rule-based (未訓練)")
 
+    # --- Experiments ---
+    print()
+    print("  [Experiments]")
+    experiments_dir = _DATA_DIR / "experiments"
+    if experiments_dir.is_dir():
+        exp_files = sorted([
+            f for f in experiments_dir.iterdir()
+            if f.suffix == ".json" and not f.name.startswith("analysis")
+        ])
+        if exp_files:
+            latest = exp_files[-1]
+            try:
+                with open(latest, encoding="utf-8") as f:
+                    exp = json.load(f)
+                print(f"  Latest experiment:      {exp.get('name', latest.stem)}")
+                print(f"  Timestamp:              {exp.get('timestamp', 'unknown')[:19]}")
+                print(f"  Samples:                {exp.get('n_samples', 0)}")
+                best_name = exp.get("best_model", "")
+                best_result = next(
+                    (m for m in exp.get("models", []) if m["name"] == best_name),
+                    {},
+                )
+                if best_result:
+                    f1 = best_result.get("f1_macro_mean", 0)
+                    acc = best_result.get("accuracy_mean", 0)
+                    print(f"  Best model:             {best_name} (F1={f1:.3f}, Acc={acc:.3f})")
+                    fi = best_result.get("feature_importance", {})
+                    if fi:
+                        top3 = sorted(fi.items(), key=lambda x: -x[1])[:3]
+                        feats_str = ", ".join(f"{k}({v:.3f})" for k, v in top3)
+                        print(f"  Top-3 features:         {feats_str}")
+            except Exception as e:
+                print(f"  Error loading experiment: {e}")
+        else:
+            print("  No experiments yet")
+            print("  → Run: python3 scripts/run_experiment.py --name baseline")
+    else:
+        print("  No experiments yet")
+        print("  → Run: python3 scripts/run_experiment.py --name baseline")
+
     # --- Next Action ---
     print()
     print("  [Next Action]")

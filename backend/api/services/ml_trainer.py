@@ -136,6 +136,87 @@ def _features_to_vector(features: Dict[str, Any]) -> List[float]:
 
 
 # ---------------------------------------------------------------------------
+# 共有データ読み込み (ExperimentRunner / CommentaryStyleSelector 共用)
+# ---------------------------------------------------------------------------
+def load_training_data(
+    log_dir: Optional[str] = None,
+) -> Dict[str, Any]:
+    """トレーニングログからML用のX, yデータを構築.
+
+    Returns
+    -------
+    dict
+        X: List[List[float]] -- feature vectors (8D)
+        y: List[int] -- style label indices
+        labels: List[str] -- per-sample style label strings
+        features_raw: List[Dict] -- original feature dicts
+        n_samples: int
+        distribution: Dict[str, int] -- style counts
+        error: Optional[str] -- error message if any
+    """
+    from backend.api.services.explanation_evaluator import evaluate_explanation
+
+    label_to_idx = {s: i for i, s in enumerate(STYLES)}
+    default_log_dir = os.path.join(
+        os.path.dirname(__file__), "..", "..", "..", "data", "training_logs"
+    )
+    src = log_dir or os.path.normpath(
+        os.getenv("TRAINING_LOG_DIR", default_log_dir)
+    )
+
+    X: List[List[float]] = []
+    y: List[int] = []
+    labels: List[str] = []
+    features_raw: List[Dict[str, Any]] = []
+
+    if not os.path.isdir(src):
+        return {
+            "X": [], "y": [], "labels": [], "features_raw": [],
+            "n_samples": 0, "distribution": {s: 0 for s in STYLES},
+            "error": f"log dir not found: {src}",
+        }
+
+    for name in sorted(os.listdir(src)):
+        if not name.endswith(".jsonl"):
+            continue
+        path = os.path.join(src, name)
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    obj = json.loads(line)
+                    explanation = (obj.get("output") or {}).get(
+                        "explanation", ""
+                    )
+                    feats = (obj.get("input") or {}).get("features")
+                    if not explanation or not feats:
+                        continue
+                    ev = evaluate_explanation(explanation, feats)
+                    label = label_style_from_scores(ev["scores"], feats)
+                    X.append(_features_to_vector(feats))
+                    y.append(label_to_idx[label])
+                    labels.append(label)
+                    features_raw.append(feats)
+        except Exception:
+            continue
+
+    dist = {s: 0 for s in STYLES}
+    for lbl in labels:
+        dist[lbl] += 1
+
+    error = None
+    if len(X) < 10:
+        error = "insufficient samples"
+
+    return {
+        "X": X, "y": y, "labels": labels, "features_raw": features_raw,
+        "n_samples": len(X), "distribution": dist, "error": error,
+    }
+
+
+# ---------------------------------------------------------------------------
 # ML スタイル選択器
 # ---------------------------------------------------------------------------
 class CommentaryStyleSelector:
@@ -177,47 +258,11 @@ class CommentaryStyleSelector:
         if not _HAS_SKLEARN:
             return {"error": "scikit-learn not installed", "samples": 0}
 
-        from backend.api.services.explanation_evaluator import evaluate_explanation
+        data = load_training_data(log_dir)
+        if data.get("error"):
+            return {"error": data["error"], "samples": data["n_samples"]}
 
-        default_log_dir = os.path.join(
-            os.path.dirname(__file__), "..", "..", "..", "data", "training_logs"
-        )
-        src = log_dir or os.path.normpath(
-            os.getenv("TRAINING_LOG_DIR", default_log_dir)
-        )
-
-        X: List[List[float]] = []
-        y: List[int] = []
-
-        if not os.path.isdir(src):
-            return {"error": f"log dir not found: {src}", "samples": 0}
-
-        for name in sorted(os.listdir(src)):
-            if not name.endswith(".jsonl"):
-                continue
-            path = os.path.join(src, name)
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    for line in f:
-                        line = line.strip()
-                        if not line:
-                            continue
-                        obj = json.loads(line)
-                        explanation = (obj.get("output") or {}).get(
-                            "explanation", ""
-                        )
-                        feats = (obj.get("input") or {}).get("features")
-                        if not explanation or not feats:
-                            continue
-                        ev = evaluate_explanation(explanation, feats)
-                        label = label_style_from_scores(ev["scores"], feats)
-                        X.append(_features_to_vector(feats))
-                        y.append(self._label_to_idx[label])
-            except Exception:
-                continue
-
-        if len(X) < 10:
-            return {"error": "insufficient samples", "samples": len(X)}
+        X, y = data["X"], data["y"]
 
         clf = DecisionTreeClassifier(max_depth=5, random_state=42)
         clf.fit(X, y)
@@ -228,15 +273,10 @@ class CommentaryStyleSelector:
         correct = sum(1 for a, b in zip(preds, y) if a == b)
         accuracy = round(correct / len(y), 3)
 
-        # Style distribution
-        dist = {s: 0 for s in STYLES}
-        for idx in y:
-            dist[self._idx_to_label[idx]] += 1
-
         return {
             "samples": len(X),
             "accuracy": accuracy,
-            "distribution": dist,
+            "distribution": data["distribution"],
         }
 
     def save(self, path: Optional[str] = None) -> str:

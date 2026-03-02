@@ -1,0 +1,18 @@
+# サンプル棋譜コーパス (USI形式)
+# 著作権に配慮し、典型的な戦型の模範手順を独自に構成
+# 1行1棋譜、position startpos moves ... 形式
+
+# 矢倉模範手順 (30手)
+position startpos moves 7g7f 3c3d 6i7h 5c5d 6g6f 6c6d 7i6h 7a6b 5g5f 5a4b 5i6i 4b3b 6i7i 6b5c 3g3f 3a4b 3i4h 4b3c 4h3g 6a5b 6h5g 5b6c 4g4f 5c4d 7h6g 6c7d 3g4h 3b3a 2h3h 4a5b
+
+# 四間飛車 vs 急戦 (32手)
+position startpos moves 7g7f 3c3d 2g2f 4c4d 2f2e 3a4b 4g4f 2b3c 6i7h 5a6b 3i3h 7a7b 5g5f 6b7a 5i6h 4b4c 6g6f 9c9d 9g9f 6a5b 7h6g 5b4b 6h5g 4b3b 3h4g 4c5d 4g5h 5d4c 5h4g 3b2b 2h4h 1c1d
+
+# 中飛車 vs 居飛車 (30手)
+position startpos moves 5g5f 3c3d 7g7f 5c5d 2h5h 5a4b 5i4h 4b3b 4g4f 7a6b 3i3h 6b5c 6g6f 4c4d 6i7h 3a4b 3h4g 4b3c 7i6h 6a5b 4h3h 5b4c 6h5g 9c9d 9g9f 7c7d 5g6h 6c6d 7h6g 1c1d
+
+# 相掛かり棒銀 (30手)
+position startpos moves 2g2f 3c3d 7g7f 7c7d 2f2e 2c2d 2e2d 2b3c 2h2f 5a4b 3i3h 7a6b 5g5f 4b3b 6i5h 5c5d 5i6h 6b5c 4g4f 9c9d 9g9f 6a5b 5h4g 3d3e 3g3f 3e3f 3h3f 3c5e 6h7h 5c4d
+
+# 角換わり腰掛け銀 (36手)
+position startpos moves 7g7f 3c3d 2g2f 5c5d 3i3h 5a4b 5g5f 4b3b 3h2g 3a4b 2g3f 7a6b 6g6f 6b5c 3f4e 5c4d 4e3f 2b8h+ 7i8h B*5e 3f2e 5e8h+ 8i7g 8h7h 2e3f 7h6h 5i6h P*5g 6h5g 4d5e 3f4e 5e4f 4g4f 3d3e 4e3f 3e3f

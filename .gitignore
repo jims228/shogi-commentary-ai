@@ -36,6 +36,7 @@ logs/
 *.db-wal
 data/*
 !data/benchmark_positions.json
+!data/sample_games.txt
 
 # Engine binaries
 engine/yaneuraou

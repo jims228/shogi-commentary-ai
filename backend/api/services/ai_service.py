@@ -16,6 +16,26 @@ from backend.api.services.training_logger import training_logger
 
 _LOG = logging.getLogger("uvicorn.error")
 
+# --- lazy style selector ---
+_style_selector = None
+
+
+def _get_style_selector():
+    global _style_selector
+    if _style_selector is None:
+        from backend.api.services.ml_trainer import CommentaryStyleSelector
+        _style_selector = CommentaryStyleSelector()
+        _style_selector.load()  # load saved model if available
+    return _style_selector
+
+
+_STYLE_INSTRUCTIONS = {
+    "technical": "専門的な視点で、手順や読み筋に言及しつつ解説してください。",
+    "encouraging": "親しみやすく前向きなトーンで、指し手の良い点を認めながら解説してください。",
+    "dramatic": "緊張感のある表現で、局面の劇的な変化を強調して解説してください。",
+    "neutral": "客観的かつ淡々と、局面の状況を正確に解説してください。",
+}
+
 # --- digest cache (in-memory, dev only) ---
 _DIGEST_CACHE_TTL_SEC = int(os.getenv("DIGEST_CACHE_TTL_SEC", "600"))
 _DIGEST_CACHE: Dict[str, Dict[str, Any]] = {}
@@ -182,6 +202,7 @@ async def _log_explanation(**kwargs: Any) -> None:
                 "explanation": kwargs.get("explanation", ""),
                 "model": kwargs.get("model_name", ""),
                 "tokens": kwargs.get("tokens"),
+                "style": kwargs.get("style"),
             },
         }
         await training_logger.log_explanation(record)
@@ -222,6 +243,7 @@ class AIService:
         user_move: Optional[str],
         delta_cp: Optional[int],
         features: Optional[Dict[str, Any]] = None,
+        style: Optional[str] = None,
     ) -> str:
         """現在局面の将棋仙人コメントを生成する"""
         if not ensure_configured():
@@ -272,6 +294,12 @@ class AIService:
         # 特徴量ブロック
         features_block = build_features_block(features) if features else ""
 
+        # スタイル選択
+        if style is None and features:
+            style = _get_style_selector().predict(features)
+        style = style or "neutral"
+        style_instruction = _STYLE_INSTRUCTIONS.get(style, _STYLE_INSTRUCTIONS["neutral"])
+
         prompt = f"""あなたは将棋の局面解説AIです。
 以下の局面について、80文字以内で解説してください。
 
@@ -280,6 +308,7 @@ class AIService:
 AI推奨手: {best_move_jp}
 形勢: {situation}
 {features_block}
+トーン: {style_instruction}
 ルール:
 - 80文字以内で完結すること
 - 地の文のみ。箇条書き・見出し・記号禁止
@@ -314,7 +343,7 @@ AI推奨手: {best_move_jp}
             sfen=sfen, ply=ply, candidates=candidates,
             user_move=user_move, delta_cp=delta_cp, features=features,
             explanation=res.text, model_name="gemini-2.5-flash-lite",
-            tokens=tokens_info,
+            tokens=tokens_info, style=style,
         ))
 
         return res.text

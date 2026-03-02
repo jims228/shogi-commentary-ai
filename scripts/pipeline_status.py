@@ -128,16 +128,25 @@ def main() -> None:
     # --- Annotated Data ---
     print()
     print("  [Annotated Data]")
-    annotated_path = _DATA_DIR / "annotated" / "annotated_corpus.jsonl"
-    if annotated_path.exists():
-        ann_count = _count_jsonl(annotated_path)
-        print(f"  Annotated records:      {ann_count} records")
-        if ann_count > 0:
-            from backend.api.schemas.annotation import FOCUS_LABELS, DEPTH_LEVELS
-            focus_counts: Counter = Counter()
-            depth_counts: Counter = Counter()
-            imp_sum = 0.0
-            with open(annotated_path, encoding="utf-8") as f:
+    annotated_dir = _DATA_DIR / "annotated"
+    if annotated_dir.is_dir():
+        from backend.api.schemas.annotation import FOCUS_LABELS, DEPTH_LEVELS
+        from backend.api.services.ml_trainer import STYLES as _STYLES
+
+        all_files = sorted([
+            f for f in annotated_dir.iterdir() if f.suffix == ".jsonl"
+        ])
+        total_ann = 0
+        focus_counts: Counter = Counter()
+        depth_counts: Counter = Counter()
+        style_counts: Counter = Counter()
+        imp_sum = 0.0
+
+        for ann_file in all_files:
+            fc = _count_jsonl(ann_file)
+            total_ann += fc
+            print(f"  {ann_file.name:<30} {fc:>4} records")
+            with open(ann_file, encoding="utf-8") as f:
                 for line in f:
                     line = line.strip()
                     if not line:
@@ -148,19 +157,29 @@ def main() -> None:
                         for lbl in ann.get("focus", []):
                             focus_counts[lbl] += 1
                         depth_counts[ann.get("depth", "unknown")] += 1
+                        style_counts[ann.get("style", "unknown")] += 1
                         imp_sum += ann.get("importance", 0)
                     except Exception:
                         continue
-            print(f"  Avg importance:         {imp_sum / ann_count:.2f}")
-            print(f"  Depth: ", end="")
-            parts = []
+
+        if total_ann > 0:
+            print(f"  Total:                        {total_ann} records")
+            print(f"  Avg importance:         {imp_sum / total_ann:.2f}")
+            depth_parts = []
             for d in DEPTH_LEVELS:
-                parts.append(f"{d}={depth_counts.get(d, 0)}")
-            print(", ".join(parts))
+                depth_parts.append(f"{d}={depth_counts.get(d, 0)}")
+            print(f"  Depth: {', '.join(depth_parts)}")
+            style_parts = []
+            for s in _STYLES:
+                style_parts.append(f"{s}={style_counts.get(s, 0)}")
+            print(f"  Style: {', '.join(style_parts)}")
             top_focus = focus_counts.most_common(3)
             if top_focus:
                 fstr = ", ".join(f"{k}({v})" for k, v in top_focus)
                 print(f"  Top focus:              {fstr}")
+        else:
+            print("  No annotated data yet")
+            print("  → Run: python3 scripts/annotate_corpus.py")
     else:
         print("  No annotated data yet")
         print("  → Run: python3 scripts/annotate_corpus.py")

@@ -183,6 +183,18 @@ def main() -> None:
     else:
         print(f"  Style selector:         rule-based (未訓練)")
 
+    focus_model_path = _DATA_DIR / "models" / "focus_predictor.joblib"
+    if focus_model_path.exists():
+        from backend.api.services.focus_predictor import FocusPredictor
+        fp = FocusPredictor()
+        loaded_fp = fp.load(str(focus_model_path))
+        if loaded_fp:
+            print(f"  Focus predictor:        TRAINED (loaded from {focus_model_path.name})")
+        else:
+            print(f"  Focus predictor:        FILE EXISTS but failed to load")
+    else:
+        print(f"  Focus predictor:        rule-based (未訓練)")
+
     # --- Experiments ---
     print()
     print("  [Experiments]")

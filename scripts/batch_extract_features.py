@@ -5,6 +5,7 @@ JSONL形式で保存する。Gemini APIは使わない。
 Usage:
     python scripts/batch_extract_features.py input.txt output.jsonl
     python scripts/batch_extract_features.py input.txt output.jsonl --interval 10
+    python scripts/batch_extract_features.py input.txt output.jsonl --with-engine
 """
 from __future__ import annotations
 
@@ -65,6 +66,8 @@ def batch_extract(
     input_file: str,
     output_file: str,
     sample_interval: int = 5,
+    with_engine: bool = False,
+    engine_nodes: int = 150000,
 ) -> Dict[str, Any]:
     """棋譜ファイルからバッチで特徴量を抽出する.
 
@@ -76,6 +79,10 @@ def batch_extract(
         出力JSONL
     sample_interval : int
         N手ごとにサンプリング (default: 5)
+    with_engine : bool
+        True ならやねうら王で各局面を評価して score_cp, bestmove 等を付加
+    engine_nodes : int
+        エンジン探索ノード数 (default: 150000)
 
     Returns
     -------
@@ -97,60 +104,27 @@ def batch_extract(
     total_positions = 0
     start_time = time.time()
 
-    with open(output_file, "w", encoding="utf-8") as out:
-        for game_idx, line in enumerate(lines):
-            base_position, moves = _parse_game_line(line)
-            if not base_position:
-                continue
+    # エンジンサービスの起動（--with-engine 時のみ）
+    engine_svc = None
+    if with_engine:
+        from backend.api.services.engine_analysis import EngineAnalysisService
+        engine_svc = EngineAnalysisService(nodes=engine_nodes)
+        try:
+            engine_svc.start()
+            print(f"  Engine started (nodes={engine_nodes})")
+        except Exception as e:
+            print(f"  Warning: Engine start failed: {e}", file=sys.stderr)
+            print("  Continuing without engine evaluation.", file=sys.stderr)
+            engine_svc = None
 
-            prev_features: Optional[Dict[str, Any]] = None
-
-            for ply in range(0, len(moves) + 1, sample_interval):
-                # 初手から ply 手目までの指し手で局面を構成
-                applied_moves = moves[:ply]
-                if applied_moves:
-                    sfen = base_position + " moves " + " ".join(applied_moves)
-                else:
-                    sfen = base_position
-
-                # この局面での指し手 (次の手)
-                current_move = moves[ply] if ply < len(moves) else None
-
-                try:
-                    features = extract_position_features(
-                        sfen,
-                        move=current_move,
-                        ply=ply,
-                        prev_features=prev_features,
-                    )
-                except Exception as e:
-                    print(
-                        f"  Warning: game {game_idx + 1}, ply {ply}: {e}",
-                        file=sys.stderr,
-                    )
-                    continue
-
-                record = {
-                    "game_index": game_idx,
-                    "ply": ply,
-                    "sfen": sfen,
-                    "move": current_move,
-                    **features,
-                }
-                out.write(json.dumps(record, ensure_ascii=False) + "\n")
-                total_positions += 1
-                prev_features = features
-
-            # 進捗表示
-            if (game_idx + 1) % 10 == 0 or game_idx + 1 == total_games:
-                elapsed = time.time() - start_time
-                print(
-                    f"\r  [{game_idx + 1}/{total_games}] "
-                    f"{total_positions} positions extracted "
-                    f"({elapsed:.1f}s)",
-                    end="",
-                    flush=True,
-                )
+    try:
+        total_positions, _ = _batch_extract_loop(
+            lines, output_file, sample_interval, engine_svc,
+            lambda g, p, e: _print_progress(g, total_games, p, e),
+        )
+    finally:
+        if engine_svc is not None:
+            engine_svc.stop()
 
     elapsed = time.time() - start_time
     print()  # 改行
@@ -168,6 +142,123 @@ def batch_extract(
     return stats
 
 
+def _print_progress(
+    game_idx: int, total_games: int, total_positions: int, elapsed: float,
+) -> None:
+    if (game_idx + 1) % 10 == 0 or game_idx + 1 == total_games:
+        print(
+            f"\r  [{game_idx + 1}/{total_games}] "
+            f"{total_positions} positions extracted "
+            f"({elapsed:.1f}s)",
+            end="",
+            flush=True,
+        )
+
+
+def _batch_extract_loop(
+    lines: List[str],
+    output_file: str,
+    sample_interval: int,
+    engine_svc: Any,
+    progress_fn: Any,
+) -> tuple[int, float]:
+    """実際の抽出ループ. total_positions と elapsed を返す."""
+    total_positions = 0
+    start_time = time.time()
+
+    with open(output_file, "w", encoding="utf-8") as out:
+        for game_idx, line in enumerate(lines):
+            base_position, moves = _parse_game_line(line)
+            if not base_position:
+                continue
+
+            prev_features: Optional[Dict[str, Any]] = None
+            prev_score_cp: Optional[int] = None
+
+            for ply in range(0, len(moves) + 1, sample_interval):
+                # 初手から ply 手目までの指し手で局面を構成
+                applied_moves = moves[:ply]
+                if applied_moves:
+                    sfen = base_position + " moves " + " ".join(applied_moves)
+                else:
+                    sfen = base_position
+
+                # この局面での指し手 (次の手)
+                current_move = moves[ply] if ply < len(moves) else None
+
+                # エンジン評価（with_engine 時のみ）
+                eval_info: Optional[Dict[str, Any]] = None
+                engine_extra: Dict[str, Any] = {}
+                if engine_svc is not None:
+                    try:
+                        res = engine_svc.analyze_position(sfen)
+                        if res.ok:
+                            eval_info = res.to_eval_info()
+                            # 先手視点に統一
+                            score_cp_sente: Optional[int] = None
+                            if res.score_cp is not None:
+                                score_cp_sente = (
+                                    res.score_cp if ply % 2 == 0 else -res.score_cp
+                                )
+                            delta_cp: Optional[int] = None
+                            if (
+                                score_cp_sente is not None
+                                and prev_score_cp is not None
+                            ):
+                                sente_diff = score_cp_sente - prev_score_cp
+                                is_sente_move = ply % 2 == 0
+                                delta_cp = (
+                                    sente_diff if is_sente_move else -sente_diff
+                                )
+
+                            engine_extra = {
+                                "score_cp": score_cp_sente,
+                                "score_mate": res.score_mate,
+                                "bestmove": res.bestmove,
+                                "pv": res.pv,
+                                "delta_cp": delta_cp,
+                            }
+                            if score_cp_sente is not None:
+                                prev_score_cp = score_cp_sente
+                    except Exception:
+                        pass
+
+                try:
+                    features = extract_position_features(
+                        sfen,
+                        move=current_move,
+                        ply=ply,
+                        eval_info=eval_info,
+                        prev_features=prev_features,
+                    )
+                except Exception as e:
+                    print(
+                        f"  Warning: game {game_idx + 1}, ply {ply}: {e}",
+                        file=sys.stderr,
+                    )
+                    continue
+
+                record = {
+                    "game_index": game_idx,
+                    "ply": ply,
+                    "sfen": sfen,
+                    "move": current_move,
+                    **features,
+                    **engine_extra,
+                }
+                out.write(json.dumps(record, ensure_ascii=False) + "\n")
+                total_positions += 1
+                prev_features = features
+
+            # 進捗表示
+            elapsed = time.time() - start_time
+            progress_fn(game_idx, total_positions, elapsed)
+
+    # total_positions を親に反映するため nonlocal 的にリストで返す代わりに
+    # ここでは上位で参照するために batch_extract 側で数える
+    return total_positions, time.time() - start_time
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="USI棋譜から特徴量をバッチ抽出してJSONLに保存"
@@ -180,8 +271,25 @@ def main() -> None:
         default=5,
         help="サンプリング間隔 (手数, default: 5)",
     )
+    parser.add_argument(
+        "--with-engine",
+        action="store_true",
+        help="やねうら王エンジンで各局面を評価して特徴量に追加",
+    )
+    parser.add_argument(
+        "--engine-nodes",
+        type=int,
+        default=150000,
+        help="エンジン探索ノード数 (default: 150000)",
+    )
     args = parser.parse_args()
-    batch_extract(args.input, args.output, sample_interval=args.interval)
+    batch_extract(
+        args.input,
+        args.output,
+        sample_interval=args.interval,
+        with_engine=args.with_engine,
+        engine_nodes=args.engine_nodes,
+    )
 
 
 if __name__ == "__main__":

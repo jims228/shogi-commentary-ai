@@ -427,8 +427,10 @@ def moves_to_usi(parsed: Dict[str, Any]) -> List[Optional[str]]:
 # ファイル読み込み
 # ---------------------------------------------------------------------------
 
-def parse_kif_file(file_path: Path) -> Dict[str, Any]:
+def parse_kif_file(file_path: "str | Path") -> Dict[str, Any]:
     """KIFファイルをエンコーディング自動判定で読み込みパース."""
+    if not isinstance(file_path, Path):
+        file_path = Path(file_path)
     enc = _detect_encoding(file_path)
     text = file_path.read_text(encoding=enc)
     return parse_kif(text)

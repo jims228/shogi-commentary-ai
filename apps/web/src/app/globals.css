@@ -282,6 +282,18 @@ body {
     content: none !important;
     display: none !important;
   }
+
+  /* Eval page: strip ALL body decorations */
+  body:has(.eval-plain)::before,
+  body:has(.eval-plain)::after {
+    content: none !important;
+    display: none !important;
+  }
+  body:has(.eval-plain) {
+    background-color: #fafaf9 !important;
+    background-image: none !important;
+    color: #1e293b !important;
+  }
 }
 
 @media (max-width: 768px) {

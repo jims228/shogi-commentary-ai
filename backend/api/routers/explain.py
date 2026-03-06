@@ -36,6 +36,8 @@ class PositionCommentRequest(BaseModel):
     user_move: Optional[str] = None
     delta_cp: Optional[int] = None
     style: Optional[str] = None
+    prev_moves: Optional[List[str]] = None  # 直前の手順 (時系列順、最大5手)
+    use_planner: Optional[bool] = None      # True: 構造化プラン経由で生成
 
 
 class GameDigestInput(BaseModel):
@@ -78,6 +80,29 @@ def _extract_digest_features(moves: List[str], max_samples: int = 20) -> List[di
 async def explain_endpoint(req: PositionCommentRequest, _principal: Principal = Depends(require_user)):
     candidates = [c.model_dump() for c in req.candidates]
 
+    # 構造化プラン経由の新パスを使うか判定
+    # 明示的に use_planner=true のときだけ新方式にする (既存フロント互換)
+    if req.use_planner:
+        # 新方式: ExplanationPlanner → LLM
+        result = await AIService.generate_planned_comment(
+            ply=req.ply,
+            sfen=req.sfen,
+            candidates=candidates,
+            user_move=req.user_move,
+            delta_cp=req.delta_cp,
+            style=req.style,
+            prev_moves=req.prev_moves,
+        )
+        resp: dict = {
+            "explanation": result["explanation"],
+            "style": result["style"],
+            "plan": result.get("plan"),
+        }
+        if result.get("is_fallback"):
+            resp["is_fallback"] = True
+        return resp
+
+    # レガシー方式: 直接LLM
     # 局面特徴量を抽出
     features = None
     try:

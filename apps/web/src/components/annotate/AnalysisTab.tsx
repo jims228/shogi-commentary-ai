@@ -22,7 +22,7 @@ import { formatUsiMoveJapanese, usiMoveToCoords, type PieceBase, type PieceCode 
 import { buildUsiPositionForPly } from "@/lib/usi";
 import type { EngineAnalyzeResponse, EngineMultipvItem } from "@/lib/annotateHook";
 import { buildMoveImpacts, getPrimaryEvalScore } from "@/lib/analysisUtils";
-import { FileText, RotateCcw, Search, Play, Sparkles, Upload, ChevronFirst, ChevronLeft, ChevronRight, ChevronLast, ArrowRight, BrainCircuit, X, ScrollText, Eye, ArrowLeft, Pencil, ArrowLeftRight, GraduationCap, BookOpen } from "lucide-react";
+import { FileText, RotateCcw, Search, Play, Sparkles, Upload, ChevronFirst, ChevronLeft, ChevronRight, ChevronLast, ChevronDown, ArrowRight, BrainCircuit, X, ScrollText, Eye, ArrowLeft, Pencil, ArrowLeftRight, GraduationCap, BookOpen, FlaskConical } from "lucide-react";
 import MoveListPanel from "@/components/annotate/MoveListPanel";
 import EvalGraph from "@/components/annotate/EvalGraph";
 import BioshogiPanel from "@/components/annotate/BioshogiPanel";
@@ -302,6 +302,17 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Dev-only planner toggle: visible when ?debug=1 or ?planner=1
+  const isDevMode = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      return sp.get("debug") === "1" || sp.get("planner") === "1";
+    } catch { return false; }
+  }, []);
+  const [usePlannerToggle, setUsePlannerToggle] = useState(false);
+  const [isPlanOpen, setIsPlanOpen] = useState(false);
+
   const [previewSequence, setPreviewSequence] = useState<string[] | null>(null);
   const [previewStep, setPreviewStep] = useState<number>(0);
 
@@ -435,6 +446,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
   const {
     explanation,
     isExplaining,
+    plan,
     handleGenerateExplanation,
     resetExplanation,
   } = useExplanation({
@@ -449,6 +461,7 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
     timelineHands,
     moveImpacts,
     boardToSfen,
+    usePlanner: isDevMode && usePlannerToggle,
   });
 
   const currentAnalysis = evalSource[safeCurrentPly];
@@ -748,6 +761,13 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
             </div>
           )}
           <Button variant="outline" onClick={handleStopAnalysis} disabled={!isAnalyzing} className="border-slate-300 text-slate-700 hover:bg-red-50 hover:text-red-600 h-9 text-sm px-3">停止</Button>
+          {isDevMode && (
+            <label className="flex items-center gap-1.5 text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2 py-1 cursor-pointer select-none">
+              <input type="checkbox" checked={usePlannerToggle} onChange={(e) => setUsePlannerToggle(e.target.checked)} className="accent-emerald-600 w-3.5 h-3.5" />
+              <FlaskConical className="w-3.5 h-3.5" />
+              Planner解説（開発用）
+            </label>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
            <Button variant="outline" onClick={() => setBoardOrientation((prev) => (prev === "sente" ? "gote" : "sente"))} className="border-slate-300 text-slate-700 h-9 text-sm px-3"><ArrowLeftRight className="w-4 h-4 mr-2" />{boardOrientation === "gote" ? "後手視点" : "先手視点"}</Button>
@@ -903,10 +923,41 @@ export default function AnalysisTab({ usi, setUsi, orientationMode = "sprite" }:
                 <div className="flex-none p-3 bg-white rounded-xl border border-purple-200 shadow-sm animate-in fade-in slide-in-from-bottom-4 max-h-[40%] overflow-y-auto">
                     <div className="font-bold text-purple-700 mb-2 flex items-center gap-2 border-b border-purple-100 pb-2 sticky top-0 bg-white z-10">
                         <Sparkles className="w-4 h-4 fill-purple-100"/> 将棋仙人の解説
+                        {isDevMode && usePlannerToggle && plan && (
+                            <span className="ml-auto text-[10px] font-normal text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">planner</span>
+                        )}
                     </div>
                     <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap font-sans text-xs">
                         {explanation}
                     </div>
+                    {isDevMode && usePlannerToggle && plan && (
+                        <div className="mt-2 border-t border-emerald-100 pt-2">
+                            <button
+                                type="button"
+                                onClick={() => setIsPlanOpen((v) => !v)}
+                                className="flex items-center gap-1 text-[11px] text-emerald-700 hover:text-emerald-900 font-medium"
+                            >
+                                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isPlanOpen ? "rotate-180" : ""}`} />
+                                Plan詳細（開発用）
+                            </button>
+                            {isPlanOpen && (
+                                <dl className="mt-1.5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px] font-mono bg-emerald-50 rounded-lg p-2">
+                                    {([
+                                        ["flow", plan.flow],
+                                        ["topic_keyword", plan.topic_keyword],
+                                        ["surface_reason", plan.surface_reason],
+                                        ["deep_reason", plan.deep_reason],
+                                        ["evidence", plan.evidence],
+                                    ] as const).map(([label, value]) => (
+                                        <React.Fragment key={label}>
+                                            <dt className="text-emerald-600 font-semibold whitespace-nowrap">{label}</dt>
+                                            <dd className="text-slate-700 break-words">{String(value || "—")}</dd>
+                                        </React.Fragment>
+                                    ))}
+                                </dl>
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

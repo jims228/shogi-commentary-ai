@@ -13,6 +13,7 @@ from google.api_core import exceptions as gax_exceptions
 from backend.api.utils.gemini_client import ensure_configured
 from backend.api.utils.shogi_utils import ShogiUtils
 from backend.api.services.training_logger import training_logger
+from backend.api.services.position_features import extract_position_features
 
 _LOG = logging.getLogger("uvicorn.error")
 
@@ -204,6 +205,10 @@ async def _log_explanation(**kwargs: Any) -> None:
                 "style": kwargs.get("style"),
             },
         }
+        # plan は features とは別フィールドに保持 (既存の学習スクリプトを壊さない)
+        plan = kwargs.get("plan")
+        if plan is not None:
+            record["metadata"] = {"plan": plan}
         await training_logger.log_explanation(record)
     except Exception as e:
         _LOG.debug("[training_logger] explanation log failed: %s", e)
@@ -244,7 +249,7 @@ class AIService:
         features: Optional[Dict[str, Any]] = None,
         style: Optional[str] = None,
     ) -> str:
-        """現在局面の将棋仙人コメントを生成する"""
+        """現在局面の将棋仙人コメントを生成する (レガシー)"""
         if not ensure_configured():
             return "APIキーが設定されていません。環境変数 GEMINI_API_KEY を確認してください。"
 
@@ -346,6 +351,177 @@ AI推奨手: {best_move_jp}
         ))
 
         return res.text
+
+    @staticmethod
+    async def generate_planned_comment(
+        ply: int,
+        sfen: str,
+        candidates: List[Dict[str, Any]],
+        user_move: Optional[str],
+        delta_cp: Optional[int],
+        style: Optional[str] = None,
+        prev_moves: Optional[List[str]] = None,
+        prev_features: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """構造化プラン経由で高品質な局面解説を生成する.
+
+        Returns
+        -------
+        dict
+            explanation: str - 生成されたテキスト
+            style: str - 使用スタイル
+            plan: dict - 構造化プラン (検証用)
+        """
+        from backend.api.services.explanation_planner import ExplanationPlanner
+
+        # 1. 構造化プランを生成
+        planner = ExplanationPlanner()
+        plan = planner.build_plan(
+            sfen=sfen,
+            move=user_move,
+            ply=ply,
+            candidates=candidates,
+            delta_cp=delta_cp,
+            user_move=user_move,
+            prev_moves=prev_moves,
+            prev_features=prev_features,
+        )
+
+        # 2. LLMが使えない場合はプランからテンプレート生成
+        if not ensure_configured():
+            explanation = _build_planned_fallback(plan)
+            return {
+                "explanation": explanation,
+                "style": style or "neutral",
+                "plan": plan.to_dict(),
+                "is_fallback": True,
+            }
+
+        # 3. スタイル選択
+        if style is None:
+            try:
+                # プラン内の特徴量から推定
+                features = extract_position_features(sfen=sfen, move=user_move, ply=ply)
+                style = _get_style_selector().predict(features)
+            except Exception:
+                style = "neutral"
+        style = style or "neutral"
+        style_instruction = _STYLE_INSTRUCTIONS.get(style, _STYLE_INSTRUCTIONS["neutral"])
+
+        # 4. 日本語ラベル
+        turn = "b"
+        parts = sfen.replace("position ", "").split()
+        for p in parts:
+            if p in ("b", "w"):
+                turn = p
+                break
+        user_move_jp = ShogiUtils.format_move_label(user_move, turn) if user_move else "なし"
+        best_move_usi = candidates[0].get("move", "") if candidates else ""
+        best_move_jp = ShogiUtils.format_move_label(best_move_usi, turn) if best_move_usi else "なし"
+
+        # 5. 構造化プランをプロンプトに組み込む
+        plan_block = plan.to_prompt_block()
+
+        prompt = f"""あなたは将棋の局面解説AIです。
+以下の構造化された局面情報に基づいて、80文字以内で解説してください。
+
+手数: {ply}手目
+指された手: {user_move_jp}
+AI推奨手: {best_move_jp}
+
+{plan_block}
+
+トーン: {style_instruction}
+
+ルール:
+- 80文字以内で完結すること
+- 上記の【注目ポイント】や【この手の理由】を中心に解説すること
+- 【直前の流れ】があれば、対局の文脈を意識した解説にすること
+- 地の文のみ。箇条書き・見出し・記号禁止
+- です/ます調
+- 文章を途中で切らないこと"""
+
+        # 6. LLM呼び出し
+        model = genai.GenerativeModel(
+            "gemini-2.5-flash-lite",
+            generation_config=genai.types.GenerationConfig(max_output_tokens=300),
+        )
+        try:
+            res = await model.generate_content_async(prompt)
+        except Exception as e:
+            _LOG.warning("[planned_comment] LLM call failed: %s", e)
+            explanation = _build_planned_fallback(plan)
+            return {
+                "explanation": explanation,
+                "style": style,
+                "plan": plan.to_dict(),
+                "is_fallback": True,
+            }
+
+        tokens_info = None
+        try:
+            if hasattr(res, 'usage_metadata') and res.usage_metadata:
+                meta = res.usage_metadata
+                tokens_info = {"prompt": meta.prompt_token_count, "completion": meta.candidates_token_count}
+                _LOG.info(
+                    "[TokenUsage] %s - input: %d, output: %d, total: %d",
+                    "generate_planned_comment",
+                    meta.prompt_token_count,
+                    meta.candidates_token_count,
+                    meta.total_token_count,
+                )
+        except Exception:
+            pass
+
+        # 7. 後処理: 改行・記号除去、80文字制限、空文字ガード
+        raw_text = getattr(res, "text", None) or ""
+        text = _sanitize_explanation(raw_text, plan)
+        # fallback 判定: sanitize で fallback テキストに差し替えた場合
+        used_fallback = (len(raw_text.strip()) < 5)
+
+        # 8. Fire-and-forget training log
+        # features は数値特徴量のまま維持、plan は別フィールド
+        try:
+            log_features = extract_position_features(sfen=sfen, move=user_move, ply=ply)
+        except Exception:
+            log_features = None
+        asyncio.ensure_future(_log_explanation(
+            sfen=sfen, ply=ply, candidates=candidates,
+            user_move=user_move, delta_cp=delta_cp,
+            features=log_features,
+            explanation=text, model_name="gemini-2.5-flash-lite",
+            tokens=tokens_info, style=style,
+            plan=plan.to_dict(),
+        ))
+
+        return {
+            "explanation": text,
+            "style": style,
+            "plan": plan.to_dict(),
+            "is_fallback": used_fallback,
+        }
+
+    @staticmethod
+    def build_plan(
+        sfen: str,
+        move: Optional[str] = None,
+        ply: int = 0,
+        candidates: Optional[List[Dict[str, Any]]] = None,
+        delta_cp: Optional[int] = None,
+        user_move: Optional[str] = None,
+        prev_moves: Optional[List[str]] = None,
+        prev_features: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """構造化プランのみを生成 (LLM不要、検証・デバッグ用)."""
+        from backend.api.services.explanation_planner import ExplanationPlanner
+        planner = ExplanationPlanner()
+        plan = planner.build_plan(
+            sfen=sfen, move=move, ply=ply,
+            candidates=candidates, delta_cp=delta_cp,
+            user_move=user_move, prev_moves=prev_moves,
+            prev_features=prev_features,
+        )
+        return plan.to_dict()
 
     @staticmethod
     async def generate_game_digest(data: Dict[str, Any]) -> Dict[str, Any]:
@@ -660,6 +836,76 @@ def _extract_retry_after_seconds(err: Exception) -> Optional[int]:
         return max(1, int(float(m.group(1))))
     except Exception:
         return None
+
+
+_HEADING_RE = re.compile(r"【[^】]*】")
+_BULLET_RE = re.compile(r"^[\s]*[-・*•▪]\s*", re.MULTILINE)
+_HASH_RE = re.compile(r"^#+\s*", re.MULTILINE)
+
+
+def _sanitize_explanation(raw: str, plan) -> str:
+    """LLM出力を後処理して安全な解説テキストにする.
+
+    - 改行・箇条書き・見出し記号を除去
+    - 80文字以内に収める
+    - 空文字や不正出力時は fallback を返す
+    """
+    text = raw.strip()
+
+    # 【見出し】除去
+    text = _HEADING_RE.sub("", text)
+    # 箇条書き記号除去 (改行がまだ残っている段階で適用)
+    text = _BULLET_RE.sub("", text)
+    # Markdown見出し除去
+    text = _HASH_RE.sub("", text)
+    # 改行 → スペースに統合
+    text = text.replace("\n", " ").replace("\r", "")
+    # 連続スペースを単一に
+    text = re.sub(r"\s{2,}", " ", text).strip()
+
+    # 空文字・極端に短い場合は fallback
+    if len(text) < 5:
+        return _build_planned_fallback(plan)
+
+    # 80文字制限
+    if len(text) > 80:
+        # 最後の句点位置で切る
+        cut = text[:80]
+        last_period = max(cut.rfind("。"), cut.rfind("です"), cut.rfind("ます"))
+        if last_period > 20:
+            text = text[: last_period + 1]
+            # "です" / "ます" で切った場合に句点を補う
+            if not text.endswith("。"):
+                text += "。"
+        else:
+            text = text[:77] + "..."
+
+    return text
+
+
+def _build_planned_fallback(plan) -> str:
+    """LLM不使用時・エラー時にプランから自然な解説を生成."""
+    # surface_reason を軸に自然文を構成
+    if plan.surface_reason:
+        base = plan.surface_reason
+        # 句点で終わっていなければ追加
+        if not base.endswith("。"):
+            base += "。"
+        # topic_keyword を前置して厚みを出す
+        if plan.topic_keyword and plan.topic_keyword not in base:
+            text = f"{plan.topic_keyword}。{base}"
+        else:
+            text = base
+    elif plan.topic_keyword:
+        text = f"{plan.topic_keyword}です。"
+    else:
+        text = "局面を進める一手です。"
+
+    # 80文字制限
+    if len(text) > 80:
+        text = text[:77] + "..."
+
+    return text
 
 
 def _log_llm_exception(label: str, err: Exception, data: Dict[str, Any]) -> None:

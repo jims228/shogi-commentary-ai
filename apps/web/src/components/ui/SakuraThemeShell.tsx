@@ -9,6 +9,11 @@ function isSakuraRoute(pathname: string | null) {
   return pathname === "/learn/roadmap" || pathname.startsWith("/training");
 }
 
+function isFullWidthRoute(pathname: string | null) {
+  if (!pathname) return false;
+  return pathname.startsWith("/eval");
+}
+
 export function SakuraThemeShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const enabled = isSakuraRoute(pathname);
@@ -21,9 +26,12 @@ export function SakuraThemeShell({ children }: { children: React.ReactNode }) {
     return isTraining ? `${base} bg-white` : `${base} sakura-theme sakura-surface`;
   }, [enabled, isTraining]);
 
+  const fullWidth = isFullWidthRoute(pathname);
+
   const contentClass = useMemo(() => {
+    if (fullWidth) return "relative z-[20] h-full flex flex-col";
     return "relative z-[20] h-full flex flex-col px-4 sm:px-6 lg:px-12 xl:px-[220px] 2xl:px-[260px] py-6 gap-6";
-  }, []);
+  }, [fullWidth]);
 
   return (
     <div className={outerClass}>

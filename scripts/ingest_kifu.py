@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import random
 import sys
@@ -382,6 +383,12 @@ def process_kif_file(
         print(f"  [parse] FAILED: {e}")
         return []
 
+    # Skip handicap games (non-平手)
+    handicap = parsed["header"].get("handicap", "平手")
+    if handicap and handicap != "平手":
+        print(f"  [skip] handicap game: {handicap}")
+        return []
+
     usi_moves_raw = moves_to_usi(parsed)
     # Filter out None (unparseable moves)
     usi_moves: List[str] = []
@@ -525,13 +532,23 @@ def main():
 
     print(f"[ingest] {len(kif_files)} file(s)")
 
-    # Process each file
-    all_records: List[Dict[str, Any]] = []
+    # Detect duplicate files by content hash
+    seen_hashes: Dict[str, Path] = {}
+    dedup_files: List[Path] = []
     for kif_path in kif_files:
         if not kif_path.exists():
             print(f"[ingest] File not found: {kif_path}")
             continue
+        content_hash = hashlib.md5(kif_path.read_bytes()).hexdigest()
+        if content_hash in seen_hashes:
+            print(f"[ingest] DUPLICATE: {kif_path.name} is identical to {seen_hashes[content_hash].name}, skipping")
+            continue
+        seen_hashes[content_hash] = kif_path
+        dedup_files.append(kif_path)
 
+    # Process each file
+    all_records: List[Dict[str, Any]] = []
+    for kif_path in dedup_files:
         suffix = kif_path.suffix.lower()
         if suffix in (".usi", ".txt"):
             records = process_usi_file(kif_path, rng, args.min_ply, args.max_ply)

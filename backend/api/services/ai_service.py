@@ -63,6 +63,41 @@ def _cache_set(key: str, text: str) -> None:
     _EXPLAIN_CACHE[key] = (time.time(), text)
 
 
+def _detect_turn(sfen: str) -> str:
+    """position コマンド文字列から手番を判定する.
+
+    "position startpos moves ..." 形式の場合、moves の数の偶奇で判定。
+    "position sfen ... b/w ... moves ..." 形式の場合、ベースSFEN中の手番 + moves数で判定。
+    """
+    parts = sfen.split()
+
+    if "startpos" in parts:
+        # startpos = sente(b) to move, each move flips turn
+        if "moves" in parts:
+            n_moves = len(parts) - parts.index("moves") - 1
+        else:
+            n_moves = 0
+        return "b" if n_moves % 2 == 0 else "w"
+
+    # "position sfen <board> <turn> <hands> <ply> moves ..."
+    if "sfen" in parts:
+        si = parts.index("sfen")
+        # turn token is 2 positions after "sfen" (board turn hands ply)
+        base_turn = "b"
+        if si + 2 < len(parts) and parts[si + 2] in ("b", "w"):
+            base_turn = parts[si + 2]
+        if "moves" in parts:
+            n_moves = len(parts) - parts.index("moves") - 1
+        else:
+            n_moves = 0
+        # Each move flips the turn from base
+        if n_moves % 2 == 0:
+            return base_turn
+        return "w" if base_turn == "b" else "b"
+
+    return "b"
+
+
 def _describe_safety(value: int) -> str:
     """king_safety (0-100) を人間が読める説明に変換."""
     if value >= 80:
@@ -286,12 +321,7 @@ class AIService:
                 good_or_bad = "好手"
 
         # 日本語ラベル
-        turn = "b"  # sfen から判定
-        parts = sfen.replace("position ", "").split()
-        for p in parts:
-            if p in ("b", "w"):
-                turn = p
-                break
+        turn = _detect_turn(sfen)
         best_move_jp = ShogiUtils.format_move_label(best_move_usi, turn) if best_move_usi else "なし"
         user_move_jp = ShogiUtils.format_move_label(user_move, turn) if user_move else "なし"
 
@@ -409,12 +439,7 @@ AI推奨手: {best_move_jp}
         style_instruction = _STYLE_INSTRUCTIONS.get(style, _STYLE_INSTRUCTIONS["neutral"])
 
         # 4. 日本語ラベル
-        turn = "b"
-        parts = sfen.replace("position ", "").split()
-        for p in parts:
-            if p in ("b", "w"):
-                turn = p
-                break
+        turn = _detect_turn(sfen)
         user_move_jp = ShogiUtils.format_move_label(user_move, turn) if user_move else "なし"
         best_move_usi = candidates[0].get("move", "") if candidates else ""
         best_move_jp = ShogiUtils.format_move_label(best_move_usi, turn) if best_move_usi else "なし"

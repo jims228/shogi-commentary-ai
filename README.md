@@ -1,116 +1,168 @@
-# 将棋解説AI (shogi-commentary-ai)
+# ShogiStep
 
-将棋の棋譜を解析し、手の意図・戦略・評価値をわかりやすく解説するAIシステムです。
+An AI system that verbalizes professional-level reasoning behind shogi moves.
 
-## 概要
+## Goal
 
-- **やねうら王** エンジンによる局面評価・最善手探索
-- **Gemini** LLMによる自然言語解説生成
-- **Supabase** による棋譜・解析結果の永続化
-- **FastAPI** による REST API 提供
+The goal is to build a system that explains not just what the best move is, but *why* — capturing the intent, causal chains, and key concepts that a professional commentator would identify. This is pursued both as academic research and as the foundation for a shogi learning application.
 
-## ディレクトリ構成
+## Research Question
+
+Can an AI verbalize professional-level shogi reasoning? What techniques are required, and how can explanation quality be defined and measured?
+
+## Current System — Pipeline
+
+The system uses a five-stage pipeline to generate move explanations:
+
+```
+KIF input
+  → Feature extraction (8-dimensional: king_safety, piece_activity, attack_pressure, phase, move_intent, ...)
+  → ML prediction
+      ├── FocusPredictor       (F1 = 0.706)
+      ├── ImportancePredictor
+      └── StyleSelector        (accuracy = 0.974)
+  → Prompt construction (ExplanationPlanner)
+  → LLM generation (Gemini API, gemini-2.5-flash-lite)
+  → ~80-character Japanese move explanation
+```
+
+The planner pipeline is activated when `use_planner=true` or `prev_moves` is provided. The legacy single-pass path is preserved for backward compatibility.
+
+## Directory Structure
 
 ```
 shogi-commentary-ai/
 ├── backend/
-│   ├── api/
-│   │   ├── main.py          # FastAPI アプリ
-│   │   ├── routers/         # エンドポイント定義
-│   │   │   ├── annotate.py  # /annotate - 棋譜一括解析
-│   │   │   ├── explain.py   # /api/explain - 1手解説
-│   │   │   └── games.py     # /api/games - 棋譜管理
-│   │   ├── services/        # ビジネスロジック
-│   │   │   ├── engine.py    # やねうら王連携
-│   │   │   ├── explanation.py  # 解説生成 (LLM)
-│   │   │   ├── features.py  # 特徴量抽出
-│   │   │   └── bioshogi.py  # bioshogi API クライアント
-│   │   ├── db/
-│   │   │   └── wkbk_db.py   # 将棋問題DB アクセス層
-│   │   └── utils/
-│   │       └── gemini_client.py  # Gemini API 設定
-│   └── models/
-│       └── explanation.py   # MoveExplanation / GameReport データ構造
-├── engine/
-│   └── engine_server.py     # USI エンジン HTTP ゲートウェイ
-├── supabase/
-│   └── migrations/          # DB マイグレーション SQL
-├── docker/                  # Dockerfile / entrypoint
+│   ├── ai/
+│   │   ├── castle_detector.py      # Castle formation detection
+│   │   ├── opening_detector.py     # Opening classification
+│   │   └── pv_reason.py            # Principal variation reasoning
+│   └── api/
+│       ├── main.py                 # FastAPI application entry point
+│       ├── engine_state.py         # YaneuraOu engine interface (Stream/Batch)
+│       ├── routers/
+│       │   ├── explain.py          # /api/explain — single-move commentary
+│       │   ├── annotate.py         # /annotate  — batch KIF annotation
+│       │   ├── games.py            # /api/games — game record management
+│       │   └── analysis.py         # /api/analysis
+│       ├── services/
+│       │   ├── explanation_planner.py   # Structured intermediate plan builder
+│       │   ├── ai_service.py            # LLM prompt dispatch
+│       │   ├── position_features.py     # 8-dimensional feature extraction
+│       │   ├── board_analyzer.py        # Threats, hanging pieces, castle hints
+│       │   ├── focus_predictor.py       # ML: what to focus on
+│       │   ├── importance_predictor.py  # ML: move importance score
+│       │   ├── ml_trainer.py            # Model training pipeline
+│       │   └── bioshogi.py              # bioshogi Ruby service client
+│       └── utils/
+│           ├── gemini_client.py         # Gemini API configuration
+│           └── shogi_explain_core.py    # SFEN / board state parser
+├── bioshogi_service/                    # Ruby-based shogi logic service (port 7070)
+├── data/
+│   ├── annotated/                       # Annotated position dataset
+│   ├── models/                          # Trained ML model artifacts
+│   ├── human_eval/                      # Human evaluation sets
+│   └── experiments/                     # Experiment outputs
 ├── scripts/
-│   └── run_backend.sh       # バックエンド起動スクリプト
+│   ├── run_backend.sh                   # Backend startup script
+│   ├── ingest_kifu.py                   # KIF file ingestion pipeline
+│   ├── train_models.py                  # ML model training
+│   ├── batch_generate_commentary.py     # Batch commentary generation
+│   └── compare_legacy_vs_planner.py     # Pipeline comparison tool
+├── tools/
+│   └── generate_training_data.py        # Training data generation
+├── engine/
+│   └── engine_server.py                 # USI engine HTTP gateway
+├── supabase/
+│   └── migrations/                      # Database migration SQL
+├── docker/                              # Dockerfile / entrypoint
 ├── tests/
 ├── .env.example
-├── requirements.txt
-└── README.md
+└── requirements.txt
 ```
 
-## セットアップ
+## Setup & Usage
 
-### 必要条件
+### Prerequisites
 
-- Python 3.11+
-- やねうら王エンジンバイナリ（`ENGINE_CMD` で指定）
-- Gemini API キー（LLM解説を使う場合）
-- Supabase プロジェクト（棋譜保存を使う場合）
+- Python 3.10+
+- YaneuraOu engine binary (set via `ENGINE_CMD`)
+- Ruby 3.2.2 via rbenv (for the bioshogi service)
+- Gemini API key (required for LLM commentary)
+- Supabase project (optional, for game record persistence)
 
-### インストール
+### Installation
 
 ```bash
-# 仮想環境
+# Create and activate virtual environment
 python -m venv .venv
 source .venv/bin/activate
 
-# 依存パッケージ
+# Install dependencies
 pip install -r requirements.txt
 
-# 環境変数設定
+# Configure environment variables
 cp .env.example .env
-# .env を編集して各キーを設定
+# Edit .env and fill in your keys
 ```
 
-### 起動
+### Running the Backend
 
 ```bash
-# バックエンド起動 (LLM OFF)
+# Start without LLM (engine analysis only)
 USE_LLM=0 bash scripts/run_backend.sh
 
-# バックエンド起動 (LLM ON)
+# Start with LLM commentary generation
 USE_LLM=1 bash scripts/run_backend.sh
 ```
 
-## API エンドポイント
+The startup script also launches the bioshogi Ruby service on port 7070.
 
-| メソッド | パス | 説明 |
-|---------|------|------|
-| GET | `/health` | ヘルスチェック |
-| POST | `/annotate` | 棋譜一括アノテーション |
-| POST | `/api/explain` | 1手解説生成 |
-| POST | `/api/games` | 棋譜保存 |
-| GET | `/api/games` | 棋譜一覧取得 |
+### Running Tests
 
-## データモデル
+```bash
+python -m pytest tests/ -v
+```
 
-### MoveExplanation
+## API Endpoints
 
-1手ごとの解析・解説情報を格納するモデル。
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Health check |
+| POST | `/annotate` | Batch KIF annotation |
+| POST | `/api/explain` | Generate commentary for a single move |
+| POST | `/api/games` | Save a game record |
+| GET | `/api/games` | List saved game records |
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `ply` | int | 手数 |
-| `move` | str | 指し手 (USI形式) |
-| `eval_before` | int? | 指す前の評価値 |
-| `eval_after` | int? | 指した後の評価値 |
-| `eval_delta` | int? | 評価値変化 |
-| `move_type` | MoveType? | 手の種類 (attack/defense/both/technique) |
-| `position_phase` | Phase? | 局面フェーズ (opening/middle/endgame) |
-| `narrative` | str? | LLM生成の解説文 |
+### `/api/explain` — Request Parameters
 
-### GameReport
+| Field | Type | Description |
+|-------|------|-------------|
+| `sfen` | string | Board position in SFEN format |
+| `move` | string | Move in USI notation |
+| `prev_moves` | string[]? | Prior moves for context (activates planner pipeline) |
+| `use_planner` | bool? | Explicitly enable the planner pipeline |
 
-棋譜全体のレポート。`MoveExplanation` のリストと転換点情報を含む。
+### `MoveExplanation` — Response Fields
 
-## 開発方針
+| Field | Type | Description |
+|-------|------|-------------|
+| `ply` | int | Move number |
+| `move` | str | Move in USI notation |
+| `eval_before` | int? | Evaluation score before the move |
+| `eval_after` | int? | Evaluation score after the move |
+| `eval_delta` | int? | Change in evaluation score |
+| `move_type` | MoveType? | Move category (attack / defense / both / technique) |
+| `position_phase` | Phase? | Game phase (opening / middle / endgame) |
+| `narrative` | str? | LLM-generated explanation text |
 
-- `USE_LLM=0` でエンジン解析のみ動作させられる（LLMキー不要）
-- 各サービスは独立して実装・テスト可能な設計
-- Supabase なしでもローカル動作可能
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Backend | Python 3.10, FastAPI |
+| ML | scikit-learn (RandomForest, GradientBoosting, OneVsRest) |
+| LLM | Google Gemini API (`gemini-2.5-flash-lite`), `thinking_budget=0` |
+| Shogi Engine | YaneuraOu + NNUE via subprocess; bioshogi (Ruby 3.2.2) |
+| Database | Supabase (PostgreSQL) |
+| Frontend (planned) | React Native / Expo SDK 54 |

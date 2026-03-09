@@ -188,6 +188,78 @@ def build_digest_features_block(features_list: List[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def build_board_analysis_block(analysis: Any) -> str:
+    """BoardAnalysis から LLM プロンプト用の日本語ブロックを構築.
+
+    commentary_hints（自然言語）を主体とし、
+    囲い・王手・浮き駒など重要情報を補足する。
+    """
+    from backend.api.services.board_analyzer import BoardAnalysis  # local import to avoid circular
+
+    lines: List[str] = ["\n【盤面の詳細分析】"]
+
+    # 1. 解説ヒント (最大3件 — BoardAnalyzer が生成した自然言語)
+    hints = getattr(analysis, "commentary_hints", [])
+    if hints:
+        lines.append("盤面のポイント: " + "。".join(hints[:3]))
+
+    # 2. 囲いの種類
+    ks_detail = getattr(analysis, "king_safety_detail", {}) or {}
+    castle_parts = []
+    for side_key, side_jp in [("sente", "先手"), ("gote", "後手")]:
+        info = ks_detail.get(side_key, {})
+        castle = info.get("castle_type", "不明")
+        if castle not in ("不明", "その他"):
+            escape = info.get("escape_squares", 0)
+            castle_parts.append(f"{side_jp}: {castle}（逃げ道{escape}）")
+    if castle_parts:
+        lines.append("囲い状況: " + "、".join(castle_parts))
+
+    # 3. 浮き駒 (上位2件 — 価値の高い順)
+    hanging = getattr(analysis, "hanging_pieces", []) or []
+    if hanging:
+        h_descs = []
+        for h in hanging[:2]:
+            side_jp = "先手" if h.get("side") == "sente" else "後手"
+            h_descs.append(f"{h.get('square', '')}の{side_jp}{h.get('piece', '駒')}が浮き駒")
+        lines.append("浮き駒: " + "、".join(h_descs))
+
+    # 4. 王手・両取り脅威 (上位2件)
+    threats = getattr(analysis, "threats", []) or []
+    threat_descs = []
+    for t in threats[:2]:
+        ttype = t.get("type")
+        side_jp = "先手" if t.get("side") == "sente" else "後手"
+        if ttype == "check":
+            threat_descs.append(f"{side_jp}の{t.get('by', '')}が王手")
+        elif ttype == "fork_potential":
+            threat_descs.append(f"{side_jp}の{t.get('piece', '')}が両取り候補")
+        elif ttype == "hanging":
+            threat_descs.append(
+                f"{side_jp}の{t.get('attacker', '')}が{t.get('target', '')}を狙っている"
+            )
+    if threat_descs:
+        lines.append("脅威: " + "、".join(threat_descs))
+
+    # 5. 手の影響 (move_impact が存在する場合)
+    impact = getattr(analysis, "move_impact", None) or {}
+    impact_parts = []
+    if impact.get("captured"):
+        impact_parts.append(f"{impact['captured']}を取った")
+    if impact.get("is_promotion"):
+        impact_parts.append("成り駒で戦力増強")
+    if impact.get("opened_lines"):
+        impact_parts.append("大駒の筋が通った")
+    if impact_parts:
+        lines.append("手の影響: " + "、".join(impact_parts))
+
+    # ヒントが空なら空文字を返して呼び出し元で除外できるようにする
+    if len(lines) == 1:  # ヘッダーのみ
+        return ""
+
+    return "\n".join(lines)
+
+
 def build_features_block(features: Dict[str, Any]) -> str:
     """特徴量辞書からプロンプト用の日本語ブロックを構築."""
     phase = _PHASE_JP.get(features.get("phase", ""), "不明")
@@ -328,6 +400,19 @@ class AIService:
         # 特徴量ブロック
         features_block = build_features_block(features) if features else ""
 
+        # 盤面分析ブロック (BoardAnalyzer)
+        board_analysis_block = ""
+        try:
+            from backend.api.services.board_analyzer import BoardAnalyzer
+            analysis = BoardAnalyzer().analyze(
+                position_cmd=sfen,
+                move=user_move,
+                ply=ply,
+            )
+            board_analysis_block = build_board_analysis_block(analysis)
+        except Exception:
+            _LOG.debug("[explain] BoardAnalyzer failed, continuing without board analysis")
+
         # スタイル選択
         if style is None and features:
             style = _get_style_selector().predict(features)
@@ -341,7 +426,7 @@ class AIService:
 指された手: {user_move_jp}（この手の評価: {good_or_bad}）
 AI推奨手: {best_move_jp}
 形勢: {situation}
-{features_block}
+{features_block}{board_analysis_block}
 トーン: {style_instruction}
 ルール:
 - 80文字以内で完結すること

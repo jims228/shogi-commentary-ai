@@ -1,0 +1,1112 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:39.924975+00:00",
+  "total": 24,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f",
+      "ply": 5,
+      "user_move": "8e8f",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 5手目",
+      "candidates": [
+        {
+          "move": "8e8f"
+        },
+        {
+          "move": "4a3b"
+        },
+        {
+          "move": "6a7b"
+        }
+      ],
+      "prev_moves": [
+        "7g7f",
+        "8c8d",
+        "7i7h",
+        "8d8e",
+        "1g1f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d",
+      "ply": 10,
+      "user_move": "9g9f",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 10手目",
+      "candidates": [
+        {
+          "move": "9g9f"
+        },
+        {
+          "move": "1i1g"
+        },
+        {
+          "move": "2g2f"
+        }
+      ],
+      "prev_moves": [
+        "8e8f",
+        "8g8f",
+        "8b8f",
+        "6i7i",
+        "1c1d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g",
+      "ply": 15,
+      "user_move": "8f8b",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 15手目",
+      "candidates": [
+        {
+          "move": "P*8g"
+        },
+        {
+          "move": "7c7d"
+        },
+        {
+          "move": "8f8b"
+        }
+      ],
+      "prev_moves": [
+        "9g9f",
+        "7a6b",
+        "8h6f",
+        "6c6d",
+        "7h7g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d",
+      "ply": 20,
+      "user_move": "5g5f",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 20手目",
+      "candidates": [
+        {
+          "move": "8h5h"
+        },
+        {
+          "move": "4i5h"
+        },
+        {
+          "move": "5g5f"
+        }
+      ],
+      "prev_moves": [
+        "8f8b",
+        "P*8d",
+        "6a7b",
+        "2h8h",
+        "7c7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h",
+      "ply": 25,
+      "user_move": "4b3b",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 25手目",
+      "candidates": [
+        {
+          "move": "1a1c"
+        },
+        {
+          "move": "3c3d"
+        },
+        {
+          "move": "4b3b"
+        }
+      ],
+      "prev_moves": [
+        "5g5f",
+        "8a7c",
+        "3i3h",
+        "5a4b",
+        "5i4h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d",
+      "ply": 30,
+      "user_move": "7i7h",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 30手目",
+      "candidates": [
+        {
+          "move": "6f3c+"
+        },
+        {
+          "move": "8h8f"
+        },
+        {
+          "move": "7i7h"
+        }
+      ],
+      "prev_moves": [
+        "4b3b",
+        "4h3i",
+        "3a4b",
+        "3i2h",
+        "5c5d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f",
+      "ply": 35,
+      "user_move": "4c4d",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 35手目",
+      "candidates": [
+        {
+          "move": "4c4d"
+        },
+        {
+          "move": "P*8a"
+        },
+        {
+          "move": "P*8c"
+        }
+      ],
+      "prev_moves": [
+        "7i7h",
+        "4b5c",
+        "6f3i",
+        "3c3d",
+        "3i6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e",
+      "ply": 40,
+      "user_move": "6f7g",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 40手目",
+      "candidates": [
+        {
+          "move": "6f7g"
+        },
+        {
+          "move": "3g3f"
+        },
+        {
+          "move": "7h7g"
+        }
+      ],
+      "prev_moves": [
+        "4c4d",
+        "6f3i",
+        "4a4b",
+        "7g6f",
+        "6d6e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i",
+      "ply": 45,
+      "user_move": "P*8e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 45手目",
+      "candidates": [
+        {
+          "move": "7c8e"
+        },
+        {
+          "move": "P*8f"
+        },
+        {
+          "move": "P*8e"
+        }
+      ],
+      "prev_moves": [
+        "6f7g",
+        "5c6d",
+        "9f9e",
+        "6b6c",
+        "7h7i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d",
+      "ply": 50,
+      "user_move": "5h8h",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 50手目",
+      "candidates": [
+        {
+          "move": "7i7h"
+        },
+        {
+          "move": "7g6f"
+        },
+        {
+          "move": "5h8h"
+        }
+      ],
+      "prev_moves": [
+        "P*8e",
+        "8h5h",
+        "7d7e",
+        "7f7e",
+        "8b8d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g",
+      "ply": 55,
+      "user_move": "7f7g+",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 55手目",
+      "candidates": [
+        {
+          "move": "4b5b"
+        },
+        {
+          "move": "7f7g+"
+        },
+        {
+          "move": "2b6f"
+        }
+      ],
+      "prev_moves": [
+        "5h8h",
+        "4d4e",
+        "7i6h",
+        "P*7f",
+        "8h8g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d",
+      "ply": 60,
+      "user_move": "7g8f",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 60手目",
+      "candidates": [
+        {
+          "move": "7g8f"
+        },
+        {
+          "move": "1i1g"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "7f7g+",
+        "6h7g",
+        "S*8f",
+        "7e7d",
+        "8d7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e",
+      "ply": 65,
+      "user_move": "6d7e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 65手目",
+      "candidates": [
+        {
+          "move": "G*5c"
+        },
+        {
+          "move": "G*4d"
+        },
+        {
+          "move": "6d7e"
+        }
+      ],
+      "prev_moves": [
+        "7g8f",
+        "8e8f",
+        "8g8f",
+        "P*8e",
+        "P*7e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d",
+      "ply": 70,
+      "user_move": "S*7e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 70手目",
+      "candidates": [
+        {
+          "move": "S*7e"
+        },
+        {
+          "move": "S*8a"
+        },
+        {
+          "move": "2g2f"
+        }
+      ],
+      "prev_moves": [
+        "6d7e",
+        "3i7e",
+        "7d7e",
+        "S*7f",
+        "7e7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d",
+      "ply": 75,
+      "user_move": "7c8e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 75手目",
+      "candidates": [
+        {
+          "move": "R*8e"
+        },
+        {
+          "move": "7c8e"
+        },
+        {
+          "move": "R*6f"
+        }
+      ],
+      "prev_moves": [
+        "S*7e",
+        "7d7e",
+        "7f7e",
+        "8e8f",
+        "P*7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a",
+      "ply": 80,
+      "user_move": "7d7c+",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 80手目",
+      "candidates": [
+        {
+          "move": "4i5i"
+        },
+        {
+          "move": "7d7c+"
+        },
+        {
+          "move": "R*5h"
+        }
+      ],
+      "prev_moves": [
+        "7c8e",
+        "R*6a",
+        "R*7a",
+        "6a7a+",
+        "7b7a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c",
+      "ply": 85,
+      "user_move": "5b4a",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 85手目",
+      "candidates": [
+        {
+          "move": "5b4a"
+        },
+        {
+          "move": "L*4d"
+        },
+        {
+          "move": "S*4f"
+        }
+      ],
+      "prev_moves": [
+        "7d7c+",
+        "6c5b",
+        "7e6d",
+        "2b9i+",
+        "7c6c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_018",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i",
+      "ply": 90,
+      "user_move": "6c5c",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 90手目",
+      "candidates": [
+        {
+          "move": "6c5c"
+        },
+        {
+          "move": "4i5h"
+        },
+        {
+          "move": "P*7g"
+        }
+      ],
+      "prev_moves": [
+        "5b4a",
+        "R*7c",
+        "S*8b",
+        "7c7d+",
+        "9i8i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_019",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i",
+      "ply": 95,
+      "user_move": "R*5i",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 95手目",
+      "candidates": [
+        {
+          "move": "G*7f"
+        },
+        {
+          "move": "R*5i"
+        },
+        {
+          "move": "G*6c"
+        }
+      ],
+      "prev_moves": [
+        "6c5c",
+        "4b3c",
+        "5c5d",
+        "N*5g",
+        "4i3i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_020",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i R*5i 6d5c+ L*4b 7d8e G*4i",
+      "ply": 100,
+      "user_move": "3h4i",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 100手目",
+      "candidates": [
+        {
+          "move": "P*7h"
+        },
+        {
+          "move": "N*4h"
+        },
+        {
+          "move": "3h4i"
+        }
+      ],
+      "prev_moves": [
+        "R*5i",
+        "6d5c+",
+        "L*4b",
+        "7d8e",
+        "G*4i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_021",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i R*5i 6d5c+ L*4b 7d8e G*4i 3h4i 5g4i+ N*2e 4i3i 2e3c+",
+      "ply": 105,
+      "user_move": "2a3c",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 105手目",
+      "candidates": [
+        {
+          "move": "2a3c"
+        },
+        {
+          "move": "3b3a"
+        },
+        {
+          "move": "3b3c"
+        }
+      ],
+      "prev_moves": [
+        "3h4i",
+        "5g4i+",
+        "N*2e",
+        "4i3i",
+        "2e3c+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_022",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i R*5i 6d5c+ L*4b 7d8e G*4i 3h4i 5g4i+ N*2e 4i3i 2e3c+ 2a3c G*4c 3b2b 4c3c 2b3c",
+      "ply": 110,
+      "user_move": "N*2e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 110手目",
+      "candidates": [
+        {
+          "move": "N*2e"
+        },
+        {
+          "move": "G*5e"
+        },
+        {
+          "move": "G*4i"
+        }
+      ],
+      "prev_moves": [
+        "2a3c",
+        "G*4c",
+        "3b2b",
+        "4c3c",
+        "2b3c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_023",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i R*5i 6d5c+ L*4b 7d8e G*4i 3h4i 5g4i+ N*2e 4i3i 2e3c+ 2a3c G*4c 3b2b 4c3c 2b3c N*2e 3c2d 8e8b 5i5h+ 2h1g",
+      "ply": 115,
+      "user_move": "B*3e",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 115手目",
+      "candidates": [
+        {
+          "move": "G*8e"
+        },
+        {
+          "move": "B*3e"
+        },
+        {
+          "move": "5h2h"
+        }
+      ],
+      "prev_moves": [
+        "N*2e",
+        "3c2d",
+        "8e8b",
+        "5i5h+",
+        "2h1g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_024",
+      "sfen": "position startpos moves 7g7f 8c8d 7i7h 8d8e 1g1f 8e8f 8g8f 8b8f 6i7i 1c1d 9g9f 7a6b 8h6f 6c6d 7h7g 8f8b P*8d 6a7b 2h8h 7c7d 5g5f 8a7c 3i3h 5a4b 5i4h 4b3b 4h3i 3a4b 3i2h 5c5d 7i7h 4b5c 6f3i 3c3d 3i6f 4c4d 6f3i 4a4b 7g6f 6d6e 6f7g 5c6d 9f9e 6b6c 7h7i P*8e 8h5h 7d7e 7f7e 8b8d 5h8h 4d4e 7i6h P*7f 8h8g 7f7g+ 6h7g S*8f 7e7d 8d7d 7g8f 8e8f 8g8f P*8e P*7e 6d7e 3i7e 7d7e S*7f 7e7d S*7e 7d7e 7f7e 8e8f P*7d 7c8e R*6a R*7a 6a7a+ 7b7a 7d7c+ 6c5b 7e6d 2b9i+ 7c6c 5b4a R*7c S*8b 7c7d+ 9i8i 6c5c 4b3c 5c5d N*5g 4i3i R*5i 6d5c+ L*4b 7d8e G*4i 3h4i 5g4i+ N*2e 4i3i 2e3c+ 2a3c G*4c 3b2b 4c3c 2b3c N*2e 3c2d 8e8b 5i5h+ 2h1g B*3e S*2f S*2h 1g1h 2h2i",
+      "ply": 120,
+      "user_move": "1h1g",
+      "name": "将棋ウォーズ(10分切れ負け) shibakabi 11級 vs Ace228 初段 120手目",
+      "candidates": [
+        {
+          "move": "1h1g"
+        }
+      ],
+      "prev_moves": [
+        "B*3e",
+        "S*2f",
+        "S*2h",
+        "1g1h",
+        "2h2i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_04.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

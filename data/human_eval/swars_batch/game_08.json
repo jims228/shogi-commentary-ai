@@ -1,0 +1,1348 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:42.443402+00:00",
+  "total": 29,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h",
+      "ply": 5,
+      "user_move": "3a3b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 5手目",
+      "candidates": [
+        {
+          "move": "3a3b"
+        },
+        {
+          "move": "6c6d"
+        },
+        {
+          "move": "9a9b"
+        }
+      ],
+      "prev_moves": [
+        "2g2f",
+        "3c3d",
+        "2f2e",
+        "2b3c",
+        "3i4h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b",
+      "ply": 10,
+      "user_move": "7i6h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 10手目",
+      "candidates": [
+        {
+          "move": "3h2g"
+        },
+        {
+          "move": "7i6h"
+        },
+        {
+          "move": "7h6h"
+        }
+      ],
+      "prev_moves": [
+        "3a3b",
+        "6i7h",
+        "8b4b",
+        "4i3h",
+        "5a6b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f",
+      "ply": 15,
+      "user_move": "4d4e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 15手目",
+      "candidates": [
+        {
+          "move": "7b8b"
+        },
+        {
+          "move": "4d4e"
+        },
+        {
+          "move": "4b6b"
+        }
+      ],
+      "prev_moves": [
+        "7i6h",
+        "6b7b",
+        "8h7i",
+        "4c4d",
+        "5g5f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c",
+      "ply": 20,
+      "user_move": "4h3g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 20手目",
+      "candidates": [
+        {
+          "move": "4h3g"
+        },
+        {
+          "move": "8g8f"
+        },
+        {
+          "move": "9g9f"
+        }
+      ],
+      "prev_moves": [
+        "4d4e",
+        "6h5g",
+        "7b8b",
+        "3g3f",
+        "3b4c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h",
+      "ply": 25,
+      "user_move": "7a7b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 25手目",
+      "candidates": [
+        {
+          "move": "7a7b"
+        },
+        {
+          "move": "4b5b"
+        },
+        {
+          "move": "2c2d"
+        }
+      ],
+      "prev_moves": [
+        "4h3g",
+        "4c4d",
+        "5i6i",
+        "1c1d",
+        "7i6h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d",
+      "ply": 30,
+      "user_move": "2h2g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 30手目",
+      "candidates": [
+        {
+          "move": "2h2g"
+        },
+        {
+          "move": "7h8h"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "7a7b",
+        "6i7i",
+        "9c9d",
+        "3g2f",
+        "5c5d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f",
+      "ply": 35,
+      "user_move": "4e4f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 35手目",
+      "candidates": [
+        {
+          "move": "4e4f"
+        },
+        {
+          "move": "5e6d"
+        },
+        {
+          "move": "9d9e"
+        }
+      ],
+      "prev_moves": [
+        "2h2g",
+        "5d5e",
+        "5f5e",
+        "4d5e",
+        "P*5f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b",
+      "ply": 40,
+      "user_move": "2i3g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 40手目",
+      "candidates": [
+        {
+          "move": "2e2d"
+        },
+        {
+          "move": "4g3g"
+        },
+        {
+          "move": "2i3g"
+        }
+      ],
+      "prev_moves": [
+        "4e4f",
+        "4g4f",
+        "5e4d",
+        "3h4g",
+        "4a5b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e",
+      "ply": 45,
+      "user_move": "3d3e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 45手目",
+      "candidates": [
+        {
+          "move": "4b3b"
+        },
+        {
+          "move": "3d3e"
+        },
+        {
+          "move": "4b2b"
+        }
+      ],
+      "prev_moves": [
+        "2i3g",
+        "6c6d",
+        "4f4e",
+        "4d5c",
+        "3f3e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d",
+      "ply": 50,
+      "user_move": "2e2d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 50手目",
+      "candidates": [
+        {
+          "move": "5g6f"
+        },
+        {
+          "move": "6g6f"
+        },
+        {
+          "move": "2e2d"
+        }
+      ],
+      "prev_moves": [
+        "3d3e",
+        "2f3e",
+        "4b4a",
+        "2g2h",
+        "7c7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+",
+      "ply": 55,
+      "user_move": "2a1c",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 55手目",
+      "candidates": [
+        {
+          "move": "1d1e"
+        },
+        {
+          "move": "2a1c"
+        },
+        {
+          "move": "P*4b"
+        }
+      ],
+      "prev_moves": [
+        "2e2d",
+        "2c2d",
+        "3e2d",
+        "3c5a",
+        "2d2c+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e",
+      "ply": 60,
+      "user_move": "2h2b+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 60手目",
+      "candidates": [
+        {
+          "move": "2h2i"
+        },
+        {
+          "move": "5g6f"
+        },
+        {
+          "move": "2h2b+"
+        }
+      ],
+      "prev_moves": [
+        "2a1c",
+        "2c3b",
+        "4a4c",
+        "P*3d",
+        "P*3e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c",
+      "ply": 65,
+      "user_move": "5b4c",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 65手目",
+      "candidates": [
+        {
+          "move": "5b4c"
+        },
+        {
+          "move": "5a8d"
+        },
+        {
+          "move": "5c4d"
+        }
+      ],
+      "prev_moves": [
+        "2h2b+",
+        "P*2d",
+        "3d3c+",
+        "1c2e",
+        "3c4c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d",
+      "ply": 70,
+      "user_move": "4a4b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 70手目",
+      "candidates": [
+        {
+          "move": "4a4b"
+        },
+        {
+          "move": "R*4i"
+        },
+        {
+          "move": "R*4b"
+        }
+      ],
+      "prev_moves": [
+        "5b4c",
+        "3b4a",
+        "5a7c",
+        "4e4d",
+        "5c4d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g",
+      "ply": 75,
+      "user_move": "4d4e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 75手目",
+      "candidates": [
+        {
+          "move": "N*1f"
+        },
+        {
+          "move": "4d4e"
+        },
+        {
+          "move": "P*4a"
+        }
+      ],
+      "prev_moves": [
+        "4a4b",
+        "4c5c",
+        "P*4e",
+        "2e3g",
+        "4g3g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b",
+      "ply": 80,
+      "user_move": "3b5b+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 80手目",
+      "candidates": [
+        {
+          "move": "3b3c"
+        },
+        {
+          "move": "3b5b+"
+        },
+        {
+          "move": "3b3e"
+        }
+      ],
+      "prev_moves": [
+        "4d4e",
+        "R*3b",
+        "6d6e",
+        "4b5b",
+        "5c5b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a",
+      "ply": 85,
+      "user_move": "7c3g+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 85手目",
+      "candidates": [
+        {
+          "move": "R*9e"
+        },
+        {
+          "move": "N*9e"
+        },
+        {
+          "move": "7c3g+"
+        }
+      ],
+      "prev_moves": [
+        "3b5b+",
+        "6a5b",
+        "2b5b",
+        "S*6a",
+        "5b4a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_018",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a",
+      "ply": 90,
+      "user_move": "4a4e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 90手目",
+      "candidates": [
+        {
+          "move": "4a4c"
+        },
+        {
+          "move": "P*4c"
+        },
+        {
+          "move": "4a4e"
+        }
+      ],
+      "prev_moves": [
+        "7c3g+",
+        "N*5c",
+        "G*7a",
+        "5c6a+",
+        "7b6a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_019",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e",
+      "ply": 95,
+      "user_move": "P*3f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 95手目",
+      "candidates": [
+        {
+          "move": "L*3h"
+        },
+        {
+          "move": "P*3f"
+        },
+        {
+          "move": "P*4b"
+        }
+      ],
+      "prev_moves": [
+        "4a4e",
+        "R*3i",
+        "G*6i",
+        "3i1i+",
+        "4e3e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_020",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a",
+      "ply": 100,
+      "user_move": "P*4g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 100手目",
+      "candidates": [
+        {
+          "move": "P*4g"
+        },
+        {
+          "move": "G*2e"
+        },
+        {
+          "move": "G*4f"
+        }
+      ],
+      "prev_moves": [
+        "P*3f",
+        "S*4h",
+        "3g2g",
+        "S*5h",
+        "L*4a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_021",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i",
+      "ply": 105,
+      "user_move": "N*4e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 105手目",
+      "candidates": [
+        {
+          "move": "8b9c"
+        },
+        {
+          "move": "N*4e"
+        },
+        {
+          "move": "1i5i"
+        }
+      ],
+      "prev_moves": [
+        "P*4g",
+        "N*3g",
+        "3e2d",
+        "P*2f",
+        "G*5i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_022",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+",
+      "ply": 110,
+      "user_move": "4h5g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 110手目",
+      "candidates": [
+        {
+          "move": "P*2b"
+        },
+        {
+          "move": "4h5g"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "N*4e",
+        "5g4f",
+        "P*5g",
+        "4f5g",
+        "4e5g+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_023",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i",
+      "ply": 115,
+      "user_move": "1i4i",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 115手目",
+      "candidates": [
+        {
+          "move": "P*5h"
+        },
+        {
+          "move": "1i4i"
+        },
+        {
+          "move": "S*2h"
+        }
+      ],
+      "prev_moves": [
+        "4h5g",
+        "3g4i+",
+        "5h4i",
+        "2g4i",
+        "5i4i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_024",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b",
+      "ply": 120,
+      "user_move": "N*8e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 120手目",
+      "candidates": [
+        {
+          "move": "N*8h"
+        },
+        {
+          "move": "N*4c"
+        },
+        {
+          "move": "N*8e"
+        }
+      ],
+      "prev_moves": [
+        "1i4i",
+        "B*5e",
+        "S*7c",
+        "N*5c",
+        "6a7b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_025",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b N*8e S*6d 8e7c+ 7b7c 5e6d",
+      "ply": 125,
+      "user_move": "7c6d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 125手目",
+      "candidates": [
+        {
+          "move": "P*5d"
+        },
+        {
+          "move": "N*1f"
+        },
+        {
+          "move": "7c6d"
+        }
+      ],
+      "prev_moves": [
+        "N*8e",
+        "S*6d",
+        "8e7c+",
+        "7b7c",
+        "5e6d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_026",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b N*8e S*6d 8e7c+ 7b7c 5e6d 7c6d 2d6d G*7c 6d3d B*2g",
+      "ply": 130,
+      "user_move": "S*5h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 130手目",
+      "candidates": [
+        {
+          "move": "S*5a"
+        },
+        {
+          "move": "S*5h"
+        },
+        {
+          "move": "5g6f"
+        }
+      ],
+      "prev_moves": [
+        "7c6d",
+        "2d6d",
+        "G*7c",
+        "6d3d",
+        "B*2g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_027",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b N*8e S*6d 8e7c+ 7b7c 5e6d 7c6d 2d6d G*7c 6d3d B*2g S*5h 4i3i 5c4a+ 3f3g+ 3d3b",
+      "ply": 135,
+      "user_move": "N*7b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 135手目",
+      "candidates": [
+        {
+          "move": "N*7b"
+        },
+        {
+          "move": "N*6b"
+        },
+        {
+          "move": "N*4b"
+        }
+      ],
+      "prev_moves": [
+        "S*5h",
+        "4i3i",
+        "5c4a+",
+        "3f3g+",
+        "3d3b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_028",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b N*8e S*6d 8e7c+ 7b7c 5e6d 7c6d 2d6d G*7c 6d3d B*2g S*5h 4i3i 5c4a+ 3f3g+ 3d3b N*7b S*6b 7a6b 3b6b S*7a",
+      "ply": 140,
+      "user_move": "6b6a",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 140手目",
+      "candidates": [
+        {
+          "move": "L*9b"
+        },
+        {
+          "move": "6b6a"
+        },
+        {
+          "move": "S*2d"
+        }
+      ],
+      "prev_moves": [
+        "N*7b",
+        "S*6b",
+        "7a6b",
+        "3b6b",
+        "S*7a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_029",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 3i4h 3a3b 6i7h 8b4b 4i3h 5a6b 7i6h 6b7b 8h7i 4c4d 5g5f 4d4e 6h5g 7b8b 3g3f 3b4c 4h3g 4c4d 5i6i 1c1d 7i6h 7a7b 6i7i 9c9d 3g2f 5c5d 2h2g 5d5e 5f5e 4d5e P*5f 4e4f 4g4f 5e4d 3h4g 4a5b 2i3g 6c6d 4f4e 4d5c 3f3e 3d3e 2f3e 4b4a 2g2h 7c7d 2e2d 2c2d 3e2d 3c5a 2d2c+ 2a1c 2c3b 4a4c P*3d P*3e 2h2b+ P*2d 3d3c+ 1c2e 3c4c 5b4c 3b4a 5a7c 4e4d 5c4d 4a4b 4c5c P*4e 2e3g 4g3g 4d4e R*3b 6d6e 4b5b 5c5b 3b5b+ 6a5b 2b5b S*6a 5b4a 7c3g+ N*5c G*7a 5c6a+ 7b6a 4a4e R*3i G*6i 3i1i+ 4e3e P*3f S*4h 3g2g S*5h L*4a P*4g N*3g 3e2d P*2f G*5i N*4e 5g4f P*5g 4f5g 4e5g+ 4h5g 3g4i+ 5h4i 2g4i 5i4i 1i4i B*5e S*7c N*5c 6a7b N*8e S*6d 8e7c+ 7b7c 5e6d 7c6d 2d6d G*7c 6d3d B*2g S*5h 4i3i 5c4a+ 3f3g+ 3d3b N*7b S*6b 7a6b 3b6b S*7a 6b6a 3g4h 5g4h 3i4h G*5i",
+      "ply": 145,
+      "user_move": "4h3i",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs kiyokoyosiko 二段 145手目",
+      "candidates": [
+        {
+          "move": "4h3i"
+        },
+        {
+          "move": "S*3f"
+        },
+        {
+          "move": "7d7e"
+        }
+      ],
+      "prev_moves": [
+        "6b6a",
+        "3g4h",
+        "5g4h",
+        "3i4h",
+        "G*5i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_08.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

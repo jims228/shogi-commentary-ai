@@ -1,0 +1,1069 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:39.211630+00:00",
+  "total": 23,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e",
+      "ply": 5,
+      "user_move": "6c6d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 5手目",
+      "candidates": [
+        {
+          "move": "6c6d"
+        },
+        {
+          "move": "4a3b"
+        },
+        {
+          "move": "2c2d"
+        }
+      ],
+      "prev_moves": [
+        "7g7f",
+        "8c8d",
+        "2h7h",
+        "6a7b",
+        "7f7e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c",
+      "ply": 10,
+      "user_move": "8h7g",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 10手目",
+      "candidates": [
+        {
+          "move": "4i3h"
+        },
+        {
+          "move": "2g2f"
+        },
+        {
+          "move": "8h7g"
+        }
+      ],
+      "prev_moves": [
+        "6c6d",
+        "5i4h",
+        "4a5b",
+        "7i6h",
+        "7b8c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d",
+      "ply": 15,
+      "user_move": "8d7d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 15手目",
+      "candidates": [
+        {
+          "move": "8d7d"
+        },
+        {
+          "move": "8b9b"
+        },
+        {
+          "move": "9c9d"
+        }
+      ],
+      "prev_moves": [
+        "8h7g",
+        "8d8e",
+        "6g6f",
+        "8c8d",
+        "7e7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c",
+      "ply": 20,
+      "user_move": "4h3h",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 20手目",
+      "candidates": [
+        {
+          "move": "4h3h"
+        },
+        {
+          "move": "7g6f"
+        },
+        {
+          "move": "7h8h"
+        }
+      ],
+      "prev_moves": [
+        "8d7d",
+        "6f6e",
+        "7d6e",
+        "6h6g",
+        "5b6c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f",
+      "ply": 25,
+      "user_move": "6c7d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 25手目",
+      "candidates": [
+        {
+          "move": "6e5f"
+        },
+        {
+          "move": "4c4d"
+        },
+        {
+          "move": "6c7d"
+        }
+      ],
+      "prev_moves": [
+        "4h3h",
+        "7c7d",
+        "3h2h",
+        "7d7e",
+        "7g6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f",
+      "ply": 30,
+      "user_move": "8g8f",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 30手目",
+      "candidates": [
+        {
+          "move": "7h8h"
+        },
+        {
+          "move": "6f5e"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "6c7d",
+        "3i3h",
+        "7a6b",
+        "1g1f",
+        "8e8f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f",
+      "ply": 35,
+      "user_move": "8f6f",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 35手目",
+      "candidates": [
+        {
+          "move": "8f8d"
+        },
+        {
+          "move": "8f6f"
+        },
+        {
+          "move": "8f8e"
+        }
+      ],
+      "prev_moves": [
+        "8g8f",
+        "8b8f",
+        "6i7i",
+        "6e6f",
+        "6g6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g",
+      "ply": 40,
+      "user_move": "7h6h",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 40手目",
+      "candidates": [
+        {
+          "move": "7h6h"
+        },
+        {
+          "move": "2g2f"
+        },
+        {
+          "move": "G*9f"
+        }
+      ],
+      "prev_moves": [
+        "8f6f",
+        "P*8b",
+        "8a7c",
+        "8b8a+",
+        "S*8g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g",
+      "ply": 45,
+      "user_move": "8f8b",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 45手目",
+      "candidates": [
+        {
+          "move": "B*9b"
+        },
+        {
+          "move": "8f8b"
+        },
+        {
+          "move": "B*1h"
+        }
+      ],
+      "prev_moves": [
+        "7h6h",
+        "6f8f",
+        "8a9a",
+        "P*8h",
+        "G*7g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+",
+      "ply": 50,
+      "user_move": "7i8i",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 50手目",
+      "candidates": [
+        {
+          "move": "6h6i"
+        },
+        {
+          "move": "9a8a"
+        },
+        {
+          "move": "7i8i"
+        }
+      ],
+      "prev_moves": [
+        "8f8b",
+        "L*8f",
+        "7c8e",
+        "7g8g",
+        "8h8i+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h",
+      "ply": 55,
+      "user_move": "N*7f",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 55手目",
+      "candidates": [
+        {
+          "move": "5d2g+"
+        },
+        {
+          "move": "N*7f"
+        },
+        {
+          "move": "N*5f"
+        }
+      ],
+      "prev_moves": [
+        "7i8i",
+        "P*8h",
+        "8i7i",
+        "B*5d",
+        "8g8h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d",
+      "ply": 60,
+      "user_move": "P*7g",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 60手目",
+      "candidates": [
+        {
+          "move": "N*5e"
+        },
+        {
+          "move": "6i7i"
+        },
+        {
+          "move": "P*7g"
+        }
+      ],
+      "prev_moves": [
+        "N*7f",
+        "6h6i",
+        "7f8h+",
+        "7i8h",
+        "3c3d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d",
+      "ply": 65,
+      "user_move": "6e7d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 65手目",
+      "candidates": [
+        {
+          "move": "6b7c"
+        },
+        {
+          "move": "6e7d"
+        },
+        {
+          "move": "G*4b"
+        }
+      ],
+      "prev_moves": [
+        "P*7g",
+        "P*8d",
+        "N*6f",
+        "5d6e",
+        "6f7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c",
+      "ply": 70,
+      "user_move": "6i6d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 70手目",
+      "candidates": [
+        {
+          "move": "6i6g"
+        },
+        {
+          "move": "6i6d"
+        },
+        {
+          "move": "G*9e"
+        }
+      ],
+      "prev_moves": [
+        "6e7d",
+        "P*6c",
+        "7d6c",
+        "9a9b",
+        "8b8c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f",
+      "ply": 75,
+      "user_move": "4d4e",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 75手目",
+      "candidates": [
+        {
+          "move": "3a4b"
+        },
+        {
+          "move": "6b7c"
+        },
+        {
+          "move": "4d4e"
+        }
+      ],
+      "prev_moves": [
+        "6i6d",
+        "N*5b",
+        "6d3d",
+        "G*4d",
+        "3d3f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d",
+      "ply": 80,
+      "user_move": "8f8e",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 80手目",
+      "candidates": [
+        {
+          "move": "2f2e"
+        },
+        {
+          "move": "8f8e"
+        },
+        {
+          "move": "G*7i"
+        }
+      ],
+      "prev_moves": [
+        "4d4e",
+        "3f2f",
+        "3a3b",
+        "P*6d",
+        "6c5d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b",
+      "ply": 85,
+      "user_move": "3c4b",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 85手目",
+      "candidates": [
+        {
+          "move": "5a6a"
+        },
+        {
+          "move": "3c4b"
+        }
+      ],
+      "prev_moves": [
+        "8f8e",
+        "8d8e",
+        "N*3d",
+        "2b3c",
+        "S*4b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_018",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a",
+      "ply": 90,
+      "user_move": "B*6a",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 90手目",
+      "candidates": [
+        {
+          "move": "B*6a"
+        },
+        {
+          "move": "B*3i"
+        },
+        {
+          "move": "9b8b"
+        }
+      ],
+      "prev_moves": [
+        "3c4b",
+        "3d4b+",
+        "5a4b",
+        "G*3d",
+        "N*3a"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_019",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a B*6a S*7b 6a7b+ 5d7b S*2b",
+      "ply": 95,
+      "user_move": "L*2d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 95手目",
+      "candidates": [
+        {
+          "move": "L*2d"
+        },
+        {
+          "move": "8c8a"
+        },
+        {
+          "move": "3b4a"
+        }
+      ],
+      "prev_moves": [
+        "B*6a",
+        "S*7b",
+        "6a7b+",
+        "5d7b",
+        "S*2b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_020",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a B*6a S*7b 6a7b+ 5d7b S*2b L*2d 3d2d 2c2d 2f2d P*2c",
+      "ply": 100,
+      "user_move": "2d3d",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 100手目",
+      "candidates": [
+        {
+          "move": "P*8f"
+        },
+        {
+          "move": "2d3d"
+        },
+        {
+          "move": "L*7c"
+        }
+      ],
+      "prev_moves": [
+        "L*2d",
+        "3d2d",
+        "2c2d",
+        "2f2d",
+        "P*2c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_021",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a B*6a S*7b 6a7b+ 5d7b S*2b L*2d 3d2d 2c2d 2f2d P*2c 2d3d G*4d 3d4d 4e4d L*3f",
+      "ply": 105,
+      "user_move": "2a3c",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 105手目",
+      "candidates": [
+        {
+          "move": "2a3c"
+        },
+        {
+          "move": "B*9a"
+        },
+        {
+          "move": "R*9a"
+        }
+      ],
+      "prev_moves": [
+        "2d3d",
+        "G*4d",
+        "3d4d",
+        "4e4d",
+        "L*3f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_022",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a B*6a S*7b 6a7b+ 5d7b S*2b L*2d 3d2d 2c2d 2f2d P*2c 2d3d G*4d 3d4d 4e4d L*3f 2a3c G*3d 4d3d 3f3d 8c8d",
+      "ply": 110,
+      "user_move": "3d3c+",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 110手目",
+      "candidates": [
+        {
+          "move": "2b3c+"
+        },
+        {
+          "move": "3d3c+"
+        },
+        {
+          "move": "G*4h"
+        }
+      ],
+      "prev_moves": [
+        "2a3c",
+        "G*3d",
+        "4d3d",
+        "3f3d",
+        "8c8d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_023",
+      "sfen": "position startpos moves 7g7f 8c8d 2h7h 6a7b 7f7e 6c6d 5i4h 4a5b 7i6h 7b8c 8h7g 8d8e 6g6f 8c8d 7e7d 8d7d 6f6e 7d6e 6h6g 5b6c 4h3h 7c7d 3h2h 7d7e 7g6f 6c7d 3i3h 7a6b 1g1f 8e8f 8g8f 8b8f 6i7i 6e6f 6g6f 8f6f P*8b 8a7c 8b8a+ S*8g 7h6h 6f8f 8a9a P*8h G*7g 8f8b L*8f 7c8e 7g8g 8h8i+ 7i8i P*8h 8i7i B*5d 8g8h N*7f 6h6i 7f8h+ 7i8h 3c3d P*7g P*8d N*6f 5d6e 6f7d 6e7d P*6c 7d6c 9a9b 8b8c 6i6d N*5b 6d3d G*4d 3d3f 4d4e 3f2f 3a3b P*6d 6c5d 8f8e 8d8e N*3d 2b3c S*4b 3c4b 3d4b+ 5a4b G*3d N*3a B*6a S*7b 6a7b+ 5d7b S*2b L*2d 3d2d 2c2d 2f2d P*2c 2d3d G*4d 3d4d 4e4d L*3f 2a3c G*3d 4d3d 3f3d 8c8d 3d3c+ 3b3c 2b3c+ 4b5a N*6c",
+      "ply": 115,
+      "user_move": "5a6a",
+      "name": "将棋ウォーズ(10分切れ負け) HARUHI02071021 二段 vs Ace228 初段 115手目",
+      "candidates": [
+        {
+          "move": "7b6c"
+        },
+        {
+          "move": "5a6a"
+        },
+        {
+          "move": "6b6c"
+        }
+      ],
+      "prev_moves": [
+        "3d3c+",
+        "3b3c",
+        "2b3c+",
+        "4b5a",
+        "N*6c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_03.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

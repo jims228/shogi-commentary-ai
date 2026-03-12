@@ -1,0 +1,87 @@
+{
+  "game_file": "/home/jimjace/shogi-commentary-ai/data/games/real_kif/game_01.kif",
+  "model": "gemini-2.5-flash-lite",
+  "system_prompt": "あなたは将棋の解説者です。指定された局面について、以下の3点を80文字以内で簡潔に解説してください。\n1. 局面の状況（駒の配置、形勢）\n2. 直前の手の意図\n3. 相手の有力な対応策",
+  "positions": [
+    {
+      "move_number": 1,
+      "ply": 1,
+      "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+      "last_move": "2g2f",
+      "commentary": "先手は飛車先の歩を交換。後手は▲2g2fに対し、▲2fに飛車を回る狙い。▲2fに飛車を回られても、▲7gに歩を突くなど、後手にも対応策はある。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 2,
+      "ply": 3,
+      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/7P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL w - 2",
+      "last_move": "2f2e",
+      "commentary": "1. 飛車先の歩交換。互いに中央の陣形を整えつつある。\n2. 飛車先の歩交換は、後手の飛車先の歩を交換し、自陣を厚くする狙い。\n3. ▲２六歩、▲７六歩、▲６八銀などが有力な対応策。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 3,
+      "ply": 5,
+      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w - 3",
+      "last_move": "6i7h",
+      "commentary": "▲２六歩 △８四歩 ▲７六歩 △３四歩 ▲６八銀 △３二銀 ▲７八金 △４二銀 ▲６九玉 ▲６九玉 △６二玉 ▲７九金 △７二玉 ▲８九玉 △８二銀 ▲７七銀 △６四歩 ▲６五歩 △５二金 ▲７五歩 △４四歩 ▲６六歩 △４三銀 ▲５八金左 △３三銀 ▲４八銀 △２二銀 ▲３八銀 △１二銀 ▲２八銀 △１四歩 ▲１八香 △１三香 ▲４六歩 △３一角 ▲３六歩 △４二金 ▲５六歩 △５四歩 ▲５五歩 △６五歩 ▲６六歩 △７五歩 ▲６七銀 △７六歩 ▲６六銀 △６五歩 ▲７七銀 △７五歩 ▲６五",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 4,
+      "ply": 7,
+      "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/7P1/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w - 4",
+      "last_move": "2e2d",
+      "commentary": "（状況）飛車先交換。先手は飛車交換を避けた。\n（意図）飛車を捌き、自陣の守りを固める。\n（対応策）▲３五歩、▲７六歩など、駒組みを進める。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 5,
+      "ply": 9,
+      "sfen": "lnsgk1snl/1r4gb1/p1ppppp1p/7R1/1p7/9/PPPPPPP1P/1BG6/LNS1KGSNL w Pp 5",
+      "last_move": "2h2d",
+      "commentary": "（状況）飛車先交換せず、▲２二歩成で金頭を狙う。\n（意図）▲２二歩成で金頭を狙う。\n（対応策）▲３四歩や▲７四歩で攻め合い。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 6,
+      "ply": 11,
+      "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w P 6",
+      "last_move": "2d2h",
+      "commentary": "左銀が桂頭に飛び出し、飛車先を狙う。▲2八飛は強襲だが、△3三銀と受ければ攻め合い。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 7,
+      "ply": 13,
+      "sfen": "ln1gk1snl/1rs3gb1/p1ppppppp/9/1p7/P8/1PPPPPP1P/1BG4R1/LNS1KGSNL w P 7",
+      "last_move": "9g9f",
+      "commentary": "▲9fは飛車先の歩交換を狙う手。△8cや△9cで応じると、▲7fと踏み込み、後手陣を狙う。△8dなら▲7fと直接狙う。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 8,
+      "ply": 15,
+      "sfen": "ln1gk1snl/1rs3gb1/p1pppppp1/8p/1p7/P7P/1PPPPPP2/1BG4R1/LNS1KGSNL w P 8",
+      "last_move": "1g1f",
+      "commentary": "▲1五歩。飛車先の歩交換を狙う。△3四歩や△5四歩で応じるのが有力。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 9,
+      "ply": 17,
+      "sfen": "ln1gk1snl/1rs3gb1/2pppppp1/p7p/1p7/P7P/1PPPPPP2/1BG3SR1/LNS1KG1NL w P 9",
+      "last_move": "3i3h",
+      "commentary": "▲3h飛は飛車先の歩交換を狙う。△3三銀や△3四歩が有力な対応策。",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "move_number": 10,
+      "ply": 19,
+      "sfen": "ln1g2snl/1rs1k1gb1/2pppppp1/p7p/1p7/P5P1P/1PPPPP3/1BG3SR1/LNS1KG1NL w P 10",
+      "last_move": "3g3f",
+      "commentary": "▲3三銀不成は飛車取り。△7四歩や△2二銀が有力。形勢は互角。",
+      "model": "gemini-2.5-flash-lite"
+    }
+  ]
+}

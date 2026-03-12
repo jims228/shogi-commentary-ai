@@ -1,0 +1,885 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:43.070535+00:00",
+  "total": 19,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h",
+      "ply": 5,
+      "user_move": "5c5d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 5手目",
+      "candidates": [
+        {
+          "move": "5c5d"
+        },
+        {
+          "move": "6c6d"
+        },
+        {
+          "move": "1a1b"
+        }
+      ],
+      "prev_moves": [
+        "2g2f",
+        "3c3d",
+        "2f2e",
+        "2b3c",
+        "4i5h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b",
+      "ply": 10,
+      "user_move": "7i6h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 10手目",
+      "candidates": [
+        {
+          "move": "1i1h"
+        },
+        {
+          "move": "3g3f"
+        },
+        {
+          "move": "7i6h"
+        }
+      ],
+      "prev_moves": [
+        "5c5d",
+        "4g4f",
+        "8b5b",
+        "5h4g",
+        "3a4b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g",
+      "ply": 15,
+      "user_move": "6c6d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 15手目",
+      "candidates": [
+        {
+          "move": "6c6d"
+        },
+        {
+          "move": "5c6d"
+        },
+        {
+          "move": "3c4b"
+        }
+      ],
+      "prev_moves": [
+        "7i6h",
+        "5d5e",
+        "6g6f",
+        "4b5c",
+        "6h6g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b",
+      "ply": 20,
+      "user_move": "3h2g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 20手目",
+      "candidates": [
+        {
+          "move": "3h2g"
+        },
+        {
+          "move": "6f6e"
+        },
+        {
+          "move": "4h5h"
+        }
+      ],
+      "prev_moves": [
+        "6c6d",
+        "3i3h",
+        "5c5d",
+        "5i4h",
+        "7a7b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f",
+      "ply": 25,
+      "user_move": "5a6b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 25手目",
+      "candidates": [
+        {
+          "move": "3c1e"
+        },
+        {
+          "move": "5a6b"
+        },
+        {
+          "move": "5d6c"
+        }
+      ],
+      "prev_moves": [
+        "3h2g",
+        "9c9d",
+        "2g2f",
+        "1c1d",
+        "1g1f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d",
+      "ply": 30,
+      "user_move": "3f3e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 30手目",
+      "candidates": [
+        {
+          "move": "3f3e"
+        },
+        {
+          "move": "4h4i"
+        },
+        {
+          "move": "9i9h"
+        }
+      ],
+      "prev_moves": [
+        "5a6b",
+        "6i5h",
+        "6b7a",
+        "3g3f",
+        "3c4d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f",
+      "ply": 35,
+      "user_move": "3e3f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 35手目",
+      "candidates": [
+        {
+          "move": "3b3a"
+        },
+        {
+          "move": "9d9e"
+        },
+        {
+          "move": "3e3f"
+        }
+      ],
+      "prev_moves": [
+        "3f3e",
+        "3d3e",
+        "2h3h",
+        "5b3b",
+        "5g5f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+",
+      "ply": 40,
+      "user_move": "4h3h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 40手目",
+      "candidates": [
+        {
+          "move": "4h5i"
+        },
+        {
+          "move": "4h5g"
+        },
+        {
+          "move": "4h3h"
+        }
+      ],
+      "prev_moves": [
+        "3e3f",
+        "4g3f",
+        "4d2f",
+        "3f2f",
+        "3b3h+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i",
+      "ply": 45,
+      "user_move": "5e5f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 45手目",
+      "candidates": [
+        {
+          "move": "S*4h"
+        },
+        {
+          "move": "P*3c"
+        },
+        {
+          "move": "5e5f"
+        }
+      ],
+      "prev_moves": [
+        "4h3h",
+        "R*6i",
+        "R*5i",
+        "6i5i+",
+        "5h5i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e",
+      "ply": 50,
+      "user_move": "3f3e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 50手目",
+      "candidates": [
+        {
+          "move": "4f4e"
+        },
+        {
+          "move": "3h3g"
+        },
+        {
+          "move": "3f3e"
+        }
+      ],
+      "prev_moves": [
+        "5e5f",
+        "P*5h",
+        "P*3f",
+        "2f3f",
+        "P*3e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c",
+      "ply": 55,
+      "user_move": "7a8b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 55手目",
+      "candidates": [
+        {
+          "move": "7a8b"
+        },
+        {
+          "move": "6a6b"
+        }
+      ],
+      "prev_moves": [
+        "3f3e",
+        "S*2f",
+        "3e3f",
+        "R*2g",
+        "B*5c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g",
+      "ply": 60,
+      "user_move": "3h2g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 60手目",
+      "candidates": [
+        {
+          "move": "3h3g"
+        },
+        {
+          "move": "3h2g"
+        },
+        {
+          "move": "3h3i"
+        }
+      ],
+      "prev_moves": [
+        "7a8b",
+        "5c2f+",
+        "2g6g+",
+        "R*2b",
+        "S*4g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+",
+      "ply": 65,
+      "user_move": "4a4b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 65手目",
+      "candidates": [
+        {
+          "move": "1d1e"
+        },
+        {
+          "move": "4a4b"
+        },
+        {
+          "move": "G*8e"
+        }
+      ],
+      "prev_moves": [
+        "3h2g",
+        "4g3f+",
+        "2g3f",
+        "6g6f",
+        "2b2a+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d",
+      "ply": 70,
+      "user_move": "2a1a",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 70手目",
+      "candidates": [
+        {
+          "move": "P*3g"
+        },
+        {
+          "move": "2i3g"
+        },
+        {
+          "move": "2a1a"
+        }
+      ],
+      "prev_moves": [
+        "4a4b",
+        "S*7a",
+        "8b9b",
+        "N*8e",
+        "8c8d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d 2a1a 8d8e S*8d N*4d 3f2g",
+      "ply": 75,
+      "user_move": "G*8c",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 75手目",
+      "candidates": [
+        {
+          "move": "6a6b"
+        },
+        {
+          "move": "G*8c"
+        },
+        {
+          "move": "6f6h"
+        }
+      ],
+      "prev_moves": [
+        "2a1a",
+        "8d8e",
+        "S*8d",
+        "N*4d",
+        "3f2g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d 2a1a 8d8e S*8d N*4d 3f2g G*8c 8d8c+ 9b8c G*8b 8c7d",
+      "ply": 80,
+      "user_move": "8b7b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 80手目",
+      "candidates": [
+        {
+          "move": "L*4h"
+        },
+        {
+          "move": "8b7b"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "G*8c",
+        "8d8c+",
+        "9b8c",
+        "G*8b",
+        "8c7d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d 2a1a 8d8e S*8d N*4d 3f2g G*8c 8d8c+ 9b8c G*8b 8c7d 8b7b 6a7b L*6i S*3f 2f3f",
+      "ply": 85,
+      "user_move": "6f5e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 85手目",
+      "candidates": [
+        {
+          "move": "6f5e"
+        },
+        {
+          "move": "4b3b"
+        },
+        {
+          "move": "G*6g"
+        }
+      ],
+      "prev_moves": [
+        "8b7b",
+        "6a7b",
+        "L*6i",
+        "S*3f",
+        "2f3f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_018",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d 2a1a 8d8e S*8d N*4d 3f2g G*8c 8d8c+ 9b8c G*8b 8c7d 8b7b 6a7b L*6i S*3f 2f3f 6f5e 7g7f 4d3f 8h5e 5d6e",
+      "ply": 90,
+      "user_move": "S*7e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 90手目",
+      "candidates": [
+        {
+          "move": "1a5a"
+        },
+        {
+          "move": "S*7e"
+        },
+        {
+          "move": "7a8b+"
+        }
+      ],
+      "prev_moves": [
+        "6f5e",
+        "7g7f",
+        "4d3f",
+        "8h5e",
+        "5d6e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_019",
+      "sfen": "position startpos moves 2g2f 3c3d 2f2e 2b3c 4i5h 5c5d 4g4f 8b5b 5h4g 3a4b 7i6h 5d5e 6g6f 4b5c 6h6g 6c6d 3i3h 5c5d 5i4h 7a7b 3h2g 9c9d 2g2f 1c1d 1g1f 5a6b 6i5h 6b7a 3g3f 3c4d 3f3e 3d3e 2h3h 5b3b 5g5f 3e3f 4g3f 4d2f 3f2f 3b3h+ 4h3h R*6i R*5i 6i5i+ 5h5i 5e5f P*5h P*3f 2f3f P*3e 3f3e S*2f 3e3f R*2g B*5c 7a8b 5c2f+ 2g6g+ R*2b S*4g 3h2g 4g3f+ 2g3f 6g6f 2b2a+ 4a4b S*7a 8b9b N*8e 8c8d 2a1a 8d8e S*8d N*4d 3f2g G*8c 8d8c+ 9b8c G*8b 8c7d 8b7b 6a7b L*6i S*3f 2f3f 6f5e 7g7f 4d3f 8h5e 5d6e S*7e 7d6c 1a6a 6c5d 7e6d",
+      "ply": 95,
+      "user_move": "3f2h+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs UBOGO 初段 95手目",
+      "candidates": [
+        {
+          "move": "G*9c"
+        },
+        {
+          "move": "3f2h+"
+        },
+        {
+          "move": "4b5c"
+        }
+      ],
+      "prev_moves": [
+        "S*7e",
+        "7d6c",
+        "1a6a",
+        "6c5d",
+        "7e6d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_10.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

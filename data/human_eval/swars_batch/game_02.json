@@ -1,0 +1,796 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:38.470645+00:00",
+  "total": 17,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h",
+      "ply": 5,
+      "user_move": "4a3b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 5手目",
+      "candidates": [
+        {
+          "move": "4a3b"
+        },
+        {
+          "move": "4a4b"
+        },
+        {
+          "move": "3a3b"
+        }
+      ],
+      "prev_moves": [
+        "2g2f",
+        "8c8d",
+        "2f2e",
+        "8d8e",
+        "6i7h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c",
+      "ply": 10,
+      "user_move": "2d2h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 10手目",
+      "candidates": [
+        {
+          "move": "7h6h"
+        },
+        {
+          "move": "5i6h"
+        },
+        {
+          "move": "2d2h"
+        }
+      ],
+      "prev_moves": [
+        "4a3b",
+        "2e2d",
+        "2c2d",
+        "2h2d",
+        "P*2c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h",
+      "ply": 15,
+      "user_move": "7c7d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 15手目",
+      "candidates": [
+        {
+          "move": "2c2d"
+        },
+        {
+          "move": "2b1c"
+        },
+        {
+          "move": "7c7d"
+        }
+      ],
+      "prev_moves": [
+        "2d2h",
+        "1c1d",
+        "9g9f",
+        "7a7b",
+        "7i6h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d",
+      "ply": 20,
+      "user_move": "3g3f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 20手目",
+      "candidates": [
+        {
+          "move": "3g3f"
+        },
+        {
+          "move": "P*2d"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "7c7d",
+        "4i5h",
+        "7b7c",
+        "3i4h",
+        "9c9d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f",
+      "ply": 25,
+      "user_move": "8b8f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 25手目",
+      "candidates": [
+        {
+          "move": "6a6b"
+        },
+        {
+          "move": "8b8f"
+        },
+        {
+          "move": "8b8e"
+        }
+      ],
+      "prev_moves": [
+        "3g3f",
+        "7c6d",
+        "7g7f",
+        "8e8f",
+        "8g8f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f",
+      "ply": 30,
+      "user_move": "4h3g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 30手目",
+      "candidates": [
+        {
+          "move": "7g6f"
+        },
+        {
+          "move": "4h3g"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "8b8f",
+        "P*8g",
+        "8f7f",
+        "7h7g",
+        "7f3f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f",
+      "ply": 35,
+      "user_move": "8a7c",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 35手目",
+      "candidates": [
+        {
+          "move": "3e3f"
+        },
+        {
+          "move": "8a7c"
+        },
+        {
+          "move": "6a6b"
+        }
+      ],
+      "prev_moves": [
+        "4h3g",
+        "3f3e",
+        "7g7f",
+        "7d7e",
+        "7f6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f",
+      "ply": 40,
+      "user_move": "8g8f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 40手目",
+      "candidates": [
+        {
+          "move": "6f5e"
+        },
+        {
+          "move": "2f5f"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "8a7c",
+        "P*7d",
+        "7c6e",
+        "2h2f",
+        "P*8f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f",
+      "ply": 45,
+      "user_move": "7f7g+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 45手目",
+      "candidates": [
+        {
+          "move": "7f7g+"
+        },
+        {
+          "move": "6e5g"
+        },
+        {
+          "move": "8g8h+"
+        }
+      ],
+      "prev_moves": [
+        "8g8f",
+        "P*8g",
+        "8h7i",
+        "7e7f",
+        "5g5f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+",
+      "ply": 50,
+      "user_move": "6h7g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 50手目",
+      "candidates": [
+        {
+          "move": "5f5e"
+        },
+        {
+          "move": "6h7g"
+        },
+        {
+          "move": "P*3h"
+        }
+      ],
+      "prev_moves": [
+        "7f7g+",
+        "8i7g",
+        "P*7h",
+        "7i9g",
+        "6e7g+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f",
+      "ply": 55,
+      "user_move": "3d2d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 55手目",
+      "candidates": [
+        {
+          "move": "5c5d"
+        },
+        {
+          "move": "N*7b"
+        },
+        {
+          "move": "3d2d"
+        }
+      ],
+      "prev_moves": [
+        "6h7g",
+        "9d9e",
+        "P*3f",
+        "3e3d",
+        "N*4f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e",
+      "ply": 60,
+      "user_move": "5f5e",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 60手目",
+      "candidates": [
+        {
+          "move": "9g7i"
+        },
+        {
+          "move": "5f5e"
+        },
+        {
+          "move": "7g8h"
+        }
+      ],
+      "prev_moves": [
+        "3d2d",
+        "P*2e",
+        "2d4d",
+        "6f5e",
+        "6d5e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e 5f5e 4d7d 8f8e 7d7g+ 9g5c+",
+      "ply": 65,
+      "user_move": "3a4b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 65手目",
+      "candidates": [
+        {
+          "move": "N*1e"
+        },
+        {
+          "move": "6a7b"
+        },
+        {
+          "move": "3a4b"
+        }
+      ],
+      "prev_moves": [
+        "5f5e",
+        "4d7d",
+        "8f8e",
+        "7d7g+",
+        "9g5c+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e 5f5e 4d7d 8f8e 7d7g+ 9g5c+ 3a4b 5c6c S*5b 6c6d 7h7i+",
+      "ply": 70,
+      "user_move": "4f5d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 70手目",
+      "candidates": [
+        {
+          "move": "1i1h"
+        },
+        {
+          "move": "4f5d"
+        },
+        {
+          "move": "S*9d"
+        }
+      ],
+      "prev_moves": [
+        "3a4b",
+        "5c6c",
+        "S*5b",
+        "6c6d",
+        "7h7i+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e 5f5e 4d7d 8f8e 7d7g+ 9g5c+ 3a4b 5c6c S*5b 6c6d 7h7i+ 4f5d 4b5c 6d9a 3c3d 2e2d",
+      "ply": 75,
+      "user_move": "2c2d",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 75手目",
+      "candidates": [
+        {
+          "move": "G*4d"
+        },
+        {
+          "move": "G*4e"
+        },
+        {
+          "move": "2c2d"
+        }
+      ],
+      "prev_moves": [
+        "4f5d",
+        "4b5c",
+        "6d9a",
+        "3c3d",
+        "2e2d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e 5f5e 4d7d 8f8e 7d7g+ 9g5c+ 3a4b 5c6c S*5b 6c6d 7h7i+ 4f5d 4b5c 6d9a 3c3d 2e2d 2c2d P*2c 3b2c S*3b 2b4d",
+      "ply": 80,
+      "user_move": "3b2c+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 80手目",
+      "candidates": [
+        {
+          "move": "3b2c+"
+        },
+        {
+          "move": "9a8a"
+        },
+        {
+          "move": "L*3i"
+        }
+      ],
+      "prev_moves": [
+        "2c2d",
+        "P*2c",
+        "3b2c",
+        "S*3b",
+        "2b4d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 1c1d 9g9f 7a7b 7i6h 7c7d 4i5h 7b7c 3i4h 9c9d 3g3f 7c6d 7g7f 8e8f 8g8f 8b8f P*8g 8f7f 7h7g 7f3f 4h3g 3f3e 7g7f 7d7e 7f6f 8a7c P*7d 7c6e 2h2f P*8f 8g8f P*8g 8h7i 7e7f 5g5f 7f7g+ 8i7g P*7h 7i9g 6e7g+ 6h7g 9d9e P*3f 3e3d N*4f 3d2d P*2e 2d4d 6f5e 6d5e 5f5e 4d7d 8f8e 7d7g+ 9g5c+ 3a4b 5c6c S*5b 6c6d 7h7i+ 4f5d 4b5c 6d9a 3c3d 2e2d 2c2d P*2c 3b2c S*3b 2b4d 3b2c+ 4d2f 3g2f G*3h B*8d",
+      "ply": 85,
+      "user_move": "P*6b",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs crowconc312 二段 85手目",
+      "candidates": [
+        {
+          "move": "P*6b"
+        },
+        {
+          "move": "5a4a"
+        },
+        {
+          "move": "N*7c"
+        }
+      ],
+      "prev_moves": [
+        "3b2c+",
+        "4d2f",
+        "3g2f",
+        "G*3h",
+        "B*8d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_02.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

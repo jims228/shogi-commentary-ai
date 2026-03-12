@@ -1,0 +1,612 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:40.236866+00:00",
+  "total": 13,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h",
+      "ply": 5,
+      "user_move": "8d8e",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 5手目",
+      "candidates": [
+        {
+          "move": "8d8e"
+        },
+        {
+          "move": "3b4b"
+        },
+        {
+          "move": "3a4b"
+        }
+      ],
+      "prev_moves": [
+        "2g2f",
+        "8c8d",
+        "2f2e",
+        "4a3b",
+        "6i7h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c",
+      "ply": 10,
+      "user_move": "2d2h",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 10手目",
+      "candidates": [
+        {
+          "move": "7h6h"
+        },
+        {
+          "move": "5i6h"
+        },
+        {
+          "move": "2d2h"
+        }
+      ],
+      "prev_moves": [
+        "8d8e",
+        "2e2d",
+        "2c2d",
+        "2h2d",
+        "P*2c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f",
+      "ply": 15,
+      "user_move": "8c8d",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 15手目",
+      "candidates": [
+        {
+          "move": "9c9d"
+        },
+        {
+          "move": "8e8f"
+        },
+        {
+          "move": "8c8d"
+        }
+      ],
+      "prev_moves": [
+        "2d2h",
+        "7a7b",
+        "7i6h",
+        "7b8c",
+        "9g9f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b",
+      "ply": 20,
+      "user_move": "8h5e",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 20手目",
+      "candidates": [
+        {
+          "move": "P*2e"
+        },
+        {
+          "move": "8h5e"
+        },
+        {
+          "move": "4i3h"
+        }
+      ],
+      "prev_moves": [
+        "8c8d",
+        "7g7f",
+        "7c7d",
+        "3g3f",
+        "5a5b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g",
+      "ply": 25,
+      "user_move": "3c3d",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 25手目",
+      "candidates": [
+        {
+          "move": "8b8d"
+        },
+        {
+          "move": "3c3d"
+        },
+        {
+          "move": "6d7e"
+        }
+      ],
+      "prev_moves": [
+        "8h5e",
+        "8d7c",
+        "6h7g",
+        "7c6d",
+        "5e3g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b",
+      "ply": 30,
+      "user_move": "5h6g",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 30手目",
+      "candidates": [
+        {
+          "move": "5h6g"
+        },
+        {
+          "move": "7h7i"
+        },
+        {
+          "move": "P*2d"
+        }
+      ],
+      "prev_moves": [
+        "3c3d",
+        "4i5h",
+        "8b8d",
+        "6g6f",
+        "6a6b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e",
+      "ply": 35,
+      "user_move": "6d7e",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 35手目",
+      "candidates": [
+        {
+          "move": "6d7e"
+        },
+        {
+          "move": "8d8c"
+        },
+        {
+          "move": "1a1b"
+        }
+      ],
+      "prev_moves": [
+        "5h6g",
+        "8a7c",
+        "3i4h",
+        "7d7e",
+        "7f7e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f",
+      "ply": 40,
+      "user_move": "7g8f",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 40手目",
+      "candidates": [
+        {
+          "move": "7h8g"
+        },
+        {
+          "move": "5i4i"
+        },
+        {
+          "move": "7g8f"
+        }
+      ],
+      "prev_moves": [
+        "6d7e",
+        "P*7f",
+        "8e8f",
+        "8g8f",
+        "7e8f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f 7g8f 8d8f P*8g 8f8d S*7e",
+      "ply": 45,
+      "user_move": "8d8a",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 45手目",
+      "candidates": [
+        {
+          "move": "8d8a"
+        },
+        {
+          "move": "P*8c"
+        },
+        {
+          "move": "8d8e"
+        }
+      ],
+      "prev_moves": [
+        "7g8f",
+        "8d8f",
+        "P*8g",
+        "8f8d",
+        "S*7e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f 7g8f 8d8f P*8g 8f8d S*7e 8d8a 7e7d S*5e 5i6h 5e6f",
+      "ply": 50,
+      "user_move": "6g6f",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 50手目",
+      "candidates": [
+        {
+          "move": "3g4f"
+        },
+        {
+          "move": "9f9e"
+        },
+        {
+          "move": "6g6f"
+        }
+      ],
+      "prev_moves": [
+        "8d8a",
+        "7e7d",
+        "S*5e",
+        "5i6h",
+        "5e6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f 7g8f 8d8f P*8g 8f8d S*7e 8d8a 7e7d S*5e 5i6h 5e6f 6g6f 2b6f 7h7g 6f4d P*6f",
+      "ply": 55,
+      "user_move": "G*5e",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 55手目",
+      "candidates": [
+        {
+          "move": "P*8f"
+        },
+        {
+          "move": "P*8h"
+        },
+        {
+          "move": "G*5e"
+        }
+      ],
+      "prev_moves": [
+        "6g6f",
+        "2b6f",
+        "7h7g",
+        "6f4d",
+        "P*6f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f 7g8f 8d8f P*8g 8f8d S*7e 8d8a 7e7d S*5e 5i6h 5e6f 6g6f 2b6f 7h7g 6f4d P*6f G*5e S*6g P*7b 6h7h 5e4e",
+      "ply": 60,
+      "user_move": "7d7c+",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 60手目",
+      "candidates": [
+        {
+          "move": "4h3i"
+        },
+        {
+          "move": "7d7c+"
+        },
+        {
+          "move": "3f3e"
+        }
+      ],
+      "prev_moves": [
+        "G*5e",
+        "S*6g",
+        "P*7b",
+        "6h7h",
+        "5e4e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 4a3b 6i7h 8d8e 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 7i6h 7b8c 9g9f 8c8d 7g7f 7c7d 3g3f 5a5b 8h5e 8d7c 6h7g 7c6d 5e3g 3c3d 4i5h 8b8d 6g6f 6a6b 5h6g 8a7c 3i4h 7d7e 7f7e 6d7e P*7f 8e8f 8g8f 7e8f 7g8f 8d8f P*8g 8f8d S*7e 8d8a 7e7d S*5e 5i6h 5e6f 6g6f 2b6f 7h7g 6f4d P*6f G*5e S*6g P*7b 6h7h 5e4e 7d7c+ 7b7c 3g2f 4d2f 2h2f",
+      "ply": 65,
+      "user_move": "B*1e",
+      "name": "将棋ウォーズ(10分切れ負け) Ace228 初段 vs nakataka170827 初段 65手目",
+      "candidates": [
+        {
+          "move": "P*8b"
+        },
+        {
+          "move": "B*1e"
+        },
+        {
+          "move": "S*1d"
+        }
+      ],
+      "prev_moves": [
+        "7d7c+",
+        "7b7c",
+        "3g2f",
+        "4d2f",
+        "2h2f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_05.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

@@ -36,6 +36,7 @@ logs/
 *.db-wal
 data/*
 !data/benchmark_positions.json
+!data/benchmark_positions_with_candidates.json
 !data/sample_games.txt
 !data/collection_config.json
 !data/reports/
@@ -45,6 +46,14 @@ data/reports/*
 data/annotated/*
 !data/annotated/*.jsonl
 data/annotated/*_backup.jsonl
+!data/games/
+!data/games/real_kif/
+!data/games/real_kif/*.kif
+!data/human_eval/
+!data/human_eval/*.json
+!data/human_eval/*.csv
+!data/human_eval/swars_batch/
+!data/human_eval/swars_batch/*.json
 
 # Engine binaries
 engine/yaneuraou

@@ -1,0 +1,428 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T14:49:38.900777+00:00",
+  "total": 9,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d",
+      "ply": 10,
+      "user_move": "1i1h",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 10手目",
+      "candidates": [
+        {
+          "move": "2g2f"
+        },
+        {
+          "move": "4g4f"
+        },
+        {
+          "move": "1i1h"
+        }
+      ],
+      "prev_moves": [
+        "5a5b",
+        "8g8f",
+        "5b5a",
+        "8h7i",
+        "6c6d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d",
+      "ply": 20,
+      "user_move": "7g7f",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 20手目",
+      "candidates": [
+        {
+          "move": "4h5h"
+        },
+        {
+          "move": "7g7f"
+        },
+        {
+          "move": "6h6g"
+        }
+      ],
+      "prev_moves": [
+        "8b9b",
+        "4i3i",
+        "8c8d",
+        "1g1f",
+        "2c2d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b",
+      "ply": 30,
+      "user_move": "2i1i",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 30手目",
+      "candidates": [
+        {
+          "move": "2i1i"
+        },
+        {
+          "move": "7f7e"
+        },
+        {
+          "move": "2i2h"
+        }
+      ],
+      "prev_moves": [
+        "4a4b",
+        "3i2h",
+        "8b8c",
+        "2h2i",
+        "4b5b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c",
+      "ply": 40,
+      "user_move": "3h2i",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 40手目",
+      "candidates": [
+        {
+          "move": "6h5i"
+        },
+        {
+          "move": "3h2i"
+        },
+        {
+          "move": "9g9f"
+        }
+      ],
+      "prev_moves": [
+        "3b2c",
+        "5i6i",
+        "1a1b",
+        "6f6e",
+        "5b6c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c 3h2i 5c5d 8i7g 5a4a 4h3h 3a5c 9i9h 5c1g 4g4f N*7b",
+      "ply": 50,
+      "user_move": "4f4e",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 50手目",
+      "candidates": [
+        {
+          "move": "4f4e"
+        },
+        {
+          "move": "3h5h"
+        },
+        {
+          "move": "1h1g"
+        }
+      ],
+      "prev_moves": [
+        "3a5c",
+        "9i9h",
+        "5c1g",
+        "4g4f",
+        "N*7b"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c 3h2i 5c5d 8i7g 5a4a 4h3h 3a5c 9i9h 5c1g 4g4f N*7b 4f4e 2c1d 7h8g 9a9b 6i7h 1g3e 7g8e 4c4d 8e9c+ 3e2f",
+      "ply": 60,
+      "user_move": "7h6i",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 60手目",
+      "candidates": [
+        {
+          "move": "1f1e"
+        },
+        {
+          "move": "7h6i"
+        },
+        {
+          "move": "3g3f"
+        }
+      ],
+      "prev_moves": [
+        "1g3e",
+        "7g8e",
+        "4c4d",
+        "8e9c+",
+        "3e2f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c 3h2i 5c5d 8i7g 5a4a 4h3h 3a5c 9i9h 5c1g 4g4f N*7b 4f4e 2c1d 7h8g 9a9b 6i7h 1g3e 7g8e 4c4d 8e9c+ 3e2f 7h6i 2d2e 6i7h 2f3g 7h8h 7e7f 9c8b 3g4h P*7d 4h3i",
+      "ply": 70,
+      "user_move": "8h9i",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 70手目",
+      "candidates": [
+        {
+          "move": "8h9i"
+        },
+        {
+          "move": "4e4d"
+        },
+        {
+          "move": "6h5g"
+        }
+      ],
+      "prev_moves": [
+        "7e7f",
+        "9c8b",
+        "3g4h",
+        "P*7d",
+        "4h3i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c 3h2i 5c5d 8i7g 5a4a 4h3h 3a5c 9i9h 5c1g 4g4f N*7b 4f4e 2c1d 7h8g 9a9b 6i7h 1g3e 7g8e 4c4d 8e9c+ 3e2f 7h6i 2d2e 6i7h 2f3g 7h8h 7e7f 9c8b 3g4h P*7d 4h3i 8h9i P*9a 6e6d 3i5g 8g9f 5g3e+ P*3d 9b9c 5f5e 1d1e",
+      "ply": 80,
+      "user_move": "8b8a",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 80手目",
+      "candidates": [
+        {
+          "move": "8b8a"
+        },
+        {
+          "move": "3h4h"
+        },
+        {
+          "move": "7d7c"
+        }
+      ],
+      "prev_moves": [
+        "5g3e+",
+        "P*3d",
+        "9b9c",
+        "5f5e",
+        "1d1e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2h5h 3a3b 3i3h 6a7b 7i6h 5a5b 8g8f 5b5a 8h7i 6c6d 1i1h 7b6b 6g6f 7c7d 5h4h 8b9b 4i3i 8c8d 1g1f 2c2d 7g7f 7d7e 5g5f 9b8b 2i1g 4a4b 3i2h 8b8c 2h2i 4b5b 2i1i 6b7c 6i7h 2b3a 1i2h 3b2c 5i6i 1a1b 6f6e 5b6c 3h2i 5c5d 8i7g 5a4a 4h3h 3a5c 9i9h 5c1g 4g4f N*7b 4f4e 2c1d 7h8g 9a9b 6i7h 1g3e 7g8e 4c4d 8e9c+ 3e2f 7h6i 2d2e 6i7h 2f3g 7h8h 7e7f 9c8b 3g4h P*7d 4h3i 8h9i P*9a 6e6d 3i5g 8g9f 5g3e+ P*3d 9b9c 5f5e 1d1e 8b8a 7a8b N*2c P*6f 8a8b 7f7g+ S*7h 6c7d 1h1g 3e4e",
+      "ply": 90,
+      "user_move": "7h7g",
+      "name": "テスト棋戦 テスト先手 vs テスト後手 90手目",
+      "candidates": [
+        {
+          "move": "8f8e"
+        },
+        {
+          "move": "3d3c+"
+        },
+        {
+          "move": "7h7g"
+        }
+      ],
+      "prev_moves": [
+        "7f7g+",
+        "S*7h",
+        "6c7d",
+        "1h1g",
+        "3e4e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "b",
+      "source": "sample_game01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:07:27.374793+00:00",
+  "total": 6,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c",
+      "ply": 10,
+      "user_move": "2d2h",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 10手目",
+      "candidates": [
+        {
+          "move": "7h6h"
+        },
+        {
+          "move": "5i6h"
+        },
+        {
+          "move": "2d2h"
+        }
+      ],
+      "prev_moves": [
+        "4a3b",
+        "2e2d",
+        "2c2d",
+        "2h2d",
+        "P*2c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 9g9f 1c1d 1g1f 9c9d 3i3h 5a5b 3g3f 3c3d",
+      "ply": 20,
+      "user_move": "3h3g",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 20手目",
+      "candidates": [
+        {
+          "move": "3h3g"
+        },
+        {
+          "move": "9i9h"
+        },
+        {
+          "move": "6g6f"
+        }
+      ],
+      "prev_moves": [
+        "9c9d",
+        "3i3h",
+        "5a5b",
+        "3g3f",
+        "3c3d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 9g9f 1c1d 1g1f 9c9d 3i3h 5a5b 3g3f 3c3d 3h3g 8e8f 8g8f 8b8f P*8g 8f8d 3g4f 7c7d 7g7f 8a7c",
+      "ply": 30,
+      "user_move": "8h2b+",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 30手目",
+      "candidates": [
+        {
+          "move": "P*2g"
+        },
+        {
+          "move": "4i4h"
+        },
+        {
+          "move": "8h2b+"
+        }
+      ],
+      "prev_moves": [
+        "8f8d",
+        "3g4f",
+        "7c7d",
+        "7g7f",
+        "8a7c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 9g9f 1c1d 1g1f 9c9d 3i3h 5a5b 3g3f 3c3d 3h3g 8e8f 8g8f 8b8f P*8g 8f8d 3g4f 7c7d 7g7f 8a7c 8h2b+ 3a2b 7i8h 2b3c 5i5h 6c6d 2i3g 7b6c 1f1e 1d1e",
+      "ply": 40,
+      "user_move": "P*1c",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 40手目",
+      "candidates": [
+        {
+          "move": "B*1g"
+        },
+        {
+          "move": "P*1c"
+        },
+        {
+          "move": "5h4h"
+        }
+      ],
+      "prev_moves": [
+        "6c6d",
+        "2i3g",
+        "7b6c",
+        "1f1e",
+        "1d1e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 9g9f 1c1d 1g1f 9c9d 3i3h 5a5b 3g3f 3c3d 3h3g 8e8f 8g8f 8b8f P*8g 8f8d 3g4f 7c7d 7g7f 8a7c 8h2b+ 3a2b 7i8h 2b3c 5i5h 6c6d 2i3g 7b6c 1f1e 1d1e P*1c 3c4d 1i1e 3d3e 3f3e P*3f 3g2e 4d3e 4f3e B*1g",
+      "ply": 50,
+      "user_move": "2h2f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 50手目",
+      "candidates": [
+        {
+          "move": "B*6f"
+        },
+        {
+          "move": "S*8e"
+        },
+        {
+          "move": "2h2f"
+        }
+      ],
+      "prev_moves": [
+        "P*3f",
+        "3g2e",
+        "4d3e",
+        "4f3e",
+        "B*1g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 2e2d 2c2d 2h2d P*2c 2d2h 7a7b 9g9f 1c1d 1g1f 9c9d 3i3h 5a5b 3g3f 3c3d 3h3g 8e8f 8g8f 8b8f P*8g 8f8d 3g4f 7c7d 7g7f 8a7c 8h2b+ 3a2b 7i8h 2b3c 5i5h 6c6d 2i3g 7b6c 1f1e 1d1e P*1c 3c4d 1i1e 3d3e 3f3e P*3f 3g2e 4d3e 4f3e B*1g 2h2f 3f3g+ B*6f 7d7e P*3c 3b4b S*3a 4b4a 3a2b+ 1g2f+",
+      "ply": 60,
+      "user_move": "3e2f",
+      "name": "将棋ウォーズ(3分切れ負け) Ace228 二段 vs homuzu1225 二段 60手目",
+      "candidates": [
+        {
+          "move": "7h7i"
+        },
+        {
+          "move": "3e2f"
+        },
+        {
+          "move": "8h7g"
+        }
+      ],
+      "prev_moves": [
+        "3b4b",
+        "S*3a",
+        "4b4a",
+        "3a2b+",
+        "1g2f+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_01.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

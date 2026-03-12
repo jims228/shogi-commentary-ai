@@ -1,0 +1,796 @@
+{
+  "version": "2.0",
+  "created": "2026-03-06T15:25:40.691024+00:00",
+  "total": 17,
+  "scoring_guide": {
+    "flow_score": "1=不自然 2=やや不自然 3=普通 4=自然 5=非常に自然",
+    "keyword_score": "1=不適切 2=やや不適切 3=普通 4=適切 5=非常に適切",
+    "depth_score": "1=浅い/無関係 2=やや浅い 3=普通 4=深い 5=非常に深い・洞察的",
+    "readability_score": "1=読みにくい 2=やや読みにくい 3=普通 4=読みやすい 5=非常に読みやすい",
+    "preference": "legacy=旧方式が良い / planner=プランナーが良い / tie=同等"
+  },
+  "records": [
+    {
+      "id": "eval_001",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h",
+      "ply": 5,
+      "user_move": "4a3b",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 5手目",
+      "candidates": [
+        {
+          "move": "4a3b"
+        },
+        {
+          "move": "4a4b"
+        },
+        {
+          "move": "3a3b"
+        }
+      ],
+      "prev_moves": [
+        "2g2f",
+        "8c8d",
+        "2f2e",
+        "8d8e",
+        "6i7h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_002",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f",
+      "ply": 10,
+      "user_move": "P*8g",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 10手目",
+      "candidates": [
+        {
+          "move": "2h2g"
+        },
+        {
+          "move": "5i6h"
+        },
+        {
+          "move": "P*8g"
+        }
+      ],
+      "prev_moves": [
+        "4a3b",
+        "3i3h",
+        "8e8f",
+        "8g8f",
+        "8b8f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_003",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f",
+      "ply": 15,
+      "user_move": "3c3d",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 15手目",
+      "candidates": [
+        {
+          "move": "9c9d"
+        },
+        {
+          "move": "1a1b"
+        },
+        {
+          "move": "3c3d"
+        }
+      ],
+      "prev_moves": [
+        "P*8g",
+        "8f8d",
+        "3h2g",
+        "1c1d",
+        "2g3f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_004",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d",
+      "ply": 20,
+      "user_move": "2h2d",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 20手目",
+      "candidates": [
+        {
+          "move": "2h2d"
+        },
+        {
+          "move": "4i4h"
+        },
+        {
+          "move": "8g8f"
+        }
+      ],
+      "prev_moves": [
+        "3c3d",
+        "5i6h",
+        "6a5b",
+        "2e2d",
+        "2c2d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_005",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f",
+      "ply": 25,
+      "user_move": "7a6b",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 25手目",
+      "candidates": [
+        {
+          "move": "3c4e"
+        },
+        {
+          "move": "7a6b"
+        },
+        {
+          "move": "P*8b"
+        }
+      ],
+      "prev_moves": [
+        "2h2d",
+        "P*2c",
+        "2d2h",
+        "2a3c",
+        "7g7f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_006",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d",
+      "ply": 30,
+      "user_move": "4i5h",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 30手目",
+      "candidates": [
+        {
+          "move": "1i1h"
+        },
+        {
+          "move": "8h4d"
+        },
+        {
+          "move": "4i5h"
+        }
+      ],
+      "prev_moves": [
+        "7a6b",
+        "9g9f",
+        "9c9d",
+        "1g1f",
+        "4c4d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "opening",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_007",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g",
+      "ply": 35,
+      "user_move": "4b4c",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 35手目",
+      "candidates": [
+        {
+          "move": "4b4c"
+        },
+        {
+          "move": "7c7d"
+        },
+        {
+          "move": "2b1c"
+        }
+      ],
+      "prev_moves": [
+        "4i5h",
+        "3a4b",
+        "4g4f",
+        "6c6d",
+        "3f4g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_008",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d",
+      "ply": 40,
+      "user_move": "4g5f",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 40手目",
+      "candidates": [
+        {
+          "move": "8h6f"
+        },
+        {
+          "move": "4g5f"
+        },
+        {
+          "move": "8i7g"
+        }
+      ],
+      "prev_moves": [
+        "4b4c",
+        "3g3f",
+        "6b6c",
+        "2i3g",
+        "6c5d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_009",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g",
+      "ply": 45,
+      "user_move": "5b6c",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 45手目",
+      "candidates": [
+        {
+          "move": "5b6c"
+        },
+        {
+          "move": "5d6e"
+        },
+        {
+          "move": "9a9c"
+        }
+      ],
+      "prev_moves": [
+        "4g5f",
+        "7c7d",
+        "2h4h",
+        "8a7c",
+        "8h9g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_010",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e",
+      "ply": 50,
+      "user_move": "3g4e",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 50手目",
+      "candidates": [
+        {
+          "move": "9f9e"
+        },
+        {
+          "move": "8h3c+"
+        },
+        {
+          "move": "3g4e"
+        }
+      ],
+      "prev_moves": [
+        "5b6c",
+        "9g8h",
+        "5a6b",
+        "4f4e",
+        "4d4e"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_011",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h",
+      "ply": 55,
+      "user_move": "5d4e",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 55手目",
+      "candidates": [
+        {
+          "move": "4c5b"
+        },
+        {
+          "move": "5d4e"
+        },
+        {
+          "move": "2c2d"
+        }
+      ],
+      "prev_moves": [
+        "3g4e",
+        "3c4e",
+        "5f4e",
+        "2b8h+",
+        "7i8h"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_012",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g",
+      "ply": 60,
+      "user_move": "P*4e",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 60手目",
+      "candidates": [
+        {
+          "move": "N*3c"
+        },
+        {
+          "move": "P*4e"
+        },
+        {
+          "move": "B*9b"
+        }
+      ],
+      "prev_moves": [
+        "5d4e",
+        "4h4e",
+        "P*4d",
+        "4e4h",
+        "B*3g"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_013",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g P*4e 3g4h+ 5h4h R*2i 4e4d",
+      "ply": 65,
+      "user_move": "S*5i",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 65手目",
+      "candidates": [
+        {
+          "move": "S*5i"
+        },
+        {
+          "move": "2i2f"
+        },
+        {
+          "move": "S*1b"
+        }
+      ],
+      "prev_moves": [
+        "P*4e",
+        "3g4h+",
+        "5h4h",
+        "R*2i",
+        "4e4d"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_014",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g P*4e 3g4h+ 5h4h R*2i 4e4d S*5i 6h5h 5i4h+ 5h4h 2i2h+",
+      "ply": 70,
+      "user_move": "N*3h",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 70手目",
+      "candidates": [
+        {
+          "move": "4h4i"
+        },
+        {
+          "move": "N*3h"
+        },
+        {
+          "move": "S*3h"
+        }
+      ],
+      "prev_moves": [
+        "S*5i",
+        "6h5h",
+        "5i4h+",
+        "5h4h",
+        "2i2h+"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_015",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g P*4e 3g4h+ 5h4h R*2i 4e4d S*5i 6h5h 5i4h+ 5h4h 2i2h+ N*3h 4c5b S*3g 2h1i S*4c",
+      "ply": 75,
+      "user_move": "L*4e",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 75手目",
+      "candidates": [
+        {
+          "move": "N*1e"
+        },
+        {
+          "move": "1i1g"
+        },
+        {
+          "move": "L*4e"
+        }
+      ],
+      "prev_moves": [
+        "N*3h",
+        "4c5b",
+        "S*3g",
+        "2h1i",
+        "S*4c"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_016",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g P*4e 3g4h+ 5h4h R*2i 4e4d S*5i 6h5h 5i4h+ 5h4h 2i2h+ N*3h 4c5b S*3g 2h1i S*4c L*4e 3h4f 1i1h P*2h 4e4f",
+      "ply": 80,
+      "user_move": "3g4f",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 80手目",
+      "candidates": [
+        {
+          "move": "3g4f"
+        },
+        {
+          "move": "4h3h"
+        },
+        {
+          "move": "4h3i"
+        }
+      ],
+      "prev_moves": [
+        "L*4e",
+        "3h4f",
+        "1i1h",
+        "P*2h",
+        "4e4f"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "midgame",
+      "turn": "b",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    },
+    {
+      "id": "eval_017",
+      "sfen": "position startpos moves 2g2f 8c8d 2f2e 8d8e 6i7h 4a3b 3i3h 8e8f 8g8f 8b8f P*8g 8f8d 3h2g 1c1d 2g3f 3c3d 5i6h 6a5b 2e2d 2c2d 2h2d P*2c 2d2h 2a3c 7g7f 7a6b 9g9f 9c9d 1g1f 4c4d 4i5h 3a4b 4g4f 6c6d 3f4g 4b4c 3g3f 6b6c 2i3g 6c5d 4g5f 7c7d 2h4h 8a7c 8h9g 5b6c 9g8h 5a6b 4f4e 4d4e 3g4e 3c4e 5f4e 2b8h+ 7i8h 5d4e 4h4e P*4d 4e4h B*3g P*4e 3g4h+ 5h4h R*2i 4e4d S*5i 6h5h 5i4h+ 5h4h 2i2h+ N*3h 4c5b S*3g 2h1i S*4c L*4e 3h4f 1i1h P*2h 4e4f 3g4f 1h2h L*3h N*2f 4h5i",
+      "ply": 85,
+      "user_move": "2h3h",
+      "name": "将棋ウォーズ(10分切れ負け) razinesu 初段 vs Ace228 初段 85手目",
+      "candidates": [
+        {
+          "move": "G*5e"
+        },
+        {
+          "move": "3b4c"
+        },
+        {
+          "move": "2h3h"
+        }
+      ],
+      "prev_moves": [
+        "3g4f",
+        "1h2h",
+        "L*3h",
+        "N*2f",
+        "4h5i"
+      ],
+      "bestmove": null,
+      "score_cp": null,
+      "delta_cp": null,
+      "phase": "endgame",
+      "turn": "w",
+      "source": "game_06.kif",
+      "legacy_explanation": "",
+      "planner_explanation": "",
+      "planner_plan_flow": "",
+      "planner_plan_topic_keyword": "",
+      "planner_plan_surface_reason": "",
+      "planner_plan_deep_reason": "",
+      "auto_legacy_score": null,
+      "auto_planner_score": null,
+      "is_fallback": false,
+      "flow_score": null,
+      "keyword_score": null,
+      "depth_score": null,
+      "readability_score": null,
+      "preference": null,
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "矢倉囲い完成 - 銀の進出",
+    "sfen": "position sfen ln1g1g1nl/1ks1r4/1pppp1p1p/p4s2P/9/P1P1PS1p1/1P1PP1P2/1BK1G2R1/LNSG3NL b - 32",
+    "ply": 32,
+    "user_move": "4g4f",
+    "delta_cp": -30,
+    "prev_moves": ["7g7f", "8c8d", "6g6f", "3c3d", "7i6h"],
+    "candidates": [
+      {"move": "3g3f", "score_cp": 120},
+      {"move": "4g4f", "score_cp": 90},
+      {"move": "2f2e", "score_cp": 85}
+    ]
+  },
+  {
+    "name": "中飛車 - 角交換を仕掛ける",
+    "sfen": "position sfen lnsgk2nl/5g1b1/ppppppspp/5rp2/9/2P1P4/PP1P1PPPP/1B3S1R1/LNSGKG1NL b - 20",
+    "ply": 20,
+    "user_move": "8h2b+",
+    "delta_cp": 50,
+    "prev_moves": ["5g5f", "3c3d", "5f5e", "8b5b", "7g7f"],
+    "candidates": [
+      {"move": "8h2b+", "score_cp": 150},
+      {"move": "6h7g", "score_cp": 100},
+      {"move": "3i4h", "score_cp": 95}
+    ]
+  },
+  {
+    "name": "終盤の寄せ - 金打ち",
+    "sfen": "position sfen 4k4/9/4G4/9/9/9/9/9/4K4 b G2r2b4s4n4l18p 120",
+    "ply": 120,
+    "user_move": "G*5b",
+    "delta_cp": -200,
+    "prev_moves": ["5c5b+", "4a5b", "G*4b", "5b6c", "G*5d"],
+    "candidates": [
+      {"move": "G*4b", "score_cp": 3000},
+      {"move": "G*5b", "score_cp": 2800},
+      {"move": "5c5d", "score_cp": 2500}
+    ]
+  },
+  {
+    "name": "穴熊 - 端攻め開始",
+    "sfen": "position sfen l3kg1nl/1r3gs2/p1pppp1bp/9/9/P1P1P2PP/1P1P1PP2/1BSG1S1R1/LN1GK3L b Np 35",
+    "ply": 35,
+    "user_move": "1f1e",
+    "delta_cp": -80,
+    "prev_moves": ["9g9f", "1c1d", "9f9e", "1d1e", "P*1f"],
+    "candidates": [
+      {"move": "N*7e", "score_cp": 180},
+      {"move": "1f1e", "score_cp": 100},
+      {"move": "3f3e", "score_cp": 95}
+    ]
+  },
+  {
+    "name": "大駒交換直後 - 飛車打ち",
+    "sfen": "position sfen lnsgk1snl/6g2/p1pppp2p/9/9/P1P1P3P/1P1P1PP2/2SGK1S2/LN1G3NL b RBrb2p 42",
+    "ply": 42,
+    "user_move": "R*8b",
+    "delta_cp": 100,
+    "prev_moves": ["8h2b+", "3a2b", "B*5e", "R*8b", "7g7f"],
+    "candidates": [
+      {"move": "R*8b", "score_cp": 250},
+      {"move": "B*3c", "score_cp": 200},
+      {"move": "R*5a", "score_cp": 150}
+    ]
+  },
+  {
+    "name": "玉頭攻め - 歩の突き捨て",
+    "sfen": "position sfen ln3g1nl/1r2s2b1/p1pppp2p/9/1s3P3/P1P3p1P/1P1PP4/1BG1K2R1/LN1G3NL b 2p 50",
+    "ply": 50,
+    "user_move": "2f2e",
+    "delta_cp": -150,
+    "prev_moves": ["5e5d", "5c5d", "P*5e", "5d5e", "4f4e"],
+    "candidates": [
+      {"move": "P*5f", "score_cp": 300},
+      {"move": "4f4e", "score_cp": 250},
+      {"move": "2f2e", "score_cp": 150}
+    ]
+  },
+  {
+    "name": "序盤 - 角道を開ける",
+    "sfen": "position startpos",
+    "ply": 1,
+    "user_move": "7g7f",
+    "delta_cp": 0,
+    "prev_moves": [],
+    "candidates": [
+      {"move": "7g7f", "score_cp": 50},
+      {"move": "2g2f", "score_cp": 48},
+      {"move": "5g5f", "score_cp": 45}
+    ]
+  },
+  {
+    "name": "中盤 - 桂馬跳ね vs 銀上がり",
+    "sfen": "position sfen ln1g1g1nl/1ks1r4/1pppp1p1p/p4s2P/9/P1P1PS1p1/1P1PP1P2/1BK1G2R1/LNSG3NL b - 32",
+    "ply": 40,
+    "user_move": "2g2f",
+    "delta_cp": -60,
+    "prev_moves": ["3g3f", "4c4d", "3f3e", "3d3e", "2h3h"],
+    "candidates": [
+      {"move": "3h3e", "score_cp": 200},
+      {"move": "N*4e", "score_cp": 180},
+      {"move": "2g2f", "score_cp": 140}
+    ]
+  }
+]

@@ -197,6 +197,8 @@ class TestImportancePredictorTrain(unittest.TestCase):
         for key in ["n_samples", "mean_importance", "std_importance",
                      "train_r2", "train_mae"]:
             self.assertIn(key, result, f"Missing key: {key}")
+        # Minimum performance threshold — catch complete model failure (e.g., circular training)
+        self.assertGreater(result["train_r2"], 0.3)
 
     def test_train_marks_trained(self) -> None:
         ip = ImportancePredictor()
@@ -265,6 +267,8 @@ class TestImportancePredictorTrain(unittest.TestCase):
         for key in ["n_samples", "n_splits", "mean_r2", "std_r2",
                      "mean_mae", "std_mae"]:
             self.assertIn(key, result, f"Missing key: {key}")
+        # Minimum performance threshold — catch complete model failure
+        self.assertGreater(result["mean_r2"], 0.3)
 
     def test_save_and_load_roundtrip(self) -> None:
         ip = ImportancePredictor()

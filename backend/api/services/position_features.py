@@ -54,8 +54,8 @@ def _king_safety(
     for dx, dy in _KING_SURROUND_DELTAS:
         nx, ny = kx + dx, ky + dy
         if not (0 <= nx < 9 and 0 <= ny < 9):
-            # 壁も防御とみなす（端玉の壁効果）
-            defend_count += 1
+            # Out-of-bounds squares are not defense — skip them.
+            # (Removed previous wall-bonus that artificially inflated edge/corner king scores.)
             continue
         p = board[ny][nx]
         if p is None:
@@ -103,6 +103,9 @@ def _piece_activity(
     board: List[List[Optional[str]]],
     side: str,
 ) -> int:
+    # TODO: This function does not account for pieces in hand (captured pieces available for drop).
+    # In shogi, pieces in hand significantly affect activity and attack potential.
+    # This must be addressed before using piece_activity in any research evaluation.
     """大駒の利き範囲 + 成り駒数 + 盤上駒価値を評価して 0-100 を返す."""
     big_reach = len(attacked_squares(board, side, only_big=True))
 
@@ -215,6 +218,10 @@ def _classify_move_intent(
     is_capture = captured is not None
 
     # 犠牲判定: 駒を取られる位置に自分の高価値駒を動かした
+    # Only bishop (8) or rook (10) qualify — lower-value pieces moving to attacked squares
+    # are more likely exchanges or tactical plays, not true sacrifices.
+    # TODO: A rigorous sacrifice check should also verify the piece cannot be safely
+    # recaptured (i.e., the player's recapture value is lower than the sacrificed piece).
     if not is_drop and not is_capture:
         # 移動先に相手の利きがあるか
         dst = move[2:4]
@@ -224,7 +231,7 @@ def _classify_move_intent(
         moved_piece = board_after[dy][dx]
         if moved_piece and (dx, dy) in opp_attacks_after:
             moved_value = PIECE_VALUE.get(piece_kind_upper(moved_piece), 0)
-            if moved_value >= 5:
+            if moved_value >= 8:
                 return "sacrifice"
 
     # 駒交換: 取った駒の価値と取られそうな駒の価値が同程度
@@ -364,18 +371,20 @@ def extract_position_features(
         intent = _classify_move_intent(board, board_after, move, turn, captured)
         features["move_intent"] = intent
 
-        # 手を指した後の特徴量
-        next_turn = "w" if turn == "b" else "b"
-        ks_after = _king_safety(board_after, next_turn)
-        pa_after = _piece_activity(board_after, next_turn)
-        ap_after = _attack_pressure(board_after, next_turn)
+        # 手を指した後の特徴量 — evaluated from the same player's perspective (turn).
+        # tension_delta = how this move changes the moving player's own position:
+        #   positive d_king_safety  → our king got safer
+        #   positive d_attack_pressure → we applied more pressure on the opponent
+        ks_after = _king_safety(board_after, turn)
+        pa_after = _piece_activity(board_after, turn)
+        ap_after = _attack_pressure(board_after, turn)
 
         after_features = {
             "king_safety": ks_after,
             "piece_activity": pa_after,
             "attack_pressure": ap_after,
         }
-        features["tension_delta"] = _tension_delta(prev_features, features)
+        features["tension_delta"] = _tension_delta(features, after_features)
         features["after"] = after_features
     else:
         features["move_intent"] = None

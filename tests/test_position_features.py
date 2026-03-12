@@ -36,10 +36,14 @@ ENDGAME_SFEN = "position sfen 4k4/9/9/9/9/9/9/9/4K4 b - 1"
 
 class TestKingSafety:
     def test_startpos_reasonable(self):
-        """初期局面では玉は金銀に守られている."""
+        """初期局面では玉は金銀に守られている.
+        Note: lower bound is 20 (not 30) after removing the artificial wall-bonus
+        that inflated scores for edge/corner kings. startpos king has 2 golds
+        adjacent → raw = 2*6 + 2*8 = 28, minus any threat penalty.
+        """
         pos = parse_position_cmd(STARTPOS)
         score = _king_safety(pos.board, "b")
-        assert 30 <= score <= 100
+        assert 20 <= score <= 100
 
     def test_bare_king_low(self):
         """裸玉は安全度が低い."""
@@ -51,7 +55,7 @@ class TestKingSafety:
         """後手玉の安全度も計算できる."""
         pos = parse_position_cmd(STARTPOS)
         score = _king_safety(pos.board, "w")
-        assert 30 <= score <= 100
+        assert 20 <= score <= 100
 
     def test_no_king_returns_zero(self):
         """玉がない盤面（異常ケース）は 0."""

@@ -6,7 +6,7 @@
     "ply": 0,
     "expected": {
       "phase": "opening",
-      "king_safety_min": 35,
+      "king_safety_min": 20,
       "piece_activity_min": 40,
       "attack_pressure_max": 10
     }
@@ -74,7 +74,7 @@
     "ply": 35,
     "expected": {
       "phase": "midgame",
-      "king_safety_min": 50,
+      "king_safety_min": 35,
       "piece_activity_min": 40
     }
   },

@@ -150,6 +150,10 @@ class TestFocusPredictorTrain(unittest.TestCase):
         self.assertIn("f1_samples", result)
         self.assertIn("f1_macro", result)
         self.assertIn("label_distribution", result)
+        # Minimum performance thresholds — catch complete model failure
+        self.assertGreater(result["accuracy"], 0.5)
+        self.assertGreater(result["f1_samples"], 0.4)
+        self.assertGreater(result["f1_macro"], 0.4)
 
     def test_train_marks_trained(self) -> None:
         fp = FocusPredictor()
@@ -181,6 +185,10 @@ class TestFocusPredictorTrain(unittest.TestCase):
         self.assertIn("mean_f1_macro", result)
         self.assertIn("per_label_f1", result)
         self.assertEqual(len(result["per_label_f1"]), len(FOCUS_LABELS))
+        # Minimum performance thresholds — catch complete model failure
+        self.assertGreater(result["mean_accuracy"], 0.5)
+        self.assertGreater(result["mean_f1_samples"], 0.4)
+        self.assertGreater(result["mean_f1_macro"], 0.4)
 
     def test_save_and_load_roundtrip(self) -> None:
         fp = FocusPredictor()

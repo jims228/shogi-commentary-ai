@@ -1,6 +1,7 @@
 """Tests for quality comparison tool and batch generation enhancements."""
 from __future__ import annotations
 
+import atexit
 import asyncio
 import json
 import os
@@ -29,7 +30,59 @@ from scripts.batch_generate_commentary import (
 from backend.api.services.template_commentary import generate_template_commentary
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-_FEATURES_PATH = str(_DATA_DIR / "pipeline_test_features.jsonl")
+
+
+def _make_features_file() -> str:
+    """Create a self-contained temp JSONL of position features (cleaned up at exit)."""
+    phases = ["opening", "midgame", "endgame"]
+    records = [
+        {
+            "game_index": i // 5,
+            "ply": (i % 5) * 10,
+            "sfen": "position startpos",
+            "move": "7g7f",
+            "king_safety": 28 + (i % 10),
+            "piece_activity": 50 + (i % 20),
+            "attack_pressure": i % 30,
+            "phase": phases[i % 3],
+            "turn": "b" if i % 2 == 0 else "w",
+            "move_intent": "development",
+            "tension_delta": {
+                "d_king_safety": float(i % 10 - 5),
+                "d_piece_activity": float(i % 8 - 4),
+                "d_attack_pressure": float(i % 6 - 3),
+            },
+        }
+        for i in range(20)
+    ]
+    fd, path = tempfile.mkstemp(suffix=".jsonl")
+    atexit.register(os.unlink, path)
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        for r in records:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    return path
+
+
+def _make_sample_games_file() -> str:
+    """Create a self-contained temp USI game file (cleaned up at exit)."""
+    yagura_20 = (
+        "position startpos moves "
+        "7g7f 8c8d 6g6f 3c3d 6f6e 7a6b "
+        "2h6h 5a4b 5i4h 4b3b 3i3h 6b5b "
+        "4h3i 5b4b 3h2g 4b3c 7i6h 3a2b "
+        "6h5g 2b3a"
+    )
+    fd, path = tempfile.mkstemp(suffix=".txt")
+    atexit.register(os.unlink, path)
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        for i in range(3):
+            f.write(f"# test game {i + 1}\n")
+            f.write(yagura_20 + "\n")
+    return path
+
+
+_FEATURES_PATH = _make_features_file()
+_SAMPLE_GAMES_FILE = _make_sample_games_file()
 
 
 # ---------------------------------------------------------------------------
@@ -235,7 +288,7 @@ class TestQualityRetry:
     """Quality retry logic tests."""
 
     def test_batch_generate_with_retry(self) -> None:
-        input_file = str(_DATA_DIR / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             stats = asyncio.run(batch_generate(
                 input_file=input_file,
@@ -250,7 +303,7 @@ class TestQualityRetry:
             assert stats["total_retries"] > 0
 
     def test_high_quality_no_retry(self) -> None:
-        input_file = str(_DATA_DIR / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             stats = asyncio.run(batch_generate(
                 input_file=input_file,

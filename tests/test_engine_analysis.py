@@ -134,13 +134,14 @@ class TestBatchExtractWithEngine(unittest.TestCase):
         """エンジン使用時に score_cp 等が出力に含まれる."""
         from scripts.batch_extract_features import _batch_extract_loop
 
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
-        input_path = Path(input_file)
+        # Use a self-contained 20-move game line — no external file needed.
         lines = [
-            l.strip()
-            for l in input_path.read_text(encoding="utf-8").splitlines()
-            if l.strip() and not l.strip().startswith("#")
-        ][:1]
+            "position startpos moves "
+            "7g7f 8c8d 6g6f 3c3d 6f6e 7a6b "
+            "2h6h 5a4b 5i4h 4b3b 3i3h 6b5b "
+            "4h3i 5b4b 3h2g 4b3c 7i6h 3a2b "
+            "6h5g 2b3a"
+        ]
 
         with tempfile.TemporaryDirectory() as tmpdir:
             output_file = os.path.join(tmpdir, "out.jsonl")
@@ -172,13 +173,14 @@ class TestBatchExtractWithEngine(unittest.TestCase):
         """エンジンなしの場合は score_cp 等がない (従来通り)."""
         from scripts.batch_extract_features import _batch_extract_loop, _parse_game_line
 
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
-        input_path = Path(input_file)
+        # Use a self-contained 20-move game line — no external file needed.
         lines = [
-            l.strip()
-            for l in input_path.read_text(encoding="utf-8").splitlines()
-            if l.strip() and not l.strip().startswith("#")
-        ][:1]
+            "position startpos moves "
+            "7g7f 8c8d 6g6f 3c3d 6f6e 7a6b "
+            "2h6h 5a4b 5i4h 4b3b 3i3h 6b5b "
+            "4h3i 5b4b 3h2g 4b3c 7i6h 3a2b "
+            "6h5g 2b3a"
+        ]
 
         with tempfile.TemporaryDirectory() as tmpdir:
             output_file = os.path.join(tmpdir, "out.jsonl")

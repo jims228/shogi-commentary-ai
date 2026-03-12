@@ -1,6 +1,7 @@
 """tests for scripts/batch_generate_commentary.py."""
 from __future__ import annotations
 
+import atexit
 import asyncio
 import json
 import os
@@ -20,11 +21,40 @@ from scripts.batch_generate_commentary import (
 )
 
 
+# ---------------------------------------------------------------------------
+# Self-contained game data — three copies of a 20-move valid game sequence.
+# sample_interval=10 → 3 positions/game, sample_interval=15 → 2 positions/game,
+# sample_interval=30 → 1 position/game.  Three games give enough total
+# positions that max_requests caps of 3 and 5 are reliably hit.
+# ---------------------------------------------------------------------------
+_YAGURA_20 = (
+    "position startpos moves "
+    "7g7f 8c8d 6g6f 3c3d 6f6e 7a6b "
+    "2h6h 5a4b 5i4h 4b3b 3i3h 6b5b "
+    "4h3i 5b4b 3h2g 4b3c 7i6h 3a2b "
+    "6h5g 2b3a"
+)
+
+
+def _make_sample_games_file() -> str:
+    """Create a temporary USI game file for testing (cleaned up at exit)."""
+    fd, path = tempfile.mkstemp(suffix=".txt")
+    atexit.register(os.unlink, path)
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        for i in range(3):
+            f.write(f"# test game {i + 1}\n")
+            f.write(_YAGURA_20 + "\n")
+    return path
+
+
+_SAMPLE_GAMES_FILE = _make_sample_games_file()
+
+
 class TestDryRun(unittest.TestCase):
     """--dry-run モードのテスト."""
 
     def test_dry_run_produces_output(self) -> None:
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             stats = asyncio.run(batch_generate(
                 input_file=input_file,
@@ -49,7 +79,7 @@ class TestDryRun(unittest.TestCase):
 
     def test_dry_run_no_api_calls(self) -> None:
         """dry-run ではGemini APIが呼ばれないことを確認."""
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             with patch("scripts.batch_generate_commentary._generate_api_commentary") as mock_api:
                 asyncio.run(batch_generate(
@@ -62,7 +92,7 @@ class TestDryRun(unittest.TestCase):
                 mock_api.assert_not_called()
 
     def test_quality_scores_present(self) -> None:
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             asyncio.run(batch_generate(
                 input_file=input_file,
@@ -97,7 +127,7 @@ class TestResume(unittest.TestCase):
             self.assertNotIn((2, 0), done)
 
     def test_skip_already_processed(self) -> None:
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             # 初回実行
             stats1 = asyncio.run(batch_generate(
@@ -131,7 +161,7 @@ class TestRateLimiting(unittest.TestCase):
 
     def test_dry_run_no_sleep(self) -> None:
         """dry-run ではsleepしない."""
-        input_file = str(Path(__file__).resolve().parent.parent / "data" / "sample_games.txt")
+        input_file = _SAMPLE_GAMES_FILE
         with tempfile.TemporaryDirectory() as tmpdir:
             with patch("time.sleep") as mock_sleep:
                 asyncio.run(batch_generate(

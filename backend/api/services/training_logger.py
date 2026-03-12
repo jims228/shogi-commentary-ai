@@ -22,6 +22,16 @@ _LOG_DIR = os.path.normpath(os.getenv("TRAINING_LOG_DIR", _DEFAULT_LOG_DIR))
 
 
 def _is_enabled() -> bool:
+    # NOTE: This logger writes every AI explanation to data/training_logs/explanations_YYYY-MM.jsonl.
+    # It is ON by default. The data/training_logs/ directory is in .gitignore.
+    #
+    # To disable auto-logging (e.g. during development or to stop synthetic data accumulation):
+    #   export TRAINING_LOG_ENABLED=0
+    #
+    # The log is triggered from ai_service.py via asyncio.ensure_future(_log_explanation(...))
+    # inside generate_position_comment() and generate_planned_comment().
+    # Template-based outputs (model="template") are logged alongside real LLM outputs.
+    # Consider filtering by model name before using these logs as training data.
     return os.getenv("TRAINING_LOG_ENABLED", "1") != "0"
 
 
